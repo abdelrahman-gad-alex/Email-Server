@@ -15,6 +15,12 @@ public class product1 {
         {
             USER.put(method,properties);
         }
+        public String getEmail(){
+            return USER.get("email") ;
+        }
+        public String getPassword(){
+            return USER.get("password") ;
+        }
 }
 
 

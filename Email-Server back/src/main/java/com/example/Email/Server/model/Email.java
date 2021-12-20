@@ -4,42 +4,58 @@ import java.util.Map;
 
 
 public class Email {
-    HashMap<String, String> Users = new HashMap<String, String>();
+    HashMap<String, User> users = new HashMap<String, User>();
 
         // setter
-       public String create( String email , String password)
+       public void add( String email , User user)
        {
-          Users.put(email,password);
-           System.out.println(Users);
-          return "user added";
+           System.out.println(user.getemail());
+           System.out.println(user.getpass());
+
+           users.put(email, user) ;
        }
 
-    public boolean validuser( String email ,String password)
+    public boolean existUser( String email ,String password)
     {
 
-        System.out.println(Users);
-        int count=1;
-        for(Map.Entry<String,String> it: Users.entrySet())
-        {
-
-            if(count==Users.size())
-            {
-                System.out.println(it.getKey());
-                System.out.println(email);
-                System.out.println(password);
-                System.out.println(it.getValue());
-                if(email.equals(it.getKey()) && password.equals(it.getValue())  )
-                {
-                     return true;
-                }
-
-            }
-
-          count++;
+        User user = users.get(email);
+        if(user == null){
+            System.out.println("User not exist");
+            return false ;
         }
-           return false;
+        if(!user.checkPassword(password)){
+            System.out.println("pas not exist");
+
+            return false ;
+        }
+        return true ;
+
     }
 
+    public boolean existemail( String email)
+    {
+        User user = users.get(email);
+        if(user == null){
+            return false ;
+        }
+
+        return true ;
+
+    }
+
+    public User getUser(String email){
+           return users.get(email) ;
+    }
+
+    public void print(){
+        for (String name: users.keySet()) {
+            User value = users.get(name);
+            String e = value.getemail();
+            String pas = value.getpass();
+
+            System.out.println(e + " " + pas);
+        }
+    }
 
 
 }

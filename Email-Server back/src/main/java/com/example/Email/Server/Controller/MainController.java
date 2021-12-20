@@ -1,23 +1,26 @@
 package com.example.Email.Server.Controller;
 
-import com.example.Email.Server.model.Email;
-import com.example.Email.Server.model.validation;
+import com.example.Email.Server.model.*;
+import org.json.JSONObject;
+import org.json.JSONException;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
-@CrossOrigin
-@RequestMapping("/controller")
+
 public class MainController {
-    Email user = new Email();
-    @GetMapping("/signup")
-    public String Signup(@RequestParam String email, @RequestParam String password)
+    Email mails = new Email();
+    director Direct = new director();
+
+    public String Signup(String email, String password)
     {
         boolean result;
         validation valid =new validation();
-       result= valid.isValid(email);
+       result= valid.isValid(email,mails);
         if(result==true)
         {
-            user.create(email,password);
+            User user = new User();
+            user = Direct.construct(user , email, password) ;
+            mails.add(email, user);
+
         }
         else
         {
@@ -25,21 +28,25 @@ public class MainController {
         }
          return "user is added";
     }
-    @GetMapping("/login")
-    public String login(@RequestParam String email, @RequestParam String password)
-    {
 
+
+    public String login(String email, String password)
+    {
         boolean result;
 
+        result= mails.existUser(email,password);
 
-        result= user.validuser(email,password);
+        System.out.println("in login");
+
+        mails.print();
+
         if(result==true)
         {
-            return "id will be returned";
+            return mails.getUser(email).getMails() ;
         }
         else
         {
-            return "in valid ";
+            return "invalid ";
         }
     }
 

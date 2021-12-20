@@ -5,16 +5,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 public class director {
 
     Ibulider1 bulider;
-    public  void construct( Ibulider1 bulider) throws JsonProcessingException {
-          this.bulider=bulider;
-          bulider.addsubject("subject","gamed");
-        bulider.addto("subject","gamed");
-        bulider.addname("subject","gamed");
-        bulider.addimportant("subject","gamed");
-        bulider.adddate("subject","gamed");
-        bulider.addemail("subject","yla");
-        bulider.generateid();
-        bulider.convertjason();
-        bulider.addproperties();
+    public  User construct( Ibulider1 bulider, String email, String pas) {
+        this.bulider=bulider;
+
+        bulider.addemail(email);
+        bulider.addpassword(pas);
+
+        return bulider.getUser();
     }
 }

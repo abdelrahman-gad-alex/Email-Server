@@ -1,56 +1,75 @@
 package com.example.Email.Server.model;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-//user
 import java.util.HashMap;
 
-public  class Inbox implements Ibulider1{
 
-    private product1 Product = new product1();
-    HashMap<Long,String > Inbox = new HashMap<Long, String>();
-    HashMap<Long,String > sent = new HashMap<Long, String>();
-    HashMap<Long,String > deleted = new HashMap<Long, String>();
-    public String object;
-    public int id;
 
-    @Override
-    public void addemail(String method, String value) {
-        Product.add2(method,value);
+public class Inbox {
+
+    long ID=0 ;
+    public HashMap<Long,Message > Inbox = new HashMap<Long, Message>();
+    public HashMap<Long,Message > sent = new HashMap<Long, Message>();
+    public HashMap<Long,Message > draft = new HashMap<Long, Message>();
+    public HashMap<Long,Message > deleted = new HashMap<Long, Message>();
+
+    public long add2Inbox(Message message){
+        Inbox.put(ID, message) ;
+
+        ID += 1 ;
+        return ID-1 ;
+    }
+    public long add2draft(Message message){
+        draft.put(ID, message) ;
+
+        ID += 1 ;
+        return ID-1 ;
     }
 
-    @Override
-    public void addpassword(String method, String  value) {
-        Product.add2(method,value);
+    public long add2sent(Message message){
+        sent.put(ID, message) ;
+
+        ID += 1 ;
+        return ID-1 ;
     }
 
-    @Override
-    public void addinbox(String method, String value) {
+    public boolean delete(long ID){
+        Message m = Inbox.get(ID) ;
+        if(m == null){
 
+            m = sent.get(ID) ;
+            if (m== null){
 
-        Product.add2(method,value);
+                m = draft.get(ID) ;
+                if (m==null){
+                    return false ;
+                }
+                draft.remove(ID) ;
+
+            }else {
+                sent.remove(ID) ;
+            }
+        }else {
+            Inbox.remove(ID) ;
+        }
+
+        deleted.put(ID, m) ;
+        return true ;
     }
 
-    @Override
-    public void addsend(String method, String value) {
-        Inbox.put("subject","")
-        Product.add2(method,value);
+    public HashMap<String,HashMap<Long,Message>> getAllMail(){
+        HashMap<String,HashMap<Long,Message > > allmails = new HashMap<String,HashMap<Long,Message >>() ;
+        allmails.put("inbox", Inbox) ;
+        allmails.put("sent", sent) ;
+        allmails.put("draft", draft) ;
+        allmails.put("deleted", deleted) ;
+
+        return allmails ;
+
+
     }
 
-    @Override
-    public void adddelete(String method, String  value) {
 
-        Product.add2(method,value);
-    }
 
-    @Override
-    public void adddraft(String method, String  value) {
 
-        Product.add2(method,value);
-    }
 
-    @Override
-    public product1 getproduct() {
-        return Product;
-    }
 }

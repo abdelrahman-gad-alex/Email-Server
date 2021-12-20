@@ -23,11 +23,7 @@
     padding-left: 0.5rem;
     height: 12%;
 }
-.navigation .contacts{
-    margin: 0 0.5rem 0 0;
-    padding-left: 0.5rem;
-    height: 12%;
-}
+
 a{
     text-decoration: none;
 }
@@ -66,6 +62,7 @@ a{
 .navigation .btn a:hover{
     background-color: #fafafb;
     box-shadow: 0px 1px 3px 0 rgba(60, 64, 67, 0.3), 0px 4px 8px 3px rgba(60,64,67,0.15);
+    cursor: pointer;
 }
 .navigation .nav-list:hover{
     overflow-y:scroll ;

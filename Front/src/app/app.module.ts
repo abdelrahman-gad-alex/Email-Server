@@ -10,6 +10,7 @@ import { StarredComponent } from './starred/starred.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { ComposeComponent } from './compose/compose.component';
 import { RichTextEditorModule } from '@syncfusion/ej2-angular-richtexteditor';
+import { MailViewComponent } from './mail-view/mail-view.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { RichTextEditorModule } from '@syncfusion/ej2-angular-richtexteditor';
     MainbarComponent,
     StarredComponent,
     SidebarComponent,
-    ComposeComponent
+    ComposeComponent,
+    MailViewComponent
   ],
   imports: [
     BrowserModule,
@@ -28,7 +30,8 @@ import { RichTextEditorModule } from '@syncfusion/ej2-angular-richtexteditor';
     RouterModule.forRoot([
       {path:'' ,component: InboxComponent},
       {path:'starred' ,component: StarredComponent},
-      {path:'compose' ,component: ComposeComponent}
+      {path:'compose' ,component: ComposeComponent},
+      {path:'mail' ,component: MailViewComponent}
     ])
   ],
   providers: [],

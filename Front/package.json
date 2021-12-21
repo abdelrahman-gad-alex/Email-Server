@@ -24,6 +24,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
     "@syncfusion/ej2-angular-richtexteditor": "^19.4.38",
     "@tinymce/tinymce-angular": "^4.2.4",
+    "bootstrap": "^5.1.3",
     "ngx-quill": "^16.1.1",
     "quill": "^1.3.7",
     "rxjs": "~7.4.0",

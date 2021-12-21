@@ -1,0 +1,32 @@
+<div class ="container">
+    <div class="row">
+      <div class="col-mid-6">
+        <div class="card">
+          <div class="text-center">
+            <div class="Logo">
+              <img alt="Mail Server Logo" src="./assets/img/myMail.png" width=50>
+              <span>Mail Server</span>
+            </div>
+            <div style="display: flex; flex-wrap: wrap ;align-items: center; justify-content: center;">
+              <div class="mb-3" style="width: 490px;">
+                <label for="exampleInputEmail1" class="form-label" >Email address</label>
+                <input  type="email" [(ngModel)]="myText" class="form-control" id="exampleInputEmail1"  aria-describedby="emailHelp">
+              </div>
+              <div class="mb-3" style="width: 490px">
+                <label for="exampleInputPassword1" class="form-label">Password</label>
+                <input type="password" [(ngModel)]="pw" class="form-control" id="exampleInputPassword1" >
+                
+              </div>
+              <div class="mb-3" style="width: 490px">
+                <label for="confirmPassword" class="form-label" >Confirm Password</label>
+                <input type="password" [(ngModel)]="pwc" class="form-control" id="confirmPassword">               
+                <div style="text-align: left;"><a routerLink="/">Aleardy registered</a></div>
+              </div>
+              <button class="btn btn-primary">Signup</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

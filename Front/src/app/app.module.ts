@@ -10,6 +10,10 @@ import { StarredComponent } from './starred/starred.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { ComposeComponent } from './compose/compose.component';
 import { RichTextEditorModule } from '@syncfusion/ej2-angular-richtexteditor';
+import { LoginComponent } from './login/login.component';
+import { SignupComponent } from './signup/signup.component';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -18,17 +22,23 @@ import { RichTextEditorModule } from '@syncfusion/ej2-angular-richtexteditor';
     MainbarComponent,
     StarredComponent,
     SidebarComponent,
-    ComposeComponent
+    ComposeComponent,
+    LoginComponent,
+    SignupComponent,
+
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FontAwesomeModule,
+    HttpClientModule,
     RichTextEditorModule,
+    FormsModule,
     RouterModule.forRoot([
-      {path:'' ,component: InboxComponent},
+      {path:'' ,component: LoginComponent},
       {path:'starred' ,component: StarredComponent},
-      {path:'compose' ,component: ComposeComponent}
+      {path:'compose' ,component: ComposeComponent},
+      {path:'signup' , component: SignupComponent}
     ])
   ],
   providers: [],

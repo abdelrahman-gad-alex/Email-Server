@@ -1,0 +1,36 @@
+
+.flex-container{
+    display:flex;
+    flex-flow:row nowrap;
+    width:100% 
+}
+.mail-compose{
+    flex:0 0 75%;
+    display :flex;
+    flex-flow: column nowrap;
+    margin-top: 20px;
+    margin-left: 20px;
+
+}
+.fts{
+    margin-bottom: 10px;
+}
+.comdiv{
+    height: 40px;
+}
+
+.mail-compose span{
+    width: 70px;
+    display: inline-block;
+
+    padding: 0.5rem 0.3rem;
+}
+
+.mail-compose input{
+    width: 90%;
+    border:none;
+    padding: 0.6rem 0.0 ;
+    outline: none;
+    background-color:#f1f3f4;
+    
+}

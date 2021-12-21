@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ToolbarService, LinkService, ImageService, HtmlEditorService } from '@syncfusion/ej2-angular-richtexteditor';
+import { faPaperclip } from '@fortawesome/free-solid-svg-icons';
+import { Location } from '@angular/common'
 
-@Component({
+@Component({ 
   selector: 'app-compose',
+<<<<<<< HEAD
   template: `
   <div class="flex-container">
   <app-sidebar></app-sidebar>
@@ -27,6 +30,10 @@ import { ToolbarService, LinkService, ImageService, HtmlEditorService } from '@s
   </ejs-richtexteditor>
   </div>
   </div> `,
+=======
+  templateUrl: './compose.component.html',
+  styleUrls: ['./compose.component.css'],
+>>>>>>> 54ae62fde33c8e982c1992ecca5bd23f7ff86588
   providers: [ToolbarService, LinkService, ImageService, HtmlEditorService]
 })
   export class ComposeComponent implements OnInit {
@@ -42,9 +49,11 @@ import { ToolbarService, LinkService, ImageService, HtmlEditorService } from '@s
   };
   public iframe: object = { enable: true };
   public height: number = 500;
-
-
-  constructor() { }
+  faPaperclip=faPaperclip
+  back(): void {
+    this.location.back()
+  }
+  constructor(private location: Location) { }
 
   ngOnInit(): void {
     

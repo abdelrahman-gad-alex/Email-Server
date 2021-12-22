@@ -58,7 +58,7 @@ export class SignupComponent {
       alert("Password length should be bigger than 6")
       return
     }
-    this.http.get("hhtp:/localhost:8080/signup",
+    this.http.get("http:/localhost:8080/signup",
     {
       responseType: 'text',
       params:

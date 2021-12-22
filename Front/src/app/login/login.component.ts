@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 
+import {Router} from '@angular/router'; // import router from angular router
+
 
 @Component({
   selector: 'app-login',
@@ -11,7 +13,8 @@ export class LoginComponent {
   myText: string =""
   pw: string = ""
   res: any
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient,private route:Router) { }
+  
   sub()
   {
     let atfound = false
@@ -55,19 +58,22 @@ export class LoginComponent {
     }
     console.log(this.myText)
     console.log(this.pw)
-    // this.http.get("http:/localhost:8080/login",
-    // {
-    //   responseType: 'text',
-    //   params:
-    //   {////////////////////////
-    //     email: this.myText,
-    //     password: this.pw
-    //   },
-    //   observe:'response'
-    // }
-    // ).subscribe(response=>{
-    //   this.res = response.body
-    //   console.log(this.res)
-    // })
+    this.http.get<Boolean>("http://localhost:8080/login",
+    {
+      params:
+      {////////////////////////
+        mail: this.myText,
+        pass: this.pw
+      },
+      observe:'response'
+    }
+    ).subscribe(response=>{
+      this.res = response.body
+      if (this.res)
+      this.route.navigate(['/inbox']);
+      else
+      alert("Email address or password is incorrect")
+      
+    })
   }
 }

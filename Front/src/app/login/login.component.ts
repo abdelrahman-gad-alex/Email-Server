@@ -59,7 +59,7 @@ export class LoginComponent {
     // {
     //   responseType: 'text',
     //   params:
-    //   {
+    //   {////////////////////////
     //     email: this.myText,
     //     password: this.pw
     //   },

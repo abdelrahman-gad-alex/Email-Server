@@ -70,7 +70,7 @@ export class LoginComponent {
     ).subscribe(response=>{
       this.res = response.body
       if (this.res)
-      this.route.navigate(['/inbox']);
+      this.route.navigate(['/folder/Inbox']);
       else
       alert("Email address or password is incorrect")
       

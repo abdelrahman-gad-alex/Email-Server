@@ -21,6 +21,7 @@ import { ActivatedRoute } from '@angular/router';
           'Indent', 'Outdent', '|', 'CreateLink',
           'Image', '|', 'ClearFormat', 'Print', 'SourceCode', '|', 'FullScreen']
   };
+x:String="";
 
   to!: String;
   public iframe: object = { enable: true };
@@ -36,5 +37,7 @@ import { ActivatedRoute } from '@angular/router';
     if (mail!="none")
       this.to=mail
   }
-
+  submit(){
+    console.log(this.x)
+  }
 }

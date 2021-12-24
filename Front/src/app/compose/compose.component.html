@@ -12,7 +12,7 @@
             </div>
             <div class="comdiv">
                 <span>TO : </span>
-                <input type="email" value={{to}}>
+                <input type="email" value={{to}} id="to" multiple >
                 
             </div>
             <div class="comdiv">
@@ -36,7 +36,7 @@
               <div class="Cancel" (click)='back()'>
                 Cancel
               </div>
-              <div class="Submit">
+              <div class="Submit" (click)='submit()'>
                 Submit
               </div>
         </div>

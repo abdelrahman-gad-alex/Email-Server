@@ -1,5 +1,8 @@
 package com.example.Email.Server.model;
 
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 
 
@@ -12,6 +15,7 @@ public class Inbox {
     public HashMap<Long,Message > draft = new HashMap<Long, Message>();
     public HashMap<Long,Message > deleted = new HashMap<Long, Message>();
 
+    public HashMap<String,HashMap<Long,Message >>  folders = new HashMap<String,HashMap<Long,Message >>() ;
     public long add2Inbox(Message message){
         Inbox.put(ID, message) ;
 
@@ -27,31 +31,30 @@ public class Inbox {
 
     public long add2sent(Message message){
         sent.put(ID, message) ;
-
         ID += 1 ;
         return ID-1 ;
     }
 
-    public boolean delete(long ID){
-        Message m = Inbox.get(ID) ;
-        if(m == null){
+    public void addFolder(String name){
+        HashMap<Long,Message > folder = new HashMap<Long,Message >() ;
+        folders.put(name, folder) ;
+    }
 
-            m = sent.get(ID) ;
-            if (m== null){
+    public void addMessageToFolder(String folder, long ID, String oldFolder){
+        HashMap<Long,Message > Thefolder = folders.get(folder);
+        Thefolder.put(ID,getMessage(ID, oldFolder)) ;
+    }
 
-                m = draft.get(ID) ;
-                if (m==null){
-                    return false ;
-                }
-                draft.remove(ID) ;
+    private Message getMessage(long ID, String folder){
+        return getAllMail().get(folder).get(ID) ;
+    }
 
-            }else {
-                sent.remove(ID) ;
-            }
-        }else {
-            Inbox.remove(ID) ;
+    public boolean delete(long ID, String folder){
+        Message m = getAllMail().get(folder).get(ID) ;
+        if(m==null){
+            return false ;
         }
-
+        getAllMail().get(folder).remove(ID) ;
         deleted.put(ID, m) ;
         return true ;
     }
@@ -63,11 +66,28 @@ public class Inbox {
         allmails.put("draft", draft) ;
         allmails.put("deleted", deleted) ;
 
+        allmails.putAll(folders);
+
         return allmails ;
 
 
     }
 
+    void checkTimeForTrash(){
+        LocalDate todayDate = java.time.LocalDate.now() ;
+        System.out.println(todayDate);
+        //2017-01-23
+
+        for(long Id : deleted.keySet()){
+            String date = deleted.get(Id).getAttr("date") ;
+            LocalDate mdate = LocalDate.parse(date);
+            Period period = Period.between(mdate, todayDate);
+
+            if(period.getDays()>30 || period.getMonths() >0 ||period.getYears() >0 ){
+                deleted.remove(Id) ;
+            }
+        }
+    }
 
 
 

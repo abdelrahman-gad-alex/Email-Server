@@ -12,7 +12,7 @@ public interface Ibulider1 {
     void addpassword(String value);
     void addinbox(Message message);
     void addsend(Message message);
-    void  adddelete(long ID);
+    void  adddelete(long ID, String folder);
     void  adddraft(Message message);
     User getUser();
 }

@@ -1,0 +1,39 @@
+<app-mainbar></app-mainbar>
+
+<section class="main-container" style="display: block">
+    <div class="flex-container">
+         
+      <app-sidebar></app-sidebar>
+          <main class="main-content">
+             
+            <div class="shortcuts" >
+              shortcuts here
+              
+            </div>
+            <div class="nono">
+                         
+            </div>
+        <!--/////////////////////////////-->
+        <div *ngFor ="let contact of contacts; let i = index">
+          <div class="mail-list" data-bs-toggle="collapse" attr.data-bs-target="#{{'contact' + i}}" aria-expanded="false" aria-controls="collapseExample">
+            <div class="mail-icons">
+              <h4 class="title">{{contact.name}}</h4>
+            </div>
+          </div>
+
+              <div *ngFor ="let mail of contact.mail">
+               <div class="collapse" id="{{ 'contact' + i }}">
+                <div class="card card-body" (click)="sendMail(mail)">
+                  {{mail}}
+                 </div>
+              </div>
+            </div>
+          </div>
+        <!--/////////////////////////////-->
+        <!--/////////////////////////////-->
+        
+        
+        </main>          
+    </div>
+  </section>
+  

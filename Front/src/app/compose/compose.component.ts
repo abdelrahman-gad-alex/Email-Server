@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ToolbarService, LinkService, ImageService, HtmlEditorService } from '@syncfusion/ej2-angular-richtexteditor';
 import { faPaperclip } from '@fortawesome/free-solid-svg-icons';
 import { Location } from '@angular/common'
+import { ActivatedRoute } from '@angular/router';
 
 @Component({ 
   selector: 'app-compose',
@@ -20,16 +21,20 @@ import { Location } from '@angular/common'
           'Indent', 'Outdent', '|', 'CreateLink',
           'Image', '|', 'ClearFormat', 'Print', 'SourceCode', '|', 'FullScreen']
   };
+
+  to!: String;
   public iframe: object = { enable: true };
   public height: number = 500;
   faPaperclip=faPaperclip
   back(): void {
     this.location.back()
   }
-  constructor(private location: Location) { }
+  constructor(private location: Location, private route:ActivatedRoute) { }
 
   ngOnInit(): void {
-    
+    let mail =this.route.snapshot.paramMap.get('mail')!;
+    if (mail!="none")
+      this.to=mail
   }
 
 }

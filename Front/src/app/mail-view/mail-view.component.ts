@@ -12,6 +12,7 @@ export class MailViewComponent implements OnInit {
   to="";
   subject="";
   mails=MAILS
+  
   constructor(private route:ActivatedRoute) {  
     
   }
@@ -19,9 +20,12 @@ export class MailViewComponent implements OnInit {
   ngOnInit(): void {
     let id =+this.route.snapshot.paramMap.get('id')!;
     this.id=id;
-    this.from=this.mails[this.id].from
-    this.to=this.mails[this.id].to
-    this.subject=this.mails[this.id].subject
+    var result = this.mails.filter(obj => {
+      return obj.id === this.id
+    })
+    this.from=result[0].from
+    this.to=result[0].to
+    this.subject=result[0].subject
   }
 
 }

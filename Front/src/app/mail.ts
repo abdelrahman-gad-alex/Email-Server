@@ -5,4 +5,5 @@ export interface Mail{
   subject: string;
   mailContent:string;
   time: string;
+  importance:number;
 }

@@ -1,0 +1,39 @@
+<app-mainbar></app-mainbar>
+
+<section class="main-container" style="display: block">
+    <div class="flex-container">
+         
+      <app-sidebar></app-sidebar>
+          <main class="main-content">
+             
+            <div class="shortcuts" >
+              shortcuts here
+              
+            </div>
+            <div class="nono">
+                         
+            </div>
+        <!--/////////////////////////////-->
+            <div class="mail-list" (click)="showMail(mail)" *ngFor ="let mail of mails">
+               <div class="mail-icons">
+                  <h4 class="title">{{mail.from}}</h4>
+               </div>
+               <div class="mail-content">
+                  <p class="subject">{{mail.subject}}
+                      <span class="sub-text">{{mail.mailContent}}</span>
+                  </p>
+              </div>
+              <div class="time-date">
+               {{mail.time}}
+              </div>
+          
+         </div>
+
+        <!--/////////////////////////////-->
+        <!--/////////////////////////////-->
+        
+        
+        </main>          
+    </div>
+  </section>
+  

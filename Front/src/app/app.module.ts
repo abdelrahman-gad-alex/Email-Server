@@ -4,7 +4,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { InboxComponent } from './inbox/inbox.component';
 import { MainbarComponent } from './mainbar/mainbar.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { ComposeComponent } from './compose/compose.component';
@@ -20,7 +19,6 @@ import { FolderComponent } from './folder/folder.component';
 @NgModule({
   declarations: [
     AppComponent,
-    InboxComponent,
     MainbarComponent,
     SidebarComponent,
     ComposeComponent,
@@ -44,7 +42,6 @@ import { FolderComponent } from './folder/folder.component';
       {path:'folder/:name' ,component: FolderComponent},
       {path:'signup' , component: SignupComponent},
       {path:'mail/:id' ,component: MailViewComponent},
-      {path:'inbox' ,component: InboxComponent},
       {path:'contacts' ,component: ContactsComponent},
     ])
   ],

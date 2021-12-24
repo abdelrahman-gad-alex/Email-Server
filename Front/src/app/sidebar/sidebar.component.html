@@ -23,7 +23,7 @@
     </div>
 
     <div class="nav-list">
-        <a routerLink="" routerLinkActive="active current"><img src="./assets/img/inbox.png" alt="Inpox"><span class="Name">Inbox</span><span class="count">56</span></a>
+        <a routerLink="/inbox" routerLinkActive="active current"><img src="./assets/img/inbox.png" alt="Inpox"><span class="Name">Inbox</span><span class="count">{{mails.length}}</span></a>
         <a routerLink="/starred" routerLinkActive="active current"><fa-icon [icon]="faStar"></fa-icon> <span class="Name">Starred</span><span class="count">56</span></a>
         <a href="#"><fa-icon [icon]="faClock" class="fas fa-clock"></fa-icon><span class="Name">Snoozed</span><span class="count">56</span></a>
         <a href="#"><fa-icon [icon]="faPaperPlane" class="fas fa-paper-plane"></fa-icon><span class="Name">Sent</span> <span class="count">56</span></a>

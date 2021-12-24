@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { faStar,faFile,faClock,faPaperPlane,faBookmark ,faTrash } from '@fortawesome/free-solid-svg-icons';
 import { ActivatedRoute, Router } from '@angular/router';
-
+import { MAILS } from '../inboxMail';
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
@@ -14,6 +14,7 @@ export class SidebarComponent implements OnInit {
   faFile=faFile;
   faBookmark=faBookmark;
   faTrash=faTrash
+  mails =MAILS
   reloadComponent() {
     let currentUrl = this.router.url;
         this.router.routeReuseStrategy.shouldReuseRoute = () => false;

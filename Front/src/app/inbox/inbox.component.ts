@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faStar,faFile,faClock,faPaperPlane,faBookmark ,faTrash } from '@fortawesome/free-solid-svg-icons';
+import { MAILS } from '../inboxMail';
 
 @Component({
   selector: 'app-inbox',
@@ -17,6 +18,9 @@ export class InboxComponent implements OnInit {
   faTrash=faTrash;
   now =new Date()
   
+  mails =MAILS
+
+
   
 
   constructor(private route: ActivatedRoute, private router: Router) {
@@ -33,4 +37,7 @@ export class InboxComponent implements OnInit {
 
   }
 
+  showMail(mail: { id: number; }){
+    this.router.navigate(['mail',mail.id])
+  }
 }

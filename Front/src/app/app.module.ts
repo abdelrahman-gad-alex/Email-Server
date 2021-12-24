@@ -41,7 +41,7 @@ import { MailViewComponent } from './mail-view/mail-view.component';
       {path:'starred' ,component: StarredComponent},
       {path:'compose' ,component: ComposeComponent},
       {path:'signup' , component: SignupComponent},
-      {path:'mail' ,component: MailViewComponent},
+      {path:'mail/:id' ,component: MailViewComponent},
       {path:'inbox' ,component: InboxComponent},
     ])
   ],

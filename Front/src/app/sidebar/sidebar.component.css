@@ -98,9 +98,14 @@ a{
 .navigation .count{
     font-size: 0.8rem;
 }
-.navigation fa-icon{
+.fas{
     color :#000000;
     font-size: 1rem;
     margin-right: 1rem;
 }
 
+
+#nameI , #nameBTN{
+    display: none;
+    margin-left: 20px;
+}

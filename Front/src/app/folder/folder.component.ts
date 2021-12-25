@@ -51,4 +51,5 @@ export class FolderComponent implements OnInit {
     this.router.navigate(['mail',mail.id])
   }
 
+ 
 }

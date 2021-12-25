@@ -4,10 +4,11 @@ import com.example.Email.Server.model.Ibulider1;
 import com.example.Email.Server.model.User;
 import com.example.Email.Server.model.validation;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @RestController
+@EnableWebMvc
 @CrossOrigin
-@RequestMapping("/controller")
 
 public class Requests {
     MainController controller = new MainController() ;

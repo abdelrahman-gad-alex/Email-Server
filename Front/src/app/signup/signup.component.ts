@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { Observable, observable } from 'rxjs';
 
 @Component({
   selector: 'app-signup',
@@ -58,19 +59,28 @@ export class SignupComponent {
       alert("Password length should be bigger than 6")
       return
     }
-    this.http.get("http:/localhost:8080/signup",
-    {
-      responseType: 'text',
-      params:
-      {
-        email: this.myText,
-        password: this.pw
-      },
-      observe:'response'
-    }
-    ).subscribe(response=>{
-      this.res = response.body
-      console.log(this.res)
-    })
+    // this.http.get("http:/localhost:8080/signup",
+    // {
+    //   responseType: 'text',
+    //   params:
+    //   {
+    //     email: this.myText,
+    //     password: this.pw
+    //   },
+    //   observe:'response'
+    // }
+    // ).subscribe(response=>{
+    //   this.res = response.body
+    //   console.log(this.res)
+    // })
+    let email=this.myText
+     this.sendmail(this.myText);
+     
+   
+  }
+  sendmail(email:string):Observable<any>
+  {
+    console.log(email)
+    return this.http.post<any>("http://localhost:8080/signup",email) 
   }
 }

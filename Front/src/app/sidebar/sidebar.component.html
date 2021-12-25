@@ -21,9 +21,16 @@
         </a>
         </div>
     </div>
+    
+
+    <div class="nav-list" id="nav-list" *ngFor = "let folder of folders" > 
+        
+        <a routerLink="/folder/{{folder.name}}" routerLinkActive="active current"><i class="fas fa-folder"></i><span class="Name">{{folder.name}}</span><span class="count">{{folder.id.length}}</span></a>
+
+    </div>
     <div class="compose">
         <div class="btn">
-        <a (click)="rename('trash','no')"><img alt ="add" src="./assets/img/refresh-512.webp">
+        <a (click)="showA()"><img alt ="add" src="./assets/img/add.webp">
             <p>add </p>
         </a>
         </div>
@@ -31,19 +38,31 @@
     <input id="nameI" [(ngModel)]="newFolderName" placeholder="Enter A Folder Name" >
     <div class="compose" id="nameBTN">
         <div class="btn">
-        <a (click)="add()"><img alt ="add" src="./assets/img/refresh-512.webp">
-            <p>add </p>
+        <a (click)="add()"><img alt ="add" src="./assets/img/add.webp">
+            <p>OK </p>
+        </a>
+        </div>
+    </div>
+    <div class="compose">
+        <div class="btn">
+        <a (click)="showB()"><img alt ="add" src="./assets/img/rename.png">
+            <p>Rename </p>
+        </a>
+        </div>
+    </div>
+    <input id="nameI2" [(ngModel)]="newFolderName" placeholder="Enter New Folder Name" >
+    <div class="compose" id="nameBTN2">
+        <div class="btn">
+        <a (click)="rename()"><img alt ="add" src="./assets/img/rename.png">
+            <p>OK </p>
+        </a>
+        </div>
+    </div>    <div class="compose">
+        <div class="btn">
+        <a (click)="remove()"><img alt ="add" src="./assets/img/delete.png">
+            <p>Delate </p>
         </a>
         </div>
     </div>
 
-    <div class="nav-list" id="nav-list" *ngFor = "let folder of folders" > 
-        
-        <a routerLink="/folder/{{folder.name}}" routerLinkActive="active current"><i class="fas fa-folder"></i><span class="Name">{{folder.name}}</span><span class="count">{{folder.id.length}}</span></a>
-        <!--<a routerLink="/folder/sent" routerLinkActive="active current"><fa-icon [icon]="faPaperPlane" class="fas "></fa-icon><span class="Name">Sent</span> <span class="count">{{Sent.length}}</span></a>
-        <a routerLink="/folder/drafts"routerLinkActive="active current" ><fa-icon [icon]="faFile"class="fas"></fa-icon><span class="Name">Drafts</span> <span class="count">{{Drafts.length}}</span></a>
-        <a routerLink="/folder/trash" routerLinkActive="active current"><fa-icon [icon]="faTrash"class="fas"></fa-icon><span class="Name">Trash</span> <span class="count">{{Trash.length}}</span></a>
-        <a routerLink="/folder/all-mail" routerLinkActive="active current"><img src="./assets/img/mail_black.png" alt=""><span class="Name">All Mail</span><span class="count">{{AllMail.length}}</span></a> -->
-
-    </div>
 </aside>

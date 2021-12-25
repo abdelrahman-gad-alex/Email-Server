@@ -19,12 +19,7 @@ export class SidebarComponent implements OnInit {
   mails =MAILS
   folders=FOLDERS
   newFolderName:String="";
-
-  inbox:number[]=[];
-  Sent:number[]=[];
-  Drafts:number[]=[];
-  Trash:number[]=[];
-  AllMail:number[]=[];
+  curFolder:String="";
 
   reloadComponent() {
     let currentUrl = this.router.url;
@@ -32,6 +27,7 @@ export class SidebarComponent implements OnInit {
         this.router.onSameUrlNavigation = 'reload';
         this.router.navigate([currentUrl]);
     }
+
     constructor(private route: ActivatedRoute, private router: Router) {
       console.log('MEntoconst')
       this.router.routeReuseStrategy.shouldReuseRoute = () => false;
@@ -41,71 +37,95 @@ export class SidebarComponent implements OnInit {
   
     }
   ngOnInit(): void {
-    var result = this.folders.filter(obj => {
-      return obj.name === "inbox"
-    })
-    this.inbox=result[0].id
+    this.curFolder =this.route.snapshot.paramMap.get('name')!;
 
-    result = this.folders.filter(obj => {
-      return obj.name === "sent"
-    })
-    this.Sent=result[0].id
-
-    var result = this.folders.filter(obj => {
-      return obj.name === "drafts"
-    })
-    this.Drafts=result[0].id
-
-    result = this.folders.filter(obj => {
-      return obj.name === "trash"
-    })
-    this.Trash=result[0].id
-
-    result = this.folders.filter(obj => {
-      return obj.name === "all-mail"
-    })
-    this.AllMail=result[0].id
   }
 
-  show(){
-    document.getElementById("nameI")!.style.display="block";
-    document.getElementById("nameBTN")!.style.display="block";
+  showA(){
+    if (document.getElementById("nameI")!.style.display=="block"){
+      document.getElementById("nameI")!.style.display="none";
+      document.getElementById("nameBTN")!.style.display="none";
+    }
+    else{
+      document.getElementById("nameI")!.style.display="block";
+      document.getElementById("nameBTN")!.style.display="block";
+  
+    }
+  }
+  showB(){
+    if (document.getElementById("nameI2")!.style.display=="block"){
+      document.getElementById("nameI2")!.style.display="none";
+      document.getElementById("nameBTN2")!.style.display="none";
+    }
+    else{
+      document.getElementById("nameI2")!.style.display="block";
+      document.getElementById("nameBTN2")!.style.display="block";
+  
+    }
   }
   add(){
     if(this.newFolderName=="")
     alert("Please Enter A folder Name")
     else{
+      let obj = FOLDERS.find(f=>f.name==this.newFolderName);
+      
+      if (obj){
+        alert("There ara a folder with the same selected name . Please choose new name.")
+      }
+      else{
     FOLDERS.push(  {"name": this.newFolderName ,"id":[] }    )
     document.getElementById("nameI")!.style.display="none";
       this.newFolderName=""
     document.getElementById("nameBTN")!.style.display="none";
+      }
     }
   }
-  remove(folderName :String)
+  remove()
   {
-    switch(folderName)
+    console.log(this.curFolder)
+    switch(this.curFolder)
     {
       case "inbox":
       case "sent":
       case "drafts":
       case "trash":
       case "all-mail":
-        alert("Folder Cannot Be Delated")
+        alert("Main Folder Cannot Be Delated")
         break;
       default:
         const index = FOLDERS.findIndex(object => {
-          return object.name === 'trash';
+          return object.name === 'this.curFolder';
         });
-        
+        if (index>-1){
         FOLDERS.splice (index,1)
-    
+        this.router.navigate(['folder',"inbox"])
+        }
     }
   
   }
-  rename(oldFolderName :String, newFolderName :String)
-  {
-    let obj = FOLDERS.find(f=>f.name==oldFolderName);
-    obj!.name=newFolderName
+  rename()
+  {    
+  if(this.newFolderName=="")
+  alert("Please Enter A folder Name")
+  else  
+    switch(this.curFolder){
+      case "inbox":
+        case "sent":
+        case "drafts":
+        case "trash":
+        case "all-mail":
+          alert ("Main Folder Cannot Be Renamed");
+          break;
+        default:
+          let obj = FOLDERS.find(f=>f.name==this.curFolder);
+          if (obj){
+          obj!.name=this.newFolderName
+          this.router.navigate(['folder',this.newFolderName])
+          document.getElementById("nameI2")!.style.display="none";
+          this.newFolderName=""
+          document.getElementById("nameBTN2")!.style.display="none";
+          }
+    }
   }
 
 }

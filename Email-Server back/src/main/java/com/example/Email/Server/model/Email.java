@@ -1,4 +1,14 @@
 package com.example.Email.Server.model;
+import com.google.gson.Gson;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,8 +20,10 @@ public class Email {
     // Using Singleton
     public static Email getInstance()
     {
-        if (single_instance == null)
+        if (single_instance == null){
             single_instance = new Email();
+            single_instance.load();
+        }
 
         return single_instance;
     }
@@ -69,6 +81,45 @@ public class Email {
             System.out.println(e + " " + pas);
         }
     }
+
+    public void save(){
+        String jsonEmail = new Gson().toJson(single_instance) ;
+        try {
+            System.out.println(jsonEmail);
+            new FileWriter("data.json", false).close();
+
+            FileWriter file = new FileWriter("data.json") ;
+            file.write(jsonEmail);
+            file.flush();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void load(){
+        JSONParser jsonParser = new JSONParser();
+
+        try (FileReader reader = new FileReader("data.json"))
+        {
+            //Read JSON file
+            JSONObject obj = (JSONObject) jsonParser.parse(reader);
+            Gson gson = new Gson();
+
+            single_instance = gson.fromJson(String.valueOf(obj), Email.class );
+            System.out.println(single_instance.users);
+
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 
 
 }

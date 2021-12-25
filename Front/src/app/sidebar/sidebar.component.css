@@ -1,0 +1,111 @@
+@import '~quill/dist/quill.core.css';
+@import '~quill/dist/quill.bubble.css';
+@import '~quill/dist/quill.snow.css';
+
+.flex-container{
+    display:flex;
+    flex-flow:row nowrap;
+    width:100% 
+}
+.navigation{
+    display: flex;
+    flex-flow: column nowrap;
+    flex: 0 0 10%;
+    height: 560px;
+    position: sticky;
+    top:60px;
+    background-color:white;   
+    max-width: 300px;
+    min-width: 250px;
+}
+.navigation .compose{
+    margin: 0.5rem 0.5rem 0 0;
+    padding-left: 0.5rem;
+    height: 12%;
+}
+
+a{
+    text-decoration: none;
+}
+.btn a{
+    display: flex;
+    width :120px;
+    flex-flow: row nowrap;
+    justify-content: center;
+    text-align: center;
+    padding: 0.5rem 0.3rem;
+    box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.3),0 1px 3px 1px rgba(60, 64, 67, 0.15);
+    font-size: 0.875rem;
+    background-color: #fff;
+    border-radius: 24px;
+    color :#3c4043;
+    font-weight: 500;
+    height: 45px;
+    min-width: 56px;
+    align-items: center;
+}
+.compose img{
+    width: 32px;
+    height: 32px;
+    margin-right: 10px;
+    margin-left: -13px;
+
+}
+
+.navigation .btn a:hover{
+    background-color: #fafafb;
+    box-shadow: 0px 1px 3px 0 rgba(60, 64, 67, 0.3), 0px 4px 8px 3px rgba(60,64,67,0.15);
+    cursor: pointer;
+}
+
+
+.navigation .nav-list{
+    overflow: hidden;
+    line-height: 1.6rem;
+
+}
+.nav-list a{
+
+    flex-flow:row nowrap;
+    justify-content:space-between;
+    display: flex;
+    padding: 3px;
+    padding-left: 1rem;
+    width: 90%;
+    color :#555;
+    align-items:center ;
+
+}
+.nav-list a:hover{
+    background-color:rgba(0, 0, 0, 0.1);
+    border-radius: 0 25px 25px 0;
+}
+.active{
+    display: flex;
+    justify-content: flex start;
+    align-items: center;
+    font-weight: bold;
+    background-color: rgb(186, 253, 186);
+    border-radius:  0 25px 25px 0;
+}
+.navigation img{
+    margin-right: 1.2rem;
+    color :#000000;
+}
+.navigation .Name{
+    color :#000000;
+}
+.navigation .count{
+    font-size: 0.8rem;
+}
+.fas{
+    color :#000000;
+    font-size: 1rem;
+    margin-right: 1rem;
+}
+
+
+#nameI , #nameBTN{
+    display: none;
+    margin-left: 20px;
+}

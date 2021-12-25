@@ -1,0 +1,45 @@
+<app-mainbar></app-mainbar>
+
+<div class="flex-container">
+    <app-sidebar></app-sidebar>
+    <div class="mail-compose">
+        <div class="fts">
+
+            <div class="comdiv">
+                <span >From : </span>
+                <input type="email" value ="Me" readonly>
+                
+            </div>
+            <div class="comdiv">
+                <span>TO : </span>
+                <input type="email" value={{to}} id="to" multiple [(ngModel)]="toText">
+                
+            </div>
+            <div class="comdiv" >
+                <span>Subject : </span>
+                <input type="text"  [(ngModel)]="subjectText">
+                
+            </div>
+        </div>
+
+    
+            <ejs-richtexteditor id='defaultRTE' [(ngModel)]="conText">
+            <ng-template #valueTemplate>
+            <p> </p>
+            
+            </ng-template>
+            </ejs-richtexteditor>
+        <div class="Attach">
+            <fa-icon [icon]="faPaperclip" class=""></fa-icon>
+        </div>
+        <div class="btns">
+              <div class="Cancel" (click)='back()'>
+                Cancel
+              </div>
+              <div class="Submit" (click)='submit()'>
+                Submit
+              </div>
+        </div>
+    </div>
+</div>
+    

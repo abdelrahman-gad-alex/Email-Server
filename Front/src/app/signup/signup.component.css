@@ -1,0 +1,17 @@
+.card
+{
+    height: 380px;
+    width: 500px;
+    background-color:aliceblue;
+    margin-top: 100px;
+    margin-bottom: 100px;
+    margin-right: 150px;
+    margin-left: 100px;
+
+}
+.form-label
+{
+    display: block;
+    text-align:left;
+    font-weight: bold;
+}

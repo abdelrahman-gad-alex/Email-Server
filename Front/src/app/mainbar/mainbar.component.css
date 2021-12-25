@@ -1,0 +1,80 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+header.global-nav {
+    display:flex;
+    flex-flow:row nowrap;
+    justify-content:space-between;
+    align-items:center;
+    width:100%;
+    height:66px;
+    padding :2px;
+    border-bottom:1px solid rgba(0,0,0,0.1);
+    position:sticky;
+    top:0;
+    z-index:10;
+    background-color:#fff;
+}
+.Logo{
+    flex-flow: row nowrap;
+    flex: 0 0 10%;
+    display:flex;
+    align-items:center;
+    margin-left:10px;
+    padding :0.6rem 1rem;
+    
+}.Logo img{
+    margin: auto;
+    
+}
+.Search{
+    flex:0 0 57%;
+    display:flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 47px;
+    font-size: 15px;
+    color:#5f6368;
+    background-color:#f1f3f4;
+    padding: 0 10px;
+    border-radius: 10px;
+    margin-right: auto;
+    margin-left: auto;
+
+}
+
+.Search input{
+    width: 90%;
+    padding: 0.6rem 0.3rem;
+    border:none;
+    outline: none;
+    background-color:#f1f3f4;
+}
+
+.Search svg:nth-child(3){
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+    padding: 5px;
+}
+.Search svg:nth-child(3):hover{
+    background-color: rgba(60,64,67,0.08);
+    cursor: pointer;
+}
+.Sign{
+    height: 40px;
+    width: 100px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    background-color: rgba(255, 0, 0, 0.63);
+    color :white;
+    border-radius: 5px;
+}.Sign:hover{
+    background-color: rgba(60,64,67,0.08);
+    cursor: pointer;
+    color :black;
+}

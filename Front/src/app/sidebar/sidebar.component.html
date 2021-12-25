@@ -1,0 +1,49 @@
+
+<aside class="navigation flex-container main-container"style="display: block">
+    <div class="compose">
+        <div class="btn">
+        <a routerLink="/compose/none"><img alt ="Compose" src="./assets/img/compose.png">
+            <p>Compose </p>
+        </a>
+        </div>
+    </div>
+    <div class="compose">
+        <div class="btn">
+        <a routerLink="/contacts"><img alt ="Contacts" src="./assets/img/contacts_2x.png">
+            <p>Contacts </p>
+        </a>
+        </div>
+    </div>
+    <div class="compose">
+        <div class="btn">
+        <a (click)="reloadComponent()"><img alt ="Reload" src="./assets/img/refresh-512.webp">
+            <p>Reload </p>
+        </a>
+        </div>
+    </div>
+    <div class="compose">
+        <div class="btn">
+        <a (click)="rename('trash','no')"><img alt ="add" src="./assets/img/refresh-512.webp">
+            <p>add </p>
+        </a>
+        </div>
+    </div>
+    <input id="nameI" [(ngModel)]="newFolderName" placeholder="Enter A Folder Name" >
+    <div class="compose" id="nameBTN">
+        <div class="btn">
+        <a (click)="add()"><img alt ="add" src="./assets/img/refresh-512.webp">
+            <p>add </p>
+        </a>
+        </div>
+    </div>
+
+    <div class="nav-list" id="nav-list" *ngFor = "let folder of folders" > 
+        
+        <a routerLink="/folder/{{folder.name}}" routerLinkActive="active current"><i class="fas fa-folder"></i><span class="Name">{{folder.name}}</span><span class="count">{{folder.id.length}}</span></a>
+        <!--<a routerLink="/folder/sent" routerLinkActive="active current"><fa-icon [icon]="faPaperPlane" class="fas "></fa-icon><span class="Name">Sent</span> <span class="count">{{Sent.length}}</span></a>
+        <a routerLink="/folder/drafts"routerLinkActive="active current" ><fa-icon [icon]="faFile"class="fas"></fa-icon><span class="Name">Drafts</span> <span class="count">{{Drafts.length}}</span></a>
+        <a routerLink="/folder/trash" routerLinkActive="active current"><fa-icon [icon]="faTrash"class="fas"></fa-icon><span class="Name">Trash</span> <span class="count">{{Trash.length}}</span></a>
+        <a routerLink="/folder/all-mail" routerLinkActive="active current"><img src="./assets/img/mail_black.png" alt=""><span class="Name">All Mail</span><span class="count">{{AllMail.length}}</span></a> -->
+
+    </div>
+</aside>

@@ -1,0 +1,33 @@
+<app-mainbar></app-mainbar>
+
+<div class="flex-container">
+    <app-sidebar></app-sidebar>
+    <div class="mail-compose">
+        <div class="fts">
+
+            <div class="comdiv">
+                <span >From : </span>
+                <input type="email" value ="{{from}}" readonly>
+                
+            </div>
+            <div class="comdiv">
+                <span>TO : </span>
+                <input type="email" value ="{{to}}" readonly>
+                
+            </div>
+            <div class="comdiv">
+                <span>Subject : </span>
+                <input type="text" value ="{{subject}}" readonly>
+                
+            </div>
+            <div class= "mailContent" id="mailContent">
+            </div>
+
+        </div>
+        <div class="btns">
+            <div class="Reply" (click)=reply()>
+                Reply
+            </div>
+        </div>
+    </div>
+</div>

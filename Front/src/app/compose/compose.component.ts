@@ -27,17 +27,22 @@ x:String="";
   public iframe: object = { enable: true };
   public height: number = 500;
   faPaperclip=faPaperclip
+  importance :number=0;
   back(): void {
     this.location.back()
   }
-  constructor(private location: Location, private route:ActivatedRoute) { }
+  constructor(private location: Location, private route:ActivatedRoute) { 
+    this.importance=2;
+  }
 
   ngOnInit(): void {
     let mail =this.route.snapshot.paramMap.get('mail')!;
     if (mail!="none")
       this.to=mail
-  }
+ 
+    }
+
   submit(){
-    console.log(this.x)
+    console.log(this.importance)
   }
 }

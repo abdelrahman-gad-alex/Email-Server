@@ -27,6 +27,10 @@ x:String="";
   public iframe: object = { enable: true };
   public height: number = 500;
   faPaperclip=faPaperclip
+  toText:string = ""
+  subjectText:string = ""
+  conText:string = ""
+  // Text:string = ""
   back(): void {
     this.location.back()
   }
@@ -38,6 +42,8 @@ x:String="";
       this.to=mail
   }
   submit(){
-    console.log(this.x)
+    console.log(this.toText)
+    console.log(this.subjectText)
+    console.log(this.conText)
   }
 }

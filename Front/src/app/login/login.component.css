@@ -65,3 +65,6 @@ label.star:before {
     content: '\f006';
     font-family: FontAwesome
 }
+table {
+    width: 100%;
+  }

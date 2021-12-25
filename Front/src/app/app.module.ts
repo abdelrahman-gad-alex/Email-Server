@@ -15,6 +15,11 @@ import { FormsModule } from '@angular/forms';
 import { MailViewComponent } from './mail-view/mail-view.component';
 import { ContactsComponent } from './contacts/contacts.component';
 import { FolderComponent } from './folder/folder.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatButtonModule } from '@angular/material/button';
+import {MatTableModule } from '@angular/material/table';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
@@ -43,7 +48,12 @@ import { FolderComponent } from './folder/folder.component';
       {path:'signup' , component: SignupComponent},
       {path:'mail/:id' ,component: MailViewComponent},
       {path:'contacts' ,component: ContactsComponent},
-    ])
+    ]),
+    BrowserAnimationsModule,
+    MatButtonModule,
+    MatTableModule,
+    MatPaginatorModule, 
+    MatCheckboxModule
   ],
   providers: [],
   bootstrap: [AppComponent],

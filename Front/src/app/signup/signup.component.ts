@@ -50,7 +50,7 @@ export class SignupComponent {
     }
     if(this.pw != this.pwc)
     {
-      alert("Password and confirmation password are not the same")
+          alert("Password and confirmation password are not the same")
       return
     }
     if(this.pw.length < 7)

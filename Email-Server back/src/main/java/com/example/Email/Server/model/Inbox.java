@@ -1,93 +1,126 @@
 package com.example.Email.Server.model;
 
-import java.time.LocalDate;
-import java.time.Period;
-import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
+import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedList;
 
 
 public class Inbox {
 
     long ID=0 ;
-    public HashMap<Long,Message > Inbox = new HashMap<Long, Message>();
-    public HashMap<Long,Message > sent = new HashMap<Long, Message>();
-    public HashMap<Long,Message > draft = new HashMap<Long, Message>();
-    public HashMap<Long,Message > deleted = new HashMap<Long, Message>();
 
-    public HashMap<String,HashMap<Long,Message >>  folders = new HashMap<String,HashMap<Long,Message >>() ;
-    public long add2Inbox(Message message){
-        Inbox.put(ID, message) ;
+    HashMap<String,Folder>  folders = new HashMap<String,Folder>() ;
+    HashMap<Long,Message>  allMails = new HashMap<Long,Message>() ;
+
+    public Inbox(){
+        folders.put("inbox", new Folder("inbox")) ;
+        folders.put("sent", new Folder("sent")) ;
+        folders.put("draft", new Folder("draft")) ;
+        folders.put("trash", new Folder("trash")) ;
+    }
+
+    // For folders
+    public long addMessage2Folder(Message message, String name){
+        message.setAttr("id",Long.toString(ID));
+        allMails.put(ID, message) ;
+        folders.get(name).addMessage(ID);
 
         ID += 1 ;
         return ID-1 ;
     }
-    public long add2draft(Message message){
-        draft.put(ID, message) ;
 
-        ID += 1 ;
-        return ID-1 ;
+    public void moveMessage(String toFolder, long ID, String oldFolder){
+        folders.get(oldFolder).removeMessage(ID);
+        folders.get(toFolder).addMessage(ID);
     }
 
-    public long add2sent(Message message){
-        sent.put(ID, message) ;
-        ID += 1 ;
-        return ID-1 ;
-    }
-
-    public void addFolder(String name){
-        HashMap<Long,Message > folder = new HashMap<Long,Message >() ;
-        folders.put(name, folder) ;
-    }
-
-    public void addMessageToFolder(String folder, long ID, String oldFolder){
-        HashMap<Long,Message > Thefolder = folders.get(folder);
-        Thefolder.put(ID,getMessage(ID, oldFolder)) ;
-    }
-
-    private Message getMessage(long ID, String folder){
-        return getAllMail().get(folder).get(ID) ;
-    }
-
+    // delete message from folder
     public boolean delete(long ID, String folder){
-        Message m = getAllMail().get(folder).get(ID) ;
+        Message m = allMails.get(ID) ;
         if(m==null){
             return false ;
         }
-        getAllMail().get(folder).remove(ID) ;
-        deleted.put(ID, m) ;
-        return true ;
+        if(folder.equals("trash")){
+            if(folders.get(folder).haveMessage(ID)){
+                folders.get(folder).removeMessage(ID);
+                allMails.remove(ID) ;
+                return true ;
+            }
+            return false ;
+        }
+        if(folders.get(folder).haveMessage(ID)){
+            folders.get(folder).removeMessage(ID);
+            folders.get("trash").addMessage(ID);
+            return true ;
+        }
+        return false ;
     }
 
-    public HashMap<String,HashMap<Long,Message>> getAllMail(){
-        HashMap<String,HashMap<Long,Message > > allmails = new HashMap<String,HashMap<Long,Message >>() ;
-        allmails.put("inbox", Inbox) ;
-        allmails.put("sent", sent) ;
-        allmails.put("draft", draft) ;
-        allmails.put("deleted", deleted) ;
 
-        allmails.putAll(folders);
+    public void addFolder(String name){
+        Folder folder = new Folder(name) ;
+        folders.put(name, folder) ;
+    }
 
-        return allmails ;
+    public void deleteFolder(String name){
+        Folder folder =  folders.get(name) ;
+        folder = null ;
+        folders.remove(name) ;
+    }
+
+    public void renameFolder(String oldname, String newname){
+        Folder folder = folders.get(oldname);
+        folder.rename(newname);
+
+        folders.remove(oldname) ;
+        folders.put(newname, folder) ;
+
+    }
 
 
+
+
+
+    public LinkedList getAllMail(){
+        checkTimeForTrash() ;
+
+        return new LinkedList<>(allMails.values()) ;
+    }
+
+    public LinkedList getAllFolders(){
+        return new LinkedList<>(folders.values()) ;
     }
 
     void checkTimeForTrash(){
-        LocalDate todayDate = java.time.LocalDate.now() ;
+        Date todayDate = new Date() ;
         System.out.println(todayDate);
         //2017-01-23
+        Folder trash = folders.get("trash") ;
+        for(long Id : trash.id){
+            String date = allMails.get(Id).getAttr("date") ;
 
-        for(long Id : deleted.keySet()){
-            String date = deleted.get(Id).getAttr("date") ;
-            LocalDate mdate = LocalDate.parse(date);
-            Period period = Period.between(mdate, todayDate);
+            SimpleDateFormat formatter =new SimpleDateFormat("E MMM dd yyyy HH:mm:ss");
 
-            if(period.getDays()>30 || period.getMonths() >0 ||period.getYears() >0 ){
-                deleted.remove(Id) ;
+           try {
+                Date mdate = formatter.parse(date);
+                long duration =( (todayDate.getTime()- mdate.getTime()) / (1000 * 60 * 60 * 24))% 365 ;
+
+                if(duration>=30 ){
+                    trash.removeMessage(Id);
+                    allMails.remove(Id) ;
+                }
+
+            } catch (ParseException e) {
+                e.printStackTrace();
             }
+
+
         }
     }
+
 
 
 

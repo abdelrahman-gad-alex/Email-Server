@@ -100,8 +100,9 @@ public class Email {
     public void load(){
         JSONParser jsonParser = new JSONParser();
 
-        try (FileReader reader = new FileReader("data.json"))
+        try
         {
+            FileReader reader = new FileReader("data.json") ;
             //Read JSON file
             JSONObject obj = (JSONObject) jsonParser.parse(reader);
             Gson gson = new Gson();
@@ -110,12 +111,8 @@ public class Email {
             System.out.println(single_instance.users);
 
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
+        }catch (Exception e){
+            System.out.println("Fresh Start");
         }
 
     }

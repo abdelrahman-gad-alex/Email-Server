@@ -11,6 +11,7 @@ public class contacts {
 
     public boolean addcontact(String jasString)
     {
+        System.out.println(jasString);
         try {
             JSONObject jas = new JSONObject(jasString);
 

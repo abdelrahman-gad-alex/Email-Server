@@ -1,8 +1,10 @@
 package com.example.Email.Server.model;
 
 import com.google.gson.Gson;
+import org.json.simple.JSONObject;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 
 
 public  class User implements Ibulider1{
@@ -10,28 +12,10 @@ public  class User implements Ibulider1{
     private product1 user = new product1();
     private Inbox inbox = new Inbox() ;
     private contacts contact =new contacts();
+
      @Override
     public void addemail(String value) {
-
         user.add2("email",value);
-    }
-    public String getemail(){
-        return user.getEmail();
-    }
-    public String getpass(){
-        return user.getPassword();
-    }
-    public boolean addconctact(String jsonContact)
-    {
-       return contact.addcontact(jsonContact);
-    }
-    public boolean editcontact(String jsonContact)
-    {
-        return contact.editcontact(jsonContact);
-    }
-    public void deletecontact(String jsonContact)
-    {
-        contact.deletecontact(jsonContact);
     }
     @Override
     public void addpassword(String  value) {
@@ -47,28 +31,55 @@ public  class User implements Ibulider1{
         }
     }
 
+
+    // get main data
+    public String getemail(){
+        return user.getEmail();
+    }
+    public String getpass(){
+        return user.getPassword();
+    }
+
+    //contacts
+    public boolean addconctact(String jsonContact)
+    {
+       return contact.addcontact(jsonContact);
+    }
+    public boolean editcontact(String jsonContact)
+    {
+        return contact.editcontact(jsonContact);
+    }
+    public void deletecontact(String jsonContact)
+    {
+        contact.deletecontact(jsonContact);
+    }
+
+
+
+
+    // add emails
     @Override
     public void addinbox(Message m) {
-        long ID = inbox.add2Inbox(m) ;
+        long ID = inbox.addMessage2Folder(m, "inbox") ;
         System.out.println("message relieved in "+user.getEmail());
 
     }
 
     @Override
     public void addsend(Message m) {
-        long ID = inbox.add2sent(m) ;
+        long ID = inbox.addMessage2Folder(m, "sent") ;
         System.out.println("message sent from "+user.getEmail());
     }
 
     @Override
-    public void adddelete(long ID, String folder) {
+    public void deleteMessage(long ID, String folder) {
         inbox.delete(ID, folder) ;
     }
 
     @Override
     public void adddraft(Message m) {
-        long ID = inbox.add2sent(m) ;
-    }
+        long ID = inbox.addMessage2Folder(m, "draft");
+     }
 
     @Override
     public User getUser() {
@@ -76,8 +87,18 @@ public  class User implements Ibulider1{
     }
 
     public String getMails(){
-        HashMap<String, HashMap<Long,Message>> mails = inbox.getAllMail() ;
-        String mailsSt = new Gson().toJson(mails) ;
+        LinkedList mails = inbox.getAllMail() ;
+        LinkedList folders = inbox.getAllFolders() ;
+
+        JSONObject obj = new JSONObject() ;
+        obj.put("mails", mails) ;
+        obj.put("folders", folders) ;
+        obj.put("contacts", contact.contacts) ;
+
+
+        String mailsSt = obj.toJSONString() ;
+        System.out.println(mails);
+                //new Gson().toJson(mails) ;
         return mailsSt ;
     }
 

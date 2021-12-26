@@ -15,9 +15,9 @@ public class Requests {
      User user =new User();
 
     @PostMapping ("/signup")
-    public String SignupRequest(@RequestBody String email, @RequestBody String password)
+    public String SignupRequest(@RequestBody String emai)
     {
-        return controller.Signup(email, password) ;
+        return controller.Signup(email, "12345678") ;
     }
     @PostMapping ("/login")
     public String loginRequest(@RequestBody String email, @RequestBody String password)

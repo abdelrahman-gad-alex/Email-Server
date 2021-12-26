@@ -3,12 +3,15 @@ package com.example.Email.Server.Controller;
 import com.example.Email.Server.model.Ibulider1;
 import com.example.Email.Server.model.User;
 import com.example.Email.Server.model.validation;
+import com.github.fge.jsonschema.core.exceptions.ProcessingException;
 import com.google.gson.Gson;
 import org.json.JSONException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 
 @RestController
@@ -33,8 +36,14 @@ public class Requests {
     }
 
     @PostMapping("/sendEmail")
-    public String sendRequest(@RequestBody String mail)
-    {
+    public String sendRequest(@RequestBody String mail) throws IOException, ProcessingException {
+        File schemaFile = new File("C:\\Users\\abdel\\Desktop\\back\\Email-Server\\Email-Server back\\src\\main\\java\\com\\example\\Email\\Server\\model\\schema.json");
+        File schemaFile2 = new File("C:\\Users\\abdel\\Desktop\\back\\Email-Server\\Email-Server back\\src\\main\\java\\com\\example\\Email\\Server\\model\\schema.json");
+        if (ValidationUtils.isJsonValid(schemaFile, schemaFile2)){
+            System.out.println("Valid!");
+        }else{
+            System.out.println("NOT valid!");
+        }
         return new Gson().toJson(controller.sendEmail(mail))  ;
     }
     @PostMapping ("/addcontact")
@@ -47,8 +56,8 @@ public class Requests {
     {
         return controller.editcontact(contact, email) ;
     }
-    @GetMapping("/deletecontact")
-    public String deletecontact(@RequestParam String contact, @RequestParam String email)
+    @DeleteMapping ("/deletecontact")
+    public String deletecontact(@PathVariable String contact, @PathVariable String email)
     {
         return controller.deletecontact(contact, email) ;
     }
@@ -61,8 +70,8 @@ public class Requests {
         return new Gson().toJson(controller.addFolder(addFolder))  ;
     }
 
-    @PostMapping("/deletefolder")
-    public String deletefolder(@RequestBody String deletefolder){
+    @DeleteMapping("/deletefolder")
+    public String deletefolder(@PathVariable String deletefolder){
         return new Gson().toJson(controller.deleteFolder(deletefolder)) ;
     }
 

@@ -4,7 +4,7 @@ import { faPaperclip } from '@fortawesome/free-solid-svg-icons';
 import { Location } from '@angular/common'
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { observable } from 'rxjs';
+import { Observable, observable } from 'rxjs';
 import { map } from 'rxjs';
 import { Mail } from '../mail';
 
@@ -19,6 +19,7 @@ import { Mail } from '../mail';
 })
 
   export class ComposeComponent implements OnInit {
+    
     public tools: object = {
       items: ['Undo', 'Redo', '|',
           'Bold', 'Italic', 'Underline', 'StrikeThrough', '|',
@@ -49,6 +50,14 @@ x:String="";
     if (mail!="none")
       this.to=mail
   }
+  sendmail(email?: mailing):Observable<any>
+  {
+    console.log(email)
+    return this.http.post<any>("http://localhost:8888/sendEmail",email) 
+  }
+  temp = new Date()
+  cMail !: mailing;
+  // cMail = 
   submit(){
     console.log(this.toText)
     console.log(this.subjectText)
@@ -60,25 +69,24 @@ x:String="";
     // mail.set('date', new Date())
     // mail.set('mailContent', this.conText)
     // mail.set('subject', this.subjectText)
-    let cMail !: Mail; 
-    cMail.from =  "omar@gmail.com"
-    cMail.to = this.toText
-    cMail.subject = this.subjectText
-    cMail.id = -1
-    cMail.importance = 1
-    cMail.mailContent = this.conText
     let temp = new Date()
-    cMail.time = temp.toDateString()
-     this.http.post("http://localhost:8080/controller/sendEmail",
-     {
-       email:cMail,
-       observe:'response'
-     }
-     
-     ).subscribe(response=>{
-       let a;
-       a=response
-     })
+    this.cMail = new mailing("omar@yahoo.com", this.toText.split(','), this.subjectText, this.conText, temp.toDateString(), 1); 
+    // this.cMail.from =  
+    // this.cMail.to = 
+    // this.cMail.subject = this.subjectText
+    // // this.cMail.id = -1
+    // this.cMail.importance = 1
+    // this.cMail.mailContent = this.conText
+    // let temp = new Date()
+    // this.cMail.time = temp.toDateString()
+    let res !: any
+    let resp !: any
+    this.sendmail(this.cMail).subscribe((temp?: any)=>
+    {
+      res = temp
+      resp = temp.res
+      console.log(resp)
+    })
    
   
   }
@@ -87,3 +95,22 @@ function observe(arg0: string, arg1: { email: Mail; }, observe: any, arg3: strin
   throw new Error('Function not implemented.');
 }
 
+class mailing
+{
+  from!: string;
+  to!: string[];
+  subject!: string;
+  mailContent!:string;
+  time!: string;
+  importance!:number;
+  constructor(a:string, b: string[], c: string, d: string, e: string,f: number)
+  {
+    this.from = a
+    this.to = b
+    this.subject = c
+    this.mailContent = d
+    this.time = e
+    this.importance = f
+  }
+  
+}

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Observable, observable } from 'rxjs';
+// import { stringify } from 'querystring';
 
 @Component({
   selector: 'app-signup',
@@ -12,7 +13,8 @@ export class SignupComponent {
   myText: string =""
   pw: string = ""
   pwc: string = ""
-  res: any
+  res: any 
+  resp: any
   constructor(private http:HttpClient) { }
   sub()
   {
@@ -74,16 +76,25 @@ export class SignupComponent {
     //   this.res = response.body
     //   console.log(this.res)
     // })
+    // ans : string;
     let email= new xp(this.myText, this.pw)
-     this.sendmail(email);
-     
+    this.sendmail(email).subscribe((temp?: any)=>
+    {
+      this.res = temp
+      this.resp = temp.res
+      console.log(this.resp)
+    })
+    if(this.resp !== "user is added")
+    {
+      alert("Invalid email, maybe it is used before")
+    }
    
   }
   
-  sendmail(email: xp):Observable<any>
+  sendmail(email?: xp):Observable<any>
   {
     console.log(email)
-    return this.http.post<string>("http://localhost:8080/signup",email) 
+    return this.http.post<any>("http://localhost:8888/signup",email) 
   }
 }
 class xp

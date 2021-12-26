@@ -19,6 +19,7 @@ public class MainController {
         boolean result;
         validation valid =new validation();
        result= valid.isValid(Email);
+       System.out.println(result);
         if(result==true)
         {
             User user = new User();
@@ -28,10 +29,11 @@ public class MainController {
         }
         else
         {
-            return "in valid form for email";
+            return "n valid form for email";
         }
 
         update() ;
+
         return "user is added";
     }
 

@@ -9,7 +9,7 @@ import { MAILS } from '../inboxMail';
 export class MailViewComponent implements OnInit {
   id=0;
   from="";
-  to="";
+  to :string[]=[];
   subject="";
   mails=MAILS
 

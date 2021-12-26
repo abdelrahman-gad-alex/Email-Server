@@ -27,7 +27,9 @@ public class MainController {
         {
             return "in valid form for email";
         }
-         return "user is added";
+
+        update() ;
+        return "user is added";
     }
 
 
@@ -75,6 +77,7 @@ public class MainController {
             User to = mails.getUser(toArr[i]) ;
             to.addinbox(m);
         }
+        update() ;
 
         return "done" ;
 
@@ -84,8 +87,10 @@ public class MainController {
     public String addcontact(String contact, String user)
     {
         User theUser = mails.getUser(user) ;
-        if (theUser.addconctact(contact))
+        if (theUser.addconctact(contact)){
+            update() ;
             return "contact added";
+        }
         else {
             return "contact do not added";
         }
@@ -93,15 +98,21 @@ public class MainController {
     public String editcontact(String contact, String user)
     {
         User theUser = mails.getUser(user) ;
-        if(theUser.editcontact(contact))
+        if(theUser.editcontact(contact)){
+            update() ;
             return "contact edited";
-        else
+        }else
             return "contact do not edited" ;
     }
     public String deletecontact(String contact, String user)
     {
         User theUser = mails.getUser(user) ;
         theUser.deletecontact(contact);
+        update() ;
         return "contact deleted";
     }
+    private void update(){
+        mails.save();
+    }
+
 }

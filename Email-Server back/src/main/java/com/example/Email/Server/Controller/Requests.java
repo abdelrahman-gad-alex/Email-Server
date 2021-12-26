@@ -3,6 +3,7 @@ package com.example.Email.Server.Controller;
 import com.example.Email.Server.model.Ibulider1;
 import com.example.Email.Server.model.User;
 import com.example.Email.Server.model.validation;
+import org.json.JSONException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
@@ -15,9 +16,8 @@ public class Requests {
      User user =new User();
 
     @PostMapping ("/signup")
-    public String SignupRequest(@RequestBody String emai)
-    {
-        return controller.Signup(email, "12345678") ;
+    public String SignupRequest(@RequestBody String email) throws JSONException {
+        return controller.Signup(email) ;
     }
     @PostMapping ("/login")
     public String loginRequest(@RequestBody String email, @RequestBody String password)

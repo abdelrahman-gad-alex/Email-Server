@@ -80,7 +80,7 @@ public class MainController {
 
         for(int i=0 ; i< toArr.length ; i++){
             User to = mails.getUser(toArr[i]) ;
-            to.addinbox(m);
+            to.addinbox(m.deepCopy());
         }
         update() ;
 
@@ -146,6 +146,7 @@ public class MainController {
             User user = mails.getUser(email) ;
             user.addFolder(name);
             System.out.println("Done");
+            update() ;
             return "Done" ;
         } catch (JSONException e) {
             e.printStackTrace();
@@ -162,6 +163,7 @@ public class MainController {
             User user = mails.getUser(email) ;
             user.deleteFolder(name);
             System.out.println("Done");
+            update() ;
             return "Done" ;
         } catch (JSONException e) {
             e.printStackTrace();
@@ -181,6 +183,7 @@ public class MainController {
             User user = mails.getUser(email) ;
             user.moveFromFolderToFolder(ID, firstFolder,secondFolder);
             System.out.println("Done");
+            update() ;
             return "Done" ;
         } catch (Exception e) {
             e.printStackTrace();
@@ -192,6 +195,7 @@ public class MainController {
         try {
             User user = mails.getUser(email) ;
             user.renameFolder(oldname,newname);
+            update() ;
             return "Done" ;
         }catch (Exception e){
             return "Can not rename folder" ;

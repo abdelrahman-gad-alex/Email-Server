@@ -12,8 +12,10 @@ import java.util.HashMap;
 
 public class Message {
     public HashMap <String,String > massageMap = new HashMap<String, String>();
+    private String jsonObject ;
 
     public Message (String jasString) {
+        jsonObject = jasString ;
 
         try {
             JSONObject jas = new JSONObject(jasString);
@@ -28,6 +30,12 @@ public class Message {
         }catch (JSONException  e){
             System.out.println("Error "+e.toString());
         }
+    }
+
+    // Prototype
+    public Message deepCopy(){
+        Message copy = new Message(jsonObject) ;
+        return copy ;
     }
 
     public String[] getTo(){

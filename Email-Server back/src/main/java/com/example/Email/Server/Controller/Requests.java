@@ -21,15 +21,12 @@ public class Requests {
 
     @PostMapping ("/signup")
     public String SignupRequest(@RequestBody String email) throws JSONException {
-        String temp = controller.Signup(email);
-        System.out.println(temp);
-        HashMap<String, String> tempHM = new HashMap();
-        tempHM.put("res", temp);
-        Gson gson = new Gson();
-        return gson.toJson(tempHM);
+
+        return new Gson().toJson(controller.Signup(email))  ;
+
     }
-    @PostMapping ("/login")
-    public String loginRequest(@RequestBody String email, @RequestBody String password)
+    @GetMapping ("/login")
+    public String loginRequest(@RequestParam String email, @RequestParam String password)
     {
 
         return  controller.login(email, password);
@@ -37,22 +34,16 @@ public class Requests {
 
     @PostMapping("/sendEmail")
     public String sendRequest(@RequestBody String mail)
-
     {
-        String temp = controller.sendEmail(mail);
-        System.out.println(temp);
-        HashMap<String, String> tempHM = new HashMap();
-        tempHM.put("res", temp);
-        Gson gson = new Gson();
-        return gson.toJson(tempHM);
+        return new Gson().toJson(controller.sendEmail(mail))  ;
     }
     @PostMapping ("/addcontact")
-    public String addcontact(@RequestBody String contact,@RequestBody String email )
+    public String addcontact(@RequestBody String addcontact)
     {
-         return controller.addcontact(contact, email) ;
+        return new Gson().toJson(controller.addcontact(addcontact))  ;
     }
-    @PostMapping ("/editcontact")
-    public String editcontact(@RequestBody String contact, @RequestBody String email)
+    @GetMapping ("/editcontact")
+    public String editcontact(@RequestParam String contact, @RequestParam String email)
     {
         return controller.editcontact(contact, email) ;
     }
@@ -60,6 +51,29 @@ public class Requests {
     public String deletecontact(@RequestParam String contact, @RequestParam String email)
     {
         return controller.deletecontact(contact, email) ;
+    }
+
+
+    //for files
+
+    @PostMapping("/addfolder")
+    public String addFolder(@RequestBody String addFolder) throws JSONException {
+        return new Gson().toJson(controller.addFolder(addFolder))  ;
+    }
+
+    @PostMapping("/deletefolder")
+    public String deletefolder(@RequestBody String deletefolder){
+        return new Gson().toJson(controller.deleteFolder(deletefolder)) ;
+    }
+
+    @PostMapping("/movemailtofolder")
+    public String move(@RequestBody String move){
+        return new Gson().toJson(controller.moveFromFolderToFolder(move)) ;
+    }
+
+    @GetMapping("/renamefolder")
+    public String renameFolder(@RequestParam String email,@RequestParam String oldname,@RequestParam String newname){
+        return controller.renameFolder(email,oldname,newname);
     }
 
 }

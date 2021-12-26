@@ -81,20 +81,20 @@ export class SignupComponent {
     this.sendmail(email).subscribe((temp?: any)=>
     {
       this.res = temp
-      this.resp = temp.res
-      console.log(this.resp)
+      console.log(this.res)
+      if(this.res != "user is added")
+      {
+        alert("Invalid email, maybe it is used before")
+      }
     })
-    if(this.resp !== "user is added")
-    {
-      alert("Invalid email, maybe it is used before")
-    }
+
    
   }
   
   sendmail(email?: xp):Observable<any>
   {
     console.log(email)
-    return this.http.post<any>("http://localhost:8888/signup",email) 
+    return this.http.post<any>("http://localhost:8080/signup",email) 
   }
 }
 class xp

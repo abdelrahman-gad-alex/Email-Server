@@ -89,16 +89,29 @@ public class MainController {
         // save mails
     }
 
-    public String addcontact(String contact, String user)
+    public String addcontact(String addcontact)
     {
-        User theUser = mails.getUser(user) ;
-        if (theUser.addconctact(contact)){
-            update() ;
-            return "contact added";
-        }
-        else {
+        String user ;
+        String contact ;
+        try {
+            JSONObject jas = new JSONObject(addcontact) ;
+            user = jas.getString("user");
+            contact = jas.getString("contact") ;
+
+            User theUser = mails.getUser(user) ;
+            if (theUser.addconctact(contact)){
+                update() ;
+                return "contact added";
+            }
+            else {
+                return "contact do not added";
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
             return "contact do not added";
+
         }
+
     }
     public String editcontact(String contact, String user)
     {
@@ -118,6 +131,72 @@ public class MainController {
     }
     private void update(){
         mails.save();
+    }
+
+
+    // File requests
+
+
+    public String addFolder(String addFolder) {
+        try {
+            JSONObject jas = new JSONObject(addFolder) ;
+            String email = jas.getString("email");
+            String name = jas.getString("name") ;
+
+            User user = mails.getUser(email) ;
+            user.addFolder(name);
+            System.out.println("Done");
+            return "Done" ;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return "Can not add contact" ;
+        }
+    }
+
+    public String deleteFolder(String deletefolder){
+        try {
+            JSONObject jas = new JSONObject(deletefolder) ;
+            String email = jas.getString("email");
+            String name = jas.getString("name") ;
+
+            User user = mails.getUser(email) ;
+            user.deleteFolder(name);
+            System.out.println("Done");
+            return "Done" ;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return "Can not delete contact" ;
+        }
+    }
+
+    public String moveFromFolderToFolder(String move){
+
+        try {
+            JSONObject jas = new JSONObject(move) ;
+            String email = jas.getString("email");
+            String firstFolder = jas.getString("from");
+            String secondFolder = jas.getString("to") ;
+            long ID = jas.getLong("id") ;
+
+            User user = mails.getUser(email) ;
+            user.moveFromFolderToFolder(ID, firstFolder,secondFolder);
+            System.out.println("Done");
+            return "Done" ;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Can not delete contact" ;
+        }
+    }
+
+    public String renameFolder(String email, String oldname, String newname){
+        try {
+            User user = mails.getUser(email) ;
+            user.renameFolder(oldname,newname);
+            return "Done" ;
+        }catch (Exception e){
+            return "Can not rename folder" ;
+        }
+
     }
 
 }

@@ -5,22 +5,25 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.springframework.web.bind.annotation.*;
-
+import org.json.*;
 
 public class MainController {
     Email mails = Email.getInstance();
     director Direct = new director();
 
-    public String Signup(String email, String password)
-    {
+    public String Signup(String email) throws JSONException {
+        JSONObject json = new JSONObject(email);
+        String Email  =  json.getString("email");
+        String password  =  json.getString("password");
+        System.out.println(Email);
         boolean result;
         validation valid =new validation();
-       result= valid.isValid(email);
+       result= valid.isValid(Email);
         if(result==true)
         {
             User user = new User();
-            user = Direct.construct(user , email, password) ;
-            mails.add(email, user);
+            user = Direct.construct(user , Email, password) ;
+            mails.add(Email, user);
 
         }
         else

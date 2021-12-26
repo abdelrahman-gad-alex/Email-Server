@@ -6,6 +6,7 @@ public class validation {
 
     public static boolean isValid(String email )
     {
+        System.out.println(email);
         String regex = "^(.+)@(.+)$";
         Pattern pattern = Pattern.compile(regex);
 

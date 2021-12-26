@@ -7,6 +7,7 @@ import { Observable, observable } from 'rxjs';
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css']
 })
+
 export class SignupComponent {
   myText: string =""
   pw: string = ""
@@ -73,14 +74,25 @@ export class SignupComponent {
     //   this.res = response.body
     //   console.log(this.res)
     // })
-    let email=this.myText
-     this.sendmail(this.myText);
+    let email= new xp(this.myText, this.pw)
+     this.sendmail(email);
      
    
   }
-  sendmail(email:string):Observable<any>
+  
+  sendmail(email: xp):Observable<any>
   {
     console.log(email)
-    return this.http.post<any>("http://localhost:8080/signup",email) 
+    return this.http.post<string>("http://localhost:8080/signup",email) 
+  }
+}
+class xp
+{
+  email!: string
+  password!: string
+  constructor(x: string, y:string)
+  {
+    this.email = x;
+    this.password =y;
   }
 }

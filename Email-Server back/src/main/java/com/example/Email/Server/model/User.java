@@ -96,7 +96,7 @@ public  class User implements Ibulider1{
         obj.put("contacts", contact.contacts) ;
 
 
-        String mailsSt = obj.toJSONString() ;
+        String mailsSt = new Gson().toJson(obj) ;
         System.out.println(mails);
                 //new Gson().toJson(mails) ;
         return mailsSt ;

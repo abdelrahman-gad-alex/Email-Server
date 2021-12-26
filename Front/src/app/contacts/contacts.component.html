@@ -6,34 +6,86 @@
       <app-sidebar></app-sidebar>
           <main class="main-content">
              
-            <div class="shortcuts" >
-              shortcuts here
-              
-            </div>
-            <div class="nono">
-                         
-            </div>
         <!--/////////////////////////////-->
-        <div *ngFor ="let contact of contacts; let i = index">
-          <div class="mail-list" data-bs-toggle="collapse" attr.data-bs-target="#{{'contact' + i}}" aria-expanded="false" aria-controls="collapseExample">
-            <div class="mail-icons">
+      <div class="accodion"id ="accordion">
+        <div *ngFor ="let contact of contacts; let i = index" >
+          <div class="mail-list" data-bs-toggle="collapse" attr.href="#{{'contact' + i}}" data-bs-parent="#accordion" aria-expanded="false" (click)="update(i)">
+            <div class="mail-icons" >
               <h4 class="title">{{contact.name}}</h4>
             </div>
           </div>
-
-              <div *ngFor ="let mail of contact.mail">
-               <div class="collapse" id="{{ 'contact' + i }}">
-                <div class="card card-body" (click)="sendMail(mail)">
-                  {{mail}}
-                 </div>
+          <div *ngFor ="let mail of contact.mail" >
+            <div class="collapse" id="{{ 'contact' + i }}" data-bs-parent="#accordion">
+               <div class="card card-body" (click)="sendMail(mail)">
+                {{mail}}
               </div>
             </div>
           </div>
+          <div class="card card-body collapse "id="{{ 'contact' + i }}" data-bs-parent="#accordion" >
+            Add Another Mail
+            <input [(ngModel)]="newContactMail" (keyup.enter)="onEnter()" >
+          </div>
+        </div>
+      </div>
+        
         <!--/////////////////////////////-->
         <!--/////////////////////////////-->
         
         
-        </main>          
-    </div>
+        </main>
+
+        <aside class="navigation flex-container main-container"style="display: block">
+          <div class="FOLDER">
+              <div class="btn">
+              <a (click)="showAdd()"><img alt ="add" src="./assets/img/add.webp">
+                      <p>Add Contact</p>
+              </a>
+              </div>
+          </div>
+          <div class="ncontact" id="ncontact">
+            <input id="cnameI" [(ngModel)]="newContactName" placeholder="Enter The contact Name" >
+            <input id="cemailI" [(ngModel)]="newContactMail" placeholder="Enter contact's Mail" >  
+          </div>
+              <div class="compose" id="cnameBTN2">
+              <div class="btn">
+                <a (click)="add()"><img alt ="add" src="./assets/img/add.webp">
+                    <p>OK </p>
+                </a>
+                </div>
+          </div>
+          <div class="FOLDER">
+              <div class="btn">
+              <a (click)="showEdit()"><img alt ="add" src="./assets/img/rename.png">
+                  <p>Edit Contact</p>
+              </a>
+              </div>
+          </div>
+          <input value="{{editName}}" [(ngModel)]="editName" id ="editName" style="display: none;">
+          <div *ngFor= "let mail of arr; let i = index;trackBy:trackByIdx">
+            <input value = "{{mail}}"  [(ngModel)]="arr[i]" id ="{{ 'mail' + i }}" style="display: none;">
+          </div>
+
+
+
+          <div class="compose" id="cnameBTN3">
+              <div class="btn">
+              <a (click)="edit()"><img alt ="add" src="./assets/img/rename.png">
+                  <p>OK </p>
+              </a>
+              </div>
+          </div>    
+              <div class="FOLDER">
+              <div class="btn">
+              <a (click)="delete()"><img alt ="add" src="./assets/img/delete.png">
+                  <p>Delate Contact</p>
+              </a>
+              </div>
+          </div>
+      
+      </aside>
+      
+
+
+      </div>
   </section>
   

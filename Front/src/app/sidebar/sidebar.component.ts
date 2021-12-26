@@ -96,10 +96,10 @@ export class SidebarComponent implements OnInit {
         const index = FOLDERS.findIndex(object => {
           return object.name === 'this.curFolder';
         });
-        if (index>-1){
         FOLDERS.splice (index,1)
         this.router.navigate(['folder',"inbox"])
-        }
+      break;
+
     }
   
   }

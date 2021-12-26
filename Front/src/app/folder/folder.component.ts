@@ -49,6 +49,7 @@ export class FolderComponent implements OnInit {
 
   showMail(mail: { id: number; }){
     this.router.navigate(['mail',mail.id])
+    console.log(this.now)
   }
 
  

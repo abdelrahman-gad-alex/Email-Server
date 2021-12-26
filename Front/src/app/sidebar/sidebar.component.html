@@ -28,10 +28,10 @@
         <a routerLink="/folder/{{folder.name}}" routerLinkActive="active current"><i class="fas fa-folder"></i><span class="Name">{{folder.name}}</span><span class="count">{{folder.id.length}}</span></a>
 
     </div>
-    <div class="compose">
+    <div class="FOLDER">
         <div class="btn">
         <a (click)="showA()"><img alt ="add" src="./assets/img/add.webp">
-            <p>add </p>
+                <p>Add Folder</p>
         </a>
         </div>
     </div>
@@ -43,10 +43,10 @@
         </a>
         </div>
     </div>
-    <div class="compose">
+    <div class="FOLDER">
         <div class="btn">
         <a (click)="showB()"><img alt ="add" src="./assets/img/rename.png">
-            <p>Rename </p>
+            <p>Rename Folder</p>
         </a>
         </div>
     </div>
@@ -57,10 +57,11 @@
             <p>OK </p>
         </a>
         </div>
-    </div>    <div class="compose">
+    </div>    
+        <div class="FOLDER">
         <div class="btn">
         <a (click)="remove()"><img alt ="add" src="./assets/img/delete.png">
-            <p>Delate </p>
+            <p>Delate Folder</p>
         </a>
         </div>
     </div>

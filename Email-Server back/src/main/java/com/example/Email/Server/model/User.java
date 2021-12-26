@@ -81,6 +81,26 @@ public  class User implements Ibulider1{
         long ID = inbox.addMessage2Folder(m, "draft");
      }
 
+
+     // for folders
+
+
+    public void addFolder(String name) {
+        inbox.addFolder(name);
+    }
+
+    public void deleteFolder(String name){
+         inbox.deleteFolder(name);
+    }
+
+    public void moveFromFolderToFolder(long ID, String firstFolder, String secondFolder){
+         inbox.moveMessage(secondFolder, ID, firstFolder);
+    }
+
+    public void renameFolder(String oldname, String newname){
+         inbox.renameFolder(oldname,newname);
+    }
+
     @Override
     public User getUser() {
         return this;

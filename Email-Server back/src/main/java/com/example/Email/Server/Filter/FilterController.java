@@ -50,7 +50,7 @@ public class FilterController {
     }
 
 
-    LinkedList searchContacts(User user, String searchEqual){
+    public LinkedList searchContacts(User user, String searchEqual){
         LinkedList<JSONObject> res = new LinkedList<JSONObject>() ;
         LinkedList<JSONObject> contacts = user.contact.getContacts() ;
         for (JSONObject contact: contacts){

@@ -1,19 +1,15 @@
 package com.example.Email.Server.Controller;
 
-import com.example.Email.Server.model.Ibulider1;
 import com.example.Email.Server.model.User;
-import com.example.Email.Server.model.validation;
 import com.github.fge.jsonschema.core.exceptions.ProcessingException;
 import com.google.gson.Gson;
 import org.json.JSONException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.HashMap;
 
 @RestController
 @EnableWebMvc
@@ -37,7 +33,7 @@ public class Requests {
     }
 
     @PostMapping("/sendEmail")
-    public String sendRequest(@RequestBody String mail) throws IOException, ProcessingException {
+    public String sendRequest(@RequestBody String mail) throws IOException,ProcessingException {
         File FLE = new File("C:\\Users\\abdel\\Desktop\\back\\Email-Server\\Email-Server back\\src\\main\\java\\com\\example\\Email\\Server\\model\\email.json");
         try (FileWriter FILE = new FileWriter("email.json")){
             FILE.write(mail);

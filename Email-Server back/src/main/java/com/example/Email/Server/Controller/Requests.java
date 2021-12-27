@@ -98,5 +98,9 @@ public class Requests {
     {
         return controller.getarraysorted(body,foldr,method);
     }
-
+    @GetMapping("/sortcontact")
+    public String sortcontacts (@RequestParam String body)
+    {
+          return new Gson().toJson(controller.contactsorted(body));
+    }
 }

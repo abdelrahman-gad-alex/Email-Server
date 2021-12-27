@@ -11,7 +11,7 @@ public  class User implements Ibulider1{
 
     private product1 user = new product1();
     public Inbox inbox = new Inbox() ;
-    private contacts contact =new contacts();
+    public contacts contact =new contacts();
 
      @Override
     public void addemail(String value) {

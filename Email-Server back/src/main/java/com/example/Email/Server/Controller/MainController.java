@@ -7,6 +7,8 @@ import org.json.JSONException;
 import org.springframework.web.bind.annotation.*;
 import org.json.*;
 
+import java.util.LinkedList;
+
 public class MainController {
     Email mails = Email.getInstance();
     director Direct = new director();
@@ -205,5 +207,10 @@ public class MainController {
    public int[] getarraysorted( String body, String foldr, String method)
    {
        return sortt.sorted(body,foldr,method);
+   }
+   public LinkedList contactsorted(String body)
+   {
+       sorting sor = new sorting();
+     return sor.SORTCONTACT(body);
    }
 }

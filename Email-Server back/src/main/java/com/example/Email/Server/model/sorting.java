@@ -1,5 +1,8 @@
 package com.example.Email.Server.model;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.*;
 
 public class sorting {
@@ -70,4 +73,27 @@ public int[] sorted(String user,String folder, String method )
    }
 
 }
+contacts contact;
+public LinkedList SORTCONTACT(String user)
+{
+    Map <String, String[]> map = new HashMap <String, String[]>( );
+    map= Email.getInstance().getUser(user).contact.contacts;
+    TreeMap<String, String[]> sorted = new TreeMap<>();
+    sorted.putAll(map);
+    LinkedList contactsList = new LinkedList() ;
+    for(String name: sorted.keySet() ){
+        JSONObject contact = new JSONObject() ;
+        try {
+            contact.put("name", name) ;
+            contact.put("emails", map.get(name)) ;
+
+            contactsList.add(contact) ;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+    return contactsList ;
+}
+
 }

@@ -7,17 +7,17 @@
 
             <div class="comdiv">
                 <span >From : </span>
-                <input type="email" value ="Mento" readonly>
+                <input type="email" value ="Me" readonly>
                 
             </div>
             <div class="comdiv">
                 <span>TO : </span>
-                <input type="email" value={{to}} id="to" multiple >
+                <input type="email" value={{to}} id="to" multiple [(ngModel)]="toText">
                 
             </div>
-            <div class="comdiv">
+            <div class="comdiv" >
                 <span>Subject : </span>
-                <input type="text" >
+                <input type="text"  [(ngModel)]="subjectText">
                 
             </div>
             <div class="starDiv">
@@ -45,7 +45,7 @@
         </div>
 
     
-            <ejs-richtexteditor id='defaultRTE'>
+            <ejs-richtexteditor id='defaultRTE' [(ngModel)]="conText">
             <ng-template #valueTemplate>
             <p> </p>
             

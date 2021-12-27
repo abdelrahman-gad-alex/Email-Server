@@ -14,7 +14,7 @@
                          
             </div>
         <!--/////////////////////////////-->
-            <div class="mail-list" (click)="showMail(mail)" *ngFor ="let mail of mails">
+            <!-- <div class="mail-list" (click)="showMail(mail)" *ngFor ="let mail of mails">
                <div class="mail-icons">
                   <h4 class="title">{{mail.from}}</h4>
                </div>
@@ -26,7 +26,59 @@
                {{mail.time}}
               </div>
           
-         </div>
+         </div> -->
+         <div class="mat-elevation-z8" id="tabPag">
+         <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+          <!--- Note that these columns can be defined in any order.
+                The actual rendered columns are set as a property on the row definition" -->
+        
+          <!-- Position Column -->
+          <!-- <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef> id. </th>
+            <td mat-cell *matCellDef="let element"> <div (click)="showMail(element.id)">{{element.id}}</div> </td>
+          </ng-container> -->
+        <ng-container matColumnDef="select">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let element">
+            <mat-checkbox (change)="onElementSelected(element.id)"></mat-checkbox>
+          </td>
+        </ng-container>
+          <ng-container matColumnDef="from" aria-disabled="true">
+            <th mat-header-cell *matHeaderCellDef> from </th>
+            <td mat-cell *matCellDef="let element"> <div (click)="showMail(element.id)">{{element.from}}</div>  </td>
+          </ng-container>
+        
+          <ng-container matColumnDef="to">
+            <th mat-header-cell *matHeaderCellDef> to </th>
+            <td mat-cell *matCellDef="let element"> <div (click)="showMail(element.id)">{{element.to}}</div>  </td>
+          </ng-container>
+          <ng-container matColumnDef="importance">
+            <th mat-header-cell *matHeaderCellDef> importance </th>
+            <td mat-cell *matCellDef="let element"><div (click)="showMail(element.id)">{{element.importance}}</div> </td>
+          </ng-container>
+        
+          <ng-container matColumnDef="subject">
+            <th mat-header-cell *matHeaderCellDef> subject </th>
+            <td mat-cell *matCellDef="let element"> <div (click)="showMail(element.id)">{{element.subject}}</div>  </td>
+          </ng-container>
+          <ng-container matColumnDef="time">
+            <th mat-header-cell *matHeaderCellDef> time </th>
+            <td mat-cell *matCellDef="let element"> <div (click)="showMail(element.id)">{{element.time}}</div>  </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row  *matRowDef="let row; columns: displayedColumns;"></tr>
+          <!-- (click)="onRow(row)" -->
+          
+
+        </table>
+        <!-- <button mat-flat-button color="warn" (click)="deleteSelect()">Warn</button> -->
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                 showFirstLastButtons 
+                 aria-label="Select page of periodic elements" id="pagin">
+  </mat-paginator>
+
+      </div>
 
         <!--/////////////////////////////-->
         <!--/////////////////////////////-->

@@ -16,6 +16,12 @@ import { MailViewComponent } from './mail-view/mail-view.component';
 import { ContactsComponent } from './contacts/contacts.component';
 import { FolderComponent } from './folder/folder.component';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatButtonModule } from '@angular/material/button';
+import {MatTableModule } from '@angular/material/table';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import {MatMenuModule} from '@angular/material/menu';
 
 @NgModule({
   declarations: [
@@ -43,7 +49,13 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
       {path:'signup' , component: SignupComponent},
       {path:'mail/:id' ,component: MailViewComponent},
       {path:'contacts' ,component: ContactsComponent},
-    ])
+    ]),
+    BrowserAnimationsModule,
+    MatButtonModule,
+    MatTableModule,
+    MatPaginatorModule, 
+    MatCheckboxModule,
+    MatMenuModule
   ],
   providers: [],
   bootstrap: [AppComponent],

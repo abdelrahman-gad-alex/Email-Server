@@ -1,7 +1,7 @@
 export interface Mail{
   id: number;
   from: string;
-  to: string;
+  to: string[];
   subject: string;
   mailContent:string;
   time: string;

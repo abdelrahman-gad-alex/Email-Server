@@ -1,16 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { Observable, observable } from 'rxjs';
+// import { stringify } from 'querystring';
 
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css']
 })
+
 export class SignupComponent {
   myText: string =""
   pw: string = ""
   pwc: string = ""
-  res: any
+  res: any 
+  resp: any
   constructor(private http:HttpClient) { }
   sub()
   {
@@ -50,7 +54,7 @@ export class SignupComponent {
     }
     if(this.pw != this.pwc)
     {
-      alert("Password and confirmation password are not the same")
+          alert("Password and confirmation password are not the same")
       return
     }
     if(this.pw.length < 7)
@@ -58,19 +62,48 @@ export class SignupComponent {
       alert("Password length should be bigger than 6")
       return
     }
-    this.http.get("http:/localhost:8080/signup",
+    // this.http.get("http:/localhost:8080/signup",
+    // {
+    //   responseType: 'text',
+    //   params:
+    //   {
+    //     email: this.myText,
+    //     password: this.pw
+    //   },
+    //   observe:'response'
+    // }
+    // ).subscribe(response=>{
+    //   this.res = response.body
+    //   console.log(this.res)
+    // })
+    // ans : string;
+    let email= new xp(this.myText, this.pw)
+    this.sendmail(email).subscribe((temp?: any)=>
     {
-      responseType: 'text',
-      params:
-      {
-        email: this.myText,
-        password: this.pw
-      },
-      observe:'response'
-    }
-    ).subscribe(response=>{
-      this.res = response.body
+      this.res = temp
       console.log(this.res)
+      if(this.res != "user is added")
+      {
+        alert("Invalid email, maybe it is used before")
+      }
     })
+
+   
+  }
+  
+  sendmail(email?: xp):Observable<any>
+  {
+    console.log(email)
+    return this.http.post<any>("http://localhost:8080/signup",email) 
+  }
+}
+class xp
+{
+  email!: string
+  password!: string
+  constructor(x: string, y:string)
+  {
+    this.email = x;
+    this.password =y;
   }
 }

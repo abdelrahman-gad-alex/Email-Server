@@ -10,7 +10,7 @@ import java.util.LinkedList;
 public  class User implements Ibulider1{
 
     private product1 user = new product1();
-    private Inbox inbox = new Inbox() ;
+    public Inbox inbox = new Inbox() ;
     private contacts contact =new contacts();
 
      @Override

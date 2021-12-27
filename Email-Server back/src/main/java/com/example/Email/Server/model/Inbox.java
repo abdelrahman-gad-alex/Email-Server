@@ -17,6 +17,7 @@ public class Inbox {
 
     public Inbox(){
         folders.put("inbox", new Folder("inbox")) ;
+        folders.put("allmails", new Folder("allmails")) ;
         folders.put("sent", new Folder("sent")) ;
         folders.put("draft", new Folder("draft")) ;
         folders.put("trash", new Folder("trash")) ;
@@ -27,6 +28,7 @@ public class Inbox {
         message.setAttr("id",Long.toString(ID));
         allMails.put(ID, message) ;
         folders.get(name).addMessage(ID);
+        folders.get("allmails").addMessage(ID);
 
         ID += 1 ;
         return ID-1 ;
@@ -53,6 +55,7 @@ public class Inbox {
         }
         if(folders.get(folder).haveMessage(ID)){
             folders.get(folder).removeMessage(ID);
+            folders.get("allmails").removeMessage(ID);
             folders.get("trash").addMessage(ID);
             return true ;
         }
@@ -120,6 +123,21 @@ public class Inbox {
 
         }
     }
+
+    public HashMap<Long,Message> getFolderMails (String folderName){
+        LinkedList<Long> folder = folders.get(folderName).id ;
+
+        HashMap<Long,Message> res = new HashMap<Long,Message>() ;
+
+        for(Long Id : folder){
+            res.put(Id, allMails.get(Id)) ;
+        }
+
+        return res ;
+
+
+    }
+
 
 
 

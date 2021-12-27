@@ -30,6 +30,10 @@ public class Folder {
     public boolean haveMessage(long ID){
         return id.contains(ID) ;
     }
+    public int getlength(){
+        return id.size() ;
+    }
+
 
 
 

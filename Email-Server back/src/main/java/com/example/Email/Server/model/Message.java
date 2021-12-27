@@ -61,6 +61,25 @@ public class Message {
         return massageMap.get("from") ;
     }
 
+    public String getEmailContent(){
+        String content = massageMap.get("emailcontent");
+        content.replaceAll("<p>","");
+        content.replaceAll("</p>","");
+        content.replaceAll("<h1>","");
+        content.replaceAll("</h1>","");
+        content.replaceAll("<h2>","");
+        content.replaceAll("</h2>","");
+        content.replaceAll("<h3>","");
+        content.replaceAll("</h3>","");
+        content.replaceAll("<h4>","");
+        content.replaceAll("</h4>","");
+        content.replaceAll("</h5>","");
+        content.replaceAll("<h5>","");
+        content.replaceAll("<h6>","");
+        content.replaceAll("</h6>","");
+
+        return content;
+    }
 
 
     public void setAttr(String attr, String value){
@@ -68,6 +87,10 @@ public class Message {
     }
 
     public String getAttr(String attr){
+        if(attr.equals("emailcontent")){
+            return getEmailContent() ;
+        }
+
         return massageMap.get(attr) ;
     }
 

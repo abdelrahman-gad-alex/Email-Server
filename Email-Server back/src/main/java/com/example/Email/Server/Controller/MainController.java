@@ -1,6 +1,8 @@
 package com.example.Email.Server.Controller;
 
+import com.example.Email.Server.Filter.FilterController;
 import com.example.Email.Server.model.*;
+import com.google.gson.Gson;
 import org.json.JSONObject;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -13,6 +15,8 @@ public class MainController {
     Email mails = Email.getInstance();
     director Direct = new director();
     sorting sortt =new sorting();
+    FilterController filter = new FilterController() ;
+
     public String Signup(String email) throws JSONException {
         JSONObject json = new JSONObject(email);
         String Email  =  json.getString("email");
@@ -213,4 +217,26 @@ public class MainController {
        sorting sor = new sorting();
      return sor.SORTCONTACT(body);
    }
+
+   public String searchEmails(String user, String folder, String searchBy, String equal){
+        User u = mails.getUser(user);
+        LinkedList<String> res = filter.search(u, folder, searchBy, equal);
+        return new Gson().toJson(res)  ;
+   }
+
+   public String filterToFolder(String user, String folder, String searchBy, String equal, String name){
+       User u = mails.getUser(user);
+       LinkedList res = filter.filterToFolder(u, folder, searchBy, equal, name);
+       return new Gson().toJson(res)  ;
+   }
+
+    public String searchContacts(String user, String searchEqual){
+        User u = mails.getUser(user);
+        LinkedList res = filter.searchContacts(u, searchEqual);
+
+        return new Gson().toJson(res)  ;
+
+    }
+
+
 }

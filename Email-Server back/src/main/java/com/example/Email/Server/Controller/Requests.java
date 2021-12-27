@@ -10,6 +10,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.LinkedList;
 
 @RestController
 @EnableWebMvc
@@ -103,4 +104,20 @@ public class Requests {
     {
           return new Gson().toJson(controller.contactsorted(body));
     }
+
+    @GetMapping("/search")
+    public String searchEmails(@RequestParam String user,@RequestParam String folder,@RequestParam String searchBy,@RequestParam String equal){
+        return controller.searchEmails(user, folder, searchBy, equal);
+    }
+
+    @GetMapping("/filter")
+    public String filterToFolder(@RequestParam String user,@RequestParam String folder,@RequestParam String searchBy,@RequestParam String equal,@RequestParam String name){
+        return controller.filterToFolder(user, folder, searchBy, equal, name);
+    }
+
+    @GetMapping("/searchcontact")
+    public String searchContacts(@RequestParam String user,@RequestParam String searchEqual){
+        return controller.searchContacts(user, searchEqual);
+    }
+    
 }

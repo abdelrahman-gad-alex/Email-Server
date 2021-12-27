@@ -11,6 +11,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
 
@@ -37,12 +38,25 @@ public class Requests {
 
     @PostMapping("/sendEmail")
     public String sendRequest(@RequestBody String mail) throws IOException, ProcessingException {
+        File FLE = new File("C:\\Users\\abdel\\Desktop\\back\\Email-Server\\Email-Server back\\src\\main\\java\\com\\example\\Email\\Server\\model\\email.json");
+        try (FileWriter FILE = new FileWriter("email.json")){
+            FILE.write(mail);
+            FILE.flush();
+        }catch (IOException e)
+        {
+            e.printStackTrace();
+        }
         File schemaFile = new File("C:\\Users\\abdel\\Desktop\\back\\Email-Server\\Email-Server back\\src\\main\\java\\com\\example\\Email\\Server\\model\\schema.json");
-        File schemaFile2 = new File("C:\\Users\\abdel\\Desktop\\back\\Email-Server\\Email-Server back\\src\\main\\java\\com\\example\\Email\\Server\\model\\schema.json");
-        if (ValidationUtils.isJsonValid(schemaFile, schemaFile2)){
+
+        // File schemaFile2 = new File("C:\\Users\\abdel\\Desktop\\back\\Email-Server\\Email-Server back\\src\\main\\java\\com\\example\\Email\\Server\\model\\schema.json");
+        if (ValidationUtils.isJsonValid(schemaFile, FLE)){
             System.out.println("Valid!");
+            FLE.delete();
+
         }else{
             System.out.println("NOT valid!");
+            FLE.delete();
+            return new Gson().toJson("invalid content of email")  ;
         }
         return new Gson().toJson(controller.sendEmail(mail))  ;
     }

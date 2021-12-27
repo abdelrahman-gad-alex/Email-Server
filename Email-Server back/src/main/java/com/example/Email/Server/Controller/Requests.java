@@ -14,7 +14,7 @@ import java.io.IOException;
 @RestController
 @EnableWebMvc
 @CrossOrigin
-
+@RequestMapping("/controller")
 public class Requests {
     MainController controller = new MainController() ;
      User user =new User();
@@ -91,6 +91,12 @@ public class Requests {
     @GetMapping("/renamefolder")
     public String renameFolder(@RequestParam String email,@RequestParam String oldname,@RequestParam String newname){
         return controller.renameFolder(email,oldname,newname);
+    }
+   // for sorting
+    @GetMapping("/sort")
+    public int[] sort(@RequestParam String body, @RequestParam String foldr, @RequestParam String method)
+    {
+        return controller.getarraysorted(body,foldr,method);
     }
 
 }

@@ -10,7 +10,7 @@ import org.json.*;
 public class MainController {
     Email mails = Email.getInstance();
     director Direct = new director();
-
+    sorting sortt =new sorting();
     public String Signup(String email) throws JSONException {
         JSONObject json = new JSONObject(email);
         String Email  =  json.getString("email");
@@ -202,5 +202,8 @@ public class MainController {
         }
 
     }
-
+   public int[] getarraysorted( String body, String foldr, String method)
+   {
+       return sortt.sorted(body,foldr,method);
+   }
 }

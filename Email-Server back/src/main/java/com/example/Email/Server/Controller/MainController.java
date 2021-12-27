@@ -50,7 +50,7 @@ public class MainController {
 
         if(result==true)
         {
-            return mails.getUser(email).getMails() ;
+            return mails.getUser(email).gerUserData() ;
         }
         else
         {

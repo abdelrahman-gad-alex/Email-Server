@@ -76,4 +76,10 @@ export class LoginComponent {
       
     })
   }
+  filePath :any
+
+  upload(){
+    console.log(this.filePath.name)
+  }
+
 }

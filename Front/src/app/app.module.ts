@@ -15,6 +15,7 @@ import { FormsModule } from '@angular/forms';
 import { MailViewComponent } from './mail-view/mail-view.component';
 import { ContactsComponent } from './contacts/contacts.component';
 import { FolderComponent } from './folder/folder.component';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,6 @@ import { FolderComponent } from './folder/folder.component';
     ComposeComponent,
     LoginComponent,
     SignupComponent,
-
     MailViewComponent,
       ContactsComponent,
       FolderComponent
@@ -49,4 +49,5 @@ import { FolderComponent } from './folder/folder.component';
   bootstrap: [AppComponent],
   })
 export class AppModule { }
+platformBrowserDynamic().bootstrapModule(AppModule);
 

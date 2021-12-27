@@ -57,11 +57,19 @@
     cursor: pointer;
     color :white;
 }
+
+.att label{
+    background-color:#f1f3f4;
+}
+.labels{
+    display: inline;
+}
 .Attach{    
-    height: 30px;
-    width: 30px;
+    height: 50px;
+    width: 50px;
     border-radius: 50%;
     display: inline-flex;
+    font-size: 30px;
     justify-content: center;
     align-items: center;
     margin-left: 10px;

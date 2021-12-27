@@ -40,6 +40,9 @@
                 </div>
             </div>
         </div>
+        <div class="container d-flex justify-content-center mt-200">
+                
+        </div>
 
     
             <ejs-richtexteditor id='defaultRTE'>
@@ -48,9 +51,19 @@
             
             </ng-template>
             </ejs-richtexteditor>
-        <div class="Attach">
-            <fa-icon [icon]="faPaperclip" class=""></fa-icon>
+        <div class="att">
+            <div class="Attach">
+            <input type="file" (change)="select($event)" style="display: none;" #fileInput>
+            <fa-icon [icon]="faPaperclip" class="" (click)="fileInput.click()"></fa-icon>
         </div>
+            <div class="labels" *ngFor="let file of attachedFileName;let i = index">
+                <div (click)=remove(i)>
+                    <img id="{{ 'img' + i }}" src="#" alt="your image" style="display: none;"/>
+                </div>
+
+            </div>
+            
+         </div>  
         <div class="btns">
               <div class="Cancel" (click)='back()'>
                 Cancel

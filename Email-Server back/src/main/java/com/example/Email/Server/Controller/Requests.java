@@ -34,7 +34,7 @@ public class Requests {
 
     @PostMapping("/sendEmail")
     public String sendRequest(@RequestBody String mail) throws IOException,ProcessingException {
-        File FLE = new File("C:\\Users\\abdel\\Desktop\\back\\Email-Server\\Email-Server back\\src\\main\\java\\com\\example\\Email\\Server\\model\\email.json");
+       File FLE = new File("C:\\Users\\abdel\\Desktop\\back\\Email-Server\\Email-Server back\\src\\main\\java\\com\\example\\Email\\Server\\model\\email.json");
         try (FileWriter FILE = new FileWriter("email.json")){
             FILE.write(mail);
             FILE.flush();
@@ -42,7 +42,7 @@ public class Requests {
         {
             e.printStackTrace();
         }
-        File schemaFile = new File("C:\\Users\\abdel\\Desktop\\back\\Email-Server\\Email-Server back\\src\\main\\java\\com\\example\\Email\\Server\\model\\schema.json");
+        File schemaFile = new File(".\\Email-Server back\\src\\main\\java\\com\\example\\Email\\Server\\model\\schema.json");
 
         // File schemaFile2 = new File("C:\\Users\\abdel\\Desktop\\back\\Email-Server\\Email-Server back\\src\\main\\java\\com\\example\\Email\\Server\\model\\schema.json");
         if (ValidationUtils.isJsonValid(schemaFile, FLE)){

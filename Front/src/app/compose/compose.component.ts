@@ -55,13 +55,13 @@ x:String="";
   sendmail(email?: mailing):Observable<any>
   {
     console.log(email)
-    return this.http.post<any>("http://localhost:8888/sendEmail",email) 
+    return this.http.post<any>("http://localhost:8080/sendEmail",email) 
   }
   temp = new Date()
   cMail !: mailing;
   // cMail = 
   submit(){
-    console.log(this.toText)
+    console.log(this.to)
     console.log(this.subjectText)
     console.log(this.conText)
     // let mail = new Map();
@@ -72,7 +72,7 @@ x:String="";
     // mail.set('mailContent', this.conText)
     // mail.set('subject', this.subjectText)
     let temp = new Date()
-    this.cMail = new mailing("omar@yahoo.com", this.toText.split(','), this.subjectText, this.conText, temp.toDateString(), 1); 
+    this.cMail = new mailing("omar@yahoo.com", this.to.split(','), this.subjectText, this.conText, temp.toDateString(), this.importance); 
     // this.cMail.from =  
     // this.cMail.to = 
     // this.cMail.subject = this.subjectText

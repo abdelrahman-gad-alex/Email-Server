@@ -57,8 +57,9 @@
             <fa-icon [icon]="faPaperclip" class="" (click)="fileInput.click()"></fa-icon>
         </div>
             <div class="labels" *ngFor="let file of attachedFileName;let i = index">
-                <div (click)=remove(i)>
-                    <img id="{{ 'img' + i }}" src="#" alt="your image" style="display: none;"/>
+                <div >
+                    <a id="{{ file }}" [href]="attachedFileUrl[i]" target="_blank" style="display: inline;">{{file}}</a>
+                    <button (click)="remove(i)">x</button>
                 </div>
 
             </div>

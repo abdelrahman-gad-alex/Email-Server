@@ -4,6 +4,7 @@ import { faPaperclip } from '@fortawesome/free-solid-svg-icons';
 import { Location } from '@angular/common'
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({ 
   selector: 'app-compose',
@@ -33,7 +34,7 @@ x:String="";
   back(): void {
     this.location.back()
   }
-  constructor(private location: Location, private route:ActivatedRoute) { 
+  constructor(private location: Location, private route:ActivatedRoute ,private sanitizer: DomSanitizer) { 
     this.importance=2;
   }
 
@@ -47,23 +48,24 @@ x:String="";
     console.log(this.importance)
   }
   attachedFile:File[]=[]
-  attachedFileName:String[]=[""]
-
+  attachedFileName:String[]=[]
+  attachedFileUrl:any[]=[]
+  c=0
+  x1:any
   select(event: any){
     this.attachedFile.push(<File>event.target.files[0] )
-    this.attachedFileName.push(this.attachedFile[this.attachedFile.length-1].name)
-    console.log(this.attachedFile)
-    var x=URL.createObjectURL(event.target.files[0])
-    document.getElementById("img"+(this.attachedFile.length-1))!.style.display="block"
-    document.getElementById("img"+(this.attachedFile.length-1))!.setAttribute("src",x)
+    this.attachedFileName.push(event.target.files[0].name)
+    this.x1=URL.createObjectURL(<File>event.target.files[0])
+    this.c++;
+    this.x1= <string>this.sanitizer.bypassSecurityTrustUrl(this.x1)
+    this.attachedFileUrl.push(this.x1)
   
   }
   remove(i:number){
-    document.getElementById("img"+i)!.setAttribute("src","#")
-    document.getElementById("img"+i)!.style.display="none"
     this.attachedFile.splice(i,1)
     this.attachedFileName.splice(i,1)
-    console.log(i)
+    this.attachedFileUrl.splice(i,1)
+    this.x1=""
   }
 
 }

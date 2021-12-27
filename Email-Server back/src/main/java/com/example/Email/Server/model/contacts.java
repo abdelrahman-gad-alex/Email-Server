@@ -5,6 +5,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 
 public class contacts {
     public HashMap<String,String[] > contacts = new HashMap<String, String[]>();
@@ -80,5 +81,23 @@ public class contacts {
             }
         }
         return true ;
+    }
+
+    public LinkedList getContacts(){
+        LinkedList contactsList = new LinkedList() ;
+        for(String name: contacts.keySet() ){
+            JSONObject contact = new JSONObject() ;
+            try {
+                contact.put("name", name) ;
+                contact.put("emails", contacts.get(name)) ;
+
+                contactsList.add(contact) ;
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
+        return contactsList ;
+
     }
 }

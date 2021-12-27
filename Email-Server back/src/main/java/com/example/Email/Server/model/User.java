@@ -106,14 +106,14 @@ public  class User implements Ibulider1{
         return this;
     }
 
-    public String getMails(){
+    public String gerUserData(){
         LinkedList mails = inbox.getAllMail() ;
         LinkedList folders = inbox.getAllFolders() ;
 
         JSONObject obj = new JSONObject() ;
         obj.put("mails", mails) ;
         obj.put("folders", folders) ;
-        obj.put("contacts", contact.contacts) ;
+        obj.put("contacts", contact.getContacts()) ;
 
 
         String mailsSt = new Gson().toJson(obj) ;

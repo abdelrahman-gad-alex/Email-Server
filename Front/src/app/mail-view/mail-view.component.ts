@@ -21,23 +21,15 @@ export class MailViewComponent implements OnInit {
   ngOnInit(): void {
     let id =+this.route.snapshot.paramMap.get('id')!;
     this.id=id;
-    let foundIdx : number = -1
-    for(let i =0; i < this.mails.length; i++)
-    {
-      if(this.mails[i].id == this.id)
-      {
-        foundIdx = i
-        console.log("found")
-        console.log(this.mails[i].mailContent)
-        break
-      }
-    }
-    // console.log(this.mails)
-    this.from = this.mails[foundIdx].from
-    this.to= this.mails[foundIdx].to
-    this.subject=this.mails[foundIdx].subject
+    var result = this.mails.filter(obj => {
+      return obj.id === this.id
+    })
+    console.log(this.mails)
+    this.from=result[0].from
+    this.to=result[0].to
+    this.subject=result[0].subject
     
-    document.getElementById("mailContent")!.innerHTML = this.mails[foundIdx].mailContent
+    document.getElementById("mailContent")!.innerHTML=result[0].mailContent
   }
 
   reply(){

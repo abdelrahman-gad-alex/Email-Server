@@ -15,13 +15,20 @@ public class GeneralCriteria implements Criteria{
     @Override
     public LinkedList<String> filter(LinkedList<Message> mails){
         LinkedList<String> res =  new LinkedList<String>() ;
-        for(Message m: mails){
-            String value = m.getAttr(key) ;
-            if(value.contains(compere)){
-                res.add(m.getAttr("id")) ;
-            }
 
+        try {
+            for(Message m: mails){
+                String value = m.getAttr(key) ;
+                if(value.contains(compere)){
+                    res.add(m.getAttr("id")) ;
+                }
+
+            }
+        }catch (Exception e){
+            System.out.println("Error in Filter");
+            res =  new LinkedList<String>() ;
         }
+
         return res ;
     }
 

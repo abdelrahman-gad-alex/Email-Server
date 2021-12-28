@@ -87,7 +87,7 @@ public class Message {
     }
 
     public String getAttr(String attr){
-        if(attr.equals("emailContent")){
+        if(attr.equals("mailContent")){
             return getEmailContent() ;
         }
 

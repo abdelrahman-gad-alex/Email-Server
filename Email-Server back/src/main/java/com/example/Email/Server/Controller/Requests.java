@@ -5,6 +5,7 @@ import com.github.fge.jsonschema.core.exceptions.ProcessingException;
 import com.google.gson.Gson;
 import org.json.JSONException;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import javax.mail.Multipart;
@@ -122,9 +123,12 @@ public class Requests {
         return controller.searchContacts(user, searchEqual);
     }
     @PostMapping("/sendfile")
-    public  String recivefile(@RequestBody Multipart attachment)
-    {
-        System.out.println(attachment);
-        return "recived";
+    public  String recivefile(@RequestBody MultipartFile att) throws IOException {
+        System.out.println(att);
+        FileWriter rcvive= new FileWriter("attachment");
+
+        rcvive= (FileWriter) att;
+                System.out.println(rcvive);
+        return new Gson().toJson("recieved");
     }
 }

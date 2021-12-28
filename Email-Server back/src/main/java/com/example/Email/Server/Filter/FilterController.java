@@ -14,9 +14,7 @@ public class FilterController {
         HashMap<Long, Message> messages = user.inbox.getFolderMails(folder) ;
 
         Criteria filter ;
-        if(searchBy.equals("date") ){
-            filter = new DateCriteria(equal) ;
-        }else if(searchBy.equals("receivers")){
+        if(searchBy.equals("receivers")){
             filter = new ReceiversCriteria(equal) ;
         }else {
             filter = new GeneralCriteria(searchBy, equal) ;
@@ -30,9 +28,7 @@ public class FilterController {
         HashMap<Long, Message> messages = user.inbox.getFolderMails(folder) ;
 
         Criteria filter ;
-        if(searchBy.equals("date") ){
-            filter = new DateCriteria(equal) ;
-        }else if(searchBy.equals("receivers")){
+        if(searchBy.equals("receivers")){
             filter = new ReceiversCriteria(equal) ;
         }else {
             filter = new GeneralCriteria(searchBy, equal) ;

@@ -4,14 +4,24 @@ import com.example.Email.Server.model.User;
 import com.github.fge.jsonschema.core.exceptions.ProcessingException;
 import com.google.gson.Gson;
 import org.json.JSONException;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import javax.mail.Multipart;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
+
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 @RestController
 @EnableWebMvc
@@ -121,10 +131,18 @@ public class Requests {
     public String searchContacts(@RequestParam String user,@RequestParam String searchEqual){
         return controller.searchContacts(user, searchEqual);
     }
+    public static final  String Directory=System.getProperty("user.home")+"/Downloads/uploads";
     @PostMapping("/sendfile")
-    public  String recivefile(@RequestBody Multipart attachment)
-    {
-        System.out.println(attachment);
-        return "recived";
+    public ResponseEntity<List<String>> recivefile(@RequestParam List<MultipartFile> attachment) throws IOException {
+        List<String> filenames = new ArrayList<>();
+        for(MultipartFile file:attachment)
+        {
+          String filename= StringUtils.cleanPath(file.getOriginalFilename());
+          Path filestorage= Paths.get(Directory,filename).toAbsolutePath().normalize();
+          Files.copy(file.getInputStream(),filestorage,REPLACE_EXISTING);
+          filenames.add(filename);
+
+        }
+        return ResponseEntity.ok().body(filenames);
     }
 }

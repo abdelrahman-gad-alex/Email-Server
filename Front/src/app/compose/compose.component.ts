@@ -9,6 +9,7 @@ import { Observable, observable } from 'rxjs';
 import { map } from 'rxjs';
 import { Mail } from '../mail';
 import { SharedService } from '../shared/shared.service';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 @Injectable({
   providedIn: 'root' 
 })
@@ -56,8 +57,11 @@ x:String="";
   {
     console.log(email)
     const fd = new FormData()
-    fd.append('files',this.attachedFile[0])
+    fd.append('file',this.attachedFile[0])
     console.log(fd)
+    let headers = new Headers();
+    headers.append('Accept', 'application/json');
+    headers.append("Content-Type", 'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW');
     return this.http.post<any>("http://localhost:8080/controller/sendfile",fd)
  
   }
@@ -72,11 +76,10 @@ x:String="";
     //this.cMail = new mailing(this.shared.getUser(), this.to.split(','), this.subjectText, this.conText, temp.toDateString(), this.importance ,this.file64); 
     let res !: any
     let resp !: any
-    this.sendmail(this.attachedFile[0]).subscribe((temp?: any)=>
+    this.sendmail(this.attachedFile[0]).subscribe(temp =>
     {
       res = temp
-      resp = temp.res
-      console.log(resp)
+      console.log(res)
     })
    
   
@@ -105,7 +108,7 @@ file64:string=""
   convert(){
   
     let reader=new FileReader();
-  reader.readAsDataURL(this.x1 as Blob)
+  reader.readAsDataURL(this.attachedFile[0] as Blob)
   reader.onload=() => {
     this.file64=(reader.result as string)
   }

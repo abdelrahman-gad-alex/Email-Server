@@ -1,9 +1,9 @@
-export interface Mail{
-  id: number;
-  from: string;
-  to: string[];
-  subject: string;
-  mailContent:string;
-  time: string;
-  importance:number;
+export class Mail{
+  public id!: number;
+  public from!: string;
+  public to!: string[];
+  public subject!: string;
+  public mailContent!:string;
+  public time!: string;
+  public importance!:number;
 }

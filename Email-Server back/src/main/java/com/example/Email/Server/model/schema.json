@@ -16,22 +16,22 @@
     "subject": {
       "type": "string"
     },
-    "important": {
+    "mailContent": {
+      "type": "string"
+    },
+    "time": {
+      "type": "string"
+    },
+    "importance": {
       "type": "integer"
-    },
-    "emailContent": {
-      "type": "string"
-    },
-    "date": {
-      "type": "string"
     }
   },
   "required": [
     "from",
     "to",
     "subject",
-    "important",
-    "emailcontent",
-    "date"
+    "mailContent",
+    "time",
+    "importance"
   ]
 }

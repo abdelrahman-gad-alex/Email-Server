@@ -35,6 +35,7 @@ public class Requests {
 
     @PostMapping("/sendEmail")
     public String sendRequest(@RequestBody String mail) throws IOException,ProcessingException {
+        System.out.println(mail);
        File FLE = new File("src/main/java/com/example/Email/Server/model/email.json");
         try (FileWriter FILE = new FileWriter(FLE)){
             FILE.write(mail);

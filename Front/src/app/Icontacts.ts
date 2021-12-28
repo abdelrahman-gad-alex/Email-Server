@@ -1,4 +1,4 @@
-export interface Icontacts{
-  name:String;
-  mail:String[];
+export class Icontacts{
+  public name!:String;
+  public mail!:String[];
 }

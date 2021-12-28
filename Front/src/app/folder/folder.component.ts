@@ -1,12 +1,16 @@
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faStar,faFile,faClock,faPaperPlane,faBookmark ,faTrash } from '@fortawesome/free-solid-svg-icons';
-import { FOLDERS } from '../folders';
-import { MAILS } from '../inboxMail';
+// import { FOLDERS } from '../folders';
+// import { MAILS } from '../inboxMail';
 import { Mail } from '../mail';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import { SelectionModel } from '@angular/cdk/collections';
+import { SharedService } from '../shared/shared.service';
+import { MAILS } from '../inboxMail';
+import { Ifolders } from '../Ifolders';
+
 
 @Component({
   selector: 'app-folder',
@@ -14,29 +18,33 @@ import { SelectionModel } from '@angular/cdk/collections';
   styleUrls: ['./folder.component.css']
 })
 export class FolderComponent implements OnInit {
-
   faStar=faStar;
   faClock=faClock;
   faPaperPlane=faPaperPlane;
   faFile=faFile;
   faBookmark=faBookmark;
   faTrash=faTrash;
+  user!: string
   now =new Date()
-
   mails:Mail[] =[]
   // dataSource:any
   id:number[]=[]
-  folder=FOLDERS
+  folder : Ifolders[] = []
   map: any
+  // toBut: any
+  // fromBut: any
+  // toButton = true
+  // fromButton = true
+  fileIn: string = ""
   // map.set(1, 'www.javatpoint.com');       
   // map.set(true, 'bool1');   
   // map.set('2', 'ajay'); 
-  constructor(private route: ActivatedRoute, private router: Router) {
+  constructor(private route: ActivatedRoute, private router: Router, private shared:SharedService ) {
     console.log('MEntoconst')
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-    setInterval(() => {
+    // setInterval(() => {
 
-    }, 1);
+    // }, 1);
     this.now =  new Date();
     this.map = new Map();  
     this.map.set('inbox', 0); 
@@ -48,19 +56,50 @@ export class FolderComponent implements OnInit {
    }
    displayedColumns: string[] = ['select', 'from', 'to', 'importance', 'subject', 'time'];
   ngOnInit(): void {
+    // fileIn: string = ""
+    this.folder = this.shared.getFolders()
     let fol =this.route.snapshot.paramMap.get('name')!;
-    var result = this.folder.filter(obj => {
-      return obj.name === fol
-    })
-    console.log(fol)
-    this.id =result[0].id
+    // this.toBut = document.getElementById("toID")
+    // this.fromBut = document.getElementById("fromID")
+    // var result = this.folder.filter(obj => {
+    //   return obj.name === fol
+    // })
+    console.log("hi    " + fol)
+    this.fileIn = fol
+    // if(fol == "inbox")
+    // {
+    //   // // this.toButton = true
+    //   // // this.fromButton = false
+    //   // console.log("iiiii")
+    //   this.toBut.disabled = true
+    //   this.fromBut.disabled = false
+    // }
+    // else if(fol == "sent")
+    // {
+    //   // this.toButton = false
+    //   // this.fromButton = true
+    //   // console.log("fffff")
+    //   this.toBut.disabled = false
+    //   this.fromBut.disabled = true
+    // }
+    for(let i = 0; i < this.folder.length; i++)
+    {
+      if(this.folder[i].name == fol)
+      {
+        this.id = this.folder[i].id
+      }
+    }
+    // console.log(fol)
+    // console.log(result[0])
+    // this.id =result[0].id
     
-    
+    let MAILS = this.shared.getMails()
     for(let i of this.id)
     this.mails.push(MAILS[i])
     
     // this.dataSource = this.mails;
-
+    this.user = this.shared.getUser()
+    console.log(this.user)
   }
   dataSource = new MatTableDataSource<Mail>(this.mails);
   @ViewChild(MatPaginator) paginator!: MatPaginator;

@@ -8,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, observable } from 'rxjs';
 import { map } from 'rxjs';
 import { Mail } from '../mail';
-
+import { SharedService } from '../shared/shared.service';
 @Injectable({
   providedIn: 'root' 
 })
@@ -45,7 +45,7 @@ x:String="";
   back(): void {
     this.location.back()
   }
-  constructor(private location: Location, private route:ActivatedRoute, private http:HttpClient,private sanitizer: DomSanitizer) { }
+  constructor(private location: Location,  private shared:SharedService,private route:ActivatedRoute, private http:HttpClient,private sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
     let mail =this.route.snapshot.paramMap.get('mail')!;
@@ -55,7 +55,7 @@ x:String="";
   sendmail(email?: mailing):Observable<any>
   {
     console.log(email)
-    return this.http.post<any>("http://localhost:8080/sendEmail",email) 
+    return this.http.post<any>("http://localhost:8888/controller/sendEmail",email) 
   }
   temp = new Date()
   cMail !: mailing;
@@ -64,23 +64,8 @@ x:String="";
     console.log(this.to)
     console.log(this.subjectText)
     console.log(this.conText)
-    // let mail = new Map();
-    // mail.set("to", this.toText)
-    // mail.set("from", "omar@gmail.com")
-    // mail.set("importance", 1)
-    // mail.set('date', new Date())
-    // mail.set('mailContent', this.conText)
-    // mail.set('subject', this.subjectText)
     let temp = new Date()
-    this.cMail = new mailing("omar@yahoo.com", this.to.split(','), this.subjectText, this.conText, temp.toDateString(), this.importance); 
-    // this.cMail.from =  
-    // this.cMail.to = 
-    // this.cMail.subject = this.subjectText
-    // // this.cMail.id = -1
-    // this.cMail.importance = 1
-    // this.cMail.mailContent = this.conText
-    // let temp = new Date()
-    // this.cMail.time = temp.toDateString()
+    this.cMail = new mailing(this.shared.getUser(), this.to.split(','), this.subjectText, this.conText, temp.toDateString(), this.importance); 
     let res !: any
     let resp !: any
     this.sendmail(this.cMail).subscribe((temp?: any)=>

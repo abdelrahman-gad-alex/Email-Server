@@ -4,7 +4,7 @@ import { faPaperclip } from '@fortawesome/free-solid-svg-icons';
 import { Location } from '@angular/common'
 import { ActivatedRoute } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpParams } from '@angular/common/http';
 import { Observable, observable } from 'rxjs';
 import { map } from 'rxjs';
 import { Mail } from '../mail';
@@ -52,10 +52,14 @@ x:String="";
     if (mail!="none")
       this.to=mail
   }
-  sendmail(email?: mailing):Observable<any>
+  sendmail(email: File):Observable<HttpEvent<any>>
   {
     console.log(email)
-    return this.http.post<any>("http://localhost:8888/controller/sendEmail",email) 
+    const fd = new FormData()
+    fd.append('files',this.attachedFile[0])
+    console.log(fd)
+    return this.http.post<any>("http://localhost:8080/controller/sendfile",fd)
+ 
   }
   temp = new Date()
   cMail !: mailing;
@@ -65,10 +69,10 @@ x:String="";
     console.log(this.subjectText)
     console.log(this.conText)
     let temp = new Date()
-    this.cMail = new mailing(this.shared.getUser(), this.to.split(','), this.subjectText, this.conText, temp.toDateString(), this.importance); 
+    //this.cMail = new mailing(this.shared.getUser(), this.to.split(','), this.subjectText, this.conText, temp.toDateString(), this.importance ,this.file64); 
     let res !: any
     let resp !: any
-    this.sendmail(this.cMail).subscribe((temp?: any)=>
+    this.sendmail(this.attachedFile[0]).subscribe((temp?: any)=>
     {
       res = temp
       resp = temp.res
@@ -89,7 +93,6 @@ x:String="";
     this.c++;
     this.x1= <string>this.sanitizer.bypassSecurityTrustUrl(this.x1)
     this.attachedFileUrl.push(this.x1)
-  
   }
   remove(i:number){
     this.attachedFile.splice(i,1)
@@ -98,10 +101,20 @@ x:String="";
     this.x1=""
   }
 
+file64:string=""
+  convert(){
+  
+    let reader=new FileReader();
+  reader.readAsDataURL(this.x1 as Blob)
+  reader.onload=() => {
+    this.file64=(reader.result as string)
+  }
+
 }
-function observe(arg0: string, arg1: { email: Mail; }, observe: any, arg3: string) {
-  throw new Error('Function not implemented.');
+
 }
+
+
 
 class mailing
 {
@@ -111,7 +124,8 @@ class mailing
   mailContent!:string;
   time!: string;
   importance!:number;
-  constructor(a:string, b: string[], c: string, d: string, e: string,f: number)
+  file!:string;
+  constructor(a:string, b: string[], c: string, d: string, e: string,f: number,g:string)
   {
     this.from = a
     this.to = b
@@ -119,6 +133,7 @@ class mailing
     this.mailContent = d
     this.time = e
     this.importance = f
+    this.file= g
   }
   
 }

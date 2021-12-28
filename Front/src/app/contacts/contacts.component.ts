@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faStar,faFile,faClock,faPaperPlane,faBookmark ,faTrash } from '@fortawesome/free-solid-svg-icons';
 import { CONTACTS } from '../contacts';
+import { SharedService } from '../shared/shared.service';
 
 @Component({
   selector: 'app-contacts',
@@ -19,7 +20,7 @@ export class ContactsComponent implements OnInit {
   faTrash=faTrash;
   now =new Date()
   nx="s"
-  contacts =CONTACTS
+  contacts =this.shared.getContacts()
   newContactName=""
   newContactMail=""
   selected=-1
@@ -31,7 +32,7 @@ export class ContactsComponent implements OnInit {
 
 
 
-  constructor(private route: ActivatedRoute, private router: Router) {
+  constructor(private route: ActivatedRoute,  private shared:SharedService, private router: Router) {
     console.log('MEntoconst')
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     setInterval(() => {
@@ -69,11 +70,11 @@ export class ContactsComponent implements OnInit {
     else if (this.newContactMail=="" )
     alert("Please Enter Mail")
     else{
-      let obj = CONTACTS.find(f=>f.name==this.newContactName);
+      let obj = this.shared.getContacts().find(f=>f.name==this.newContactName);
       if (obj)
       alert("There ara Someone Has the same Name. Please choose new name.")
       else{
-      for(let con of CONTACTS){
+      for(let con of this.shared.getContacts()){
         let obj =con.mail.find(f=>f==this.newContactMail)
         if (obj){
         alert("You Already Stored the same mail to another contact")
@@ -82,7 +83,7 @@ export class ContactsComponent implements OnInit {
        }
       }
     if (st){
-    CONTACTS.push( {"name": this.newContactName ,"mail":[this.newContactMail] }  )
+      this.shared.getContacts().push( {"name": this.newContactName ,"mail":[this.newContactMail] }  )
     document.getElementById("cnameI")!.style.display="none"
     document.getElementById("cemailI")!.style.display="none"
     document.getElementById("cnameBTN2")!.style.display="none"
@@ -96,8 +97,8 @@ export class ContactsComponent implements OnInit {
   
   update(x:number){
     this.selected=x
-    this.editName=CONTACTS[x].name
-    this.arr=CONTACTS[x].mail
+    this.editName=this.shared.getContacts()[x].name
+    this.arr=this.shared.getContacts()[x].mail
     this.array=this.arr
     if (this.showededit){
     document.getElementById("editName")!.style.display="none"
@@ -133,10 +134,10 @@ edit(){
   }
   else{
     console.log(this.editName)
-    CONTACTS[this.selected].name=this.editName
+    this.shared.getContacts()[this.selected].name=this.editName
     for (let i=0 ;i<this.arr.length;i++){
-      CONTACTS[this.selected].mail[i]=this.arr[i]
-      console.log(CONTACTS[this.selected].mail[i])
+      this.shared.getContacts()[this.selected].mail[i]=this.arr[i]
+      console.log(this.shared.getContacts()[this.selected].mail[i])
     }
     let currentUrl = this.router.url;
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
@@ -154,13 +155,13 @@ delete(){
     alert("Please Select a contact before press edit")
   }
   else{
-    CONTACTS.splice (this.selected,1)
+    this.shared.getContacts().splice (this.selected,1)
   }
 }
 
 onEnter(){
   var st =true
-  for(let con of CONTACTS){
+  for(let con of this.shared.getContacts()){
     let obj =con.mail.find(f=>f==this.newContactMail)
     if (obj){
     alert("You Already Stored the same mail to another contact")
@@ -169,7 +170,7 @@ onEnter(){
    }
   }
    if (st){
-    CONTACTS[this.selected].mail.push(this.newContactMail)
+    this.shared.getContacts()[this.selected].mail.push(this.newContactMail)
     let currentUrl = this.router.url;
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.router.onSameUrlNavigation = 'reload';

@@ -51,6 +51,8 @@ x:String="";
     let mail =this.route.snapshot.paramMap.get('mail')!;
     if (mail!="none")
       this.to=mail
+      console.log(this.shared.getFolders())
+
   }
   sendmail(email?: mailing):Observable<any>
   {

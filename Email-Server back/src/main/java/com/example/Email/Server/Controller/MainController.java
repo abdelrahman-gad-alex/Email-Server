@@ -78,6 +78,8 @@ public class MainController {
         for(int i=0 ; i< toArr.length ; i++){
             if (! mails.existemail(toArr[i])){
                 return (toArr[i]+ " do not exist") ;
+            }else if(toArr[i].equals(m.getFrom())){
+                return "Can not send mail to yourself" ;
             }
         }
 

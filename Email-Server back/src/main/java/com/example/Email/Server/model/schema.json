@@ -19,7 +19,7 @@
     "important": {
       "type": "integer"
     },
-    "emailcontent": {
+    "emailContent": {
       "type": "string"
     },
     "date": {

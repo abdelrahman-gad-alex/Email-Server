@@ -23,7 +23,7 @@ public int[] sorted(String user,String folder, String method )
    }
    String dumi;
    String dumi2;
-   if(method=="emailcontent")
+   if(method=="emailContent")
    {
        Map <String, String> map2 = new HashMap <String, String>( );
        for (Map.Entry<String, String> entry : map.entrySet()) {

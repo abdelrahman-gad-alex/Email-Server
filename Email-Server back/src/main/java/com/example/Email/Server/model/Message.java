@@ -62,7 +62,7 @@ public class Message {
     }
 
     public String getEmailContent(){
-        String content = massageMap.get("emailcontent");
+        String content = massageMap.get("emailContent");
         content.replaceAll("<p>","");
         content.replaceAll("</p>","");
         content.replaceAll("<h1>","");
@@ -87,7 +87,7 @@ public class Message {
     }
 
     public String getAttr(String attr){
-        if(attr.equals("emailcontent")){
+        if(attr.equals("emailContent")){
             return getEmailContent() ;
         }
 

@@ -95,7 +95,7 @@
   <button mat-menu-item [matMenuTriggerFor]="filterby">Filter by</button>
   <button mat-menu-item [matMenuTriggerFor]="searchby">Search by</button>
   <button mat-menu-item (click)="deleteSelect()">Remove</button>
-  <button mat-menu-item >Move</button>
+  <button mat-menu-item (click)="moveClick()" [disabled]="fileIn=='allMails'">Move</button>
 </mat-menu>
 
 <mat-menu #sortby="matMenu">
@@ -158,14 +158,14 @@
   <button mat-menu-item>ASC</button>
   <button mat-menu-item>DSC</button>
 </mat-menu>
-<div id="textDiv1">
-<input type="text" id="firstText" placeholder="Key">
+<div id="textDiv1" >
+<input type="text" id="firstText" placeholder="Key" [(ngModel)]="keyText">
 </div>
 <div id="textDiv2">
-  <input type="text" id="secondText" placeholder="Folder Name">
+  <input type="text" id="secondText" placeholder="Folder Name" [(ngModel)]="foldText">
 </div>
 <div id="butDiv">
-<button mat-stroked-button color="primary">Primary</button>
+<button mat-stroked-button color="primary" (click)="operButClick()">Perfom Operation</button>
 </div>         
             </div>
             <div class="nono">

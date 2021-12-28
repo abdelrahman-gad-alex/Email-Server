@@ -227,6 +227,7 @@ public class MainController {
    public String filterToFolder(String user, String folder, String searchBy, String equal, String name){
        User u = mails.getUser(user);
        LinkedList res = filter.filterToFolder(u, folder, searchBy, equal, name);
+       update();
        return new Gson().toJson(res)  ;
    }
 

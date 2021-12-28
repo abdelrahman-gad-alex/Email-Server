@@ -23,7 +23,7 @@
       "type": "string"
     },
     "importance": {
-      "type": "integer"
+      "type": "string"
     }
   },
   "required": [

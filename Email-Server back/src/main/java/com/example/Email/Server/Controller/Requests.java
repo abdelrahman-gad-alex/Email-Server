@@ -1,5 +1,6 @@
 package com.example.Email.Server.Controller;
 
+import com.example.Email.Server.model.UploadForm;
 import com.example.Email.Server.model.User;
 import com.github.fge.jsonschema.core.exceptions.ProcessingException;
 import com.google.gson.Gson;
@@ -11,7 +12,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import javax.mail.Multipart;
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -29,7 +32,6 @@ import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 @RequestMapping("/controller")
 public class Requests {
     MainController controller = new MainController() ;
-    MainController controller = new MainController();
     User user = new User();
 
     @PostMapping("/signup")
@@ -134,14 +136,38 @@ public class Requests {
 
     public static final String Directory = System.getProperty("user.home") + "/Downloads/uploads";
 
+    /*
     @PostMapping("/sendfile")
-        public String recivefile(@RequestBody MultipartFile att) throws IOException {
-        System.out.println(att);
-        FileWriter rcvive = new FileWriter("attachment");
+        public String recivefile(@RequestParam(value = "file") MultipartFile file) throws IOException {
+        System.out.println(file);
+        FileReader rcvive = new FileReader((File) file);
 
-        rcvive = (FileWriter) att;
+        //rcvive.write();
+        System.out.println("inn");
         System.out.println(rcvive);
-        return new Gson().toJson(att);
+        System.out.println(file);
+        return new Gson().toJson(file);
     }
+
+     */
+
+
+    @PostMapping("/sendfile")
+    public void uploadFile(@RequestParam("file") MultipartFile file) {
+        String message = "";
+        try {
+
+            message = "Uploaded the file successfully: " + file.getOriginalFilename();
+            System.out.println(file);
+        } catch (Exception e) {
+            message = "Could not upload the file: " + file.getOriginalFilename() + "!";
+            System.out.println(file);
+
+        }
+    }
+
+
+
+
 
 }

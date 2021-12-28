@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router } from '@angular/router';
 import { MAILS } from '../inboxMail';
+import { SharedService } from '../shared/shared.service';
 @Component({
   selector: 'app-mail-view',
   templateUrl: './mail-view.component.html',
@@ -11,9 +12,9 @@ export class MailViewComponent implements OnInit {
   from="";
   to :string[]=[];
   subject="";
-  mails=MAILS
+  mails=this.shared.getMails()
 
-  constructor(private route:ActivatedRoute,private router: Router) {  
+  constructor(private route:ActivatedRoute,private router: Router, private shared : SharedService) {  
     
   }
 
@@ -23,6 +24,7 @@ export class MailViewComponent implements OnInit {
     var result = this.mails.filter(obj => {
       return obj.id === this.id
     })
+    console.log(this.mails)
     this.from=result[0].from
     this.to=result[0].to
     this.subject=result[0].subject

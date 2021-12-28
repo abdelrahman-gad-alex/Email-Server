@@ -130,20 +130,45 @@ export class FolderComponent implements OnInit {
   }
  deleteSelect()
  {
-   for(let i = 0; i < this.mails.length;i++)
+   let temp : number = -1
+   let tempAll : number = -1
+   for(let i = 0; i < this.selectedMails.length; i++)
    {
-     if(this.selectedMails.includes(this.mails[i].id))
+     for(let j = 0; j < this.folder.length; j++)
      {
-       let fol =this.route.snapshot.paramMap.get('name')!;
-       var result = this.folder.filter(obj => {
-        return obj.name === fol
-      })
-      // if(FOLDERS[this.map.get(result)].id.includes())
-      // FOLDERS[this.map.get(result)].id.splice()
+       if(this.folder[j].name == this.fileIn || this.folder[j].name == "allMails")
+       {
+        if(this.folder[j].name == this.fileIn )
+        {
+          temp = j
+        }
+        else
+        {
+          tempAll = j
+        }
+        this.folder[j].id.splice(this.folder[j].id.indexOf(this.selectedMails[i]), 1)
+       }
      }
-     this.mails.splice(i, 1)
-     MAILS.splice(i,1)
-   }
-   this.dataSource = new MatTableDataSource<Mail>(MAILS);
+     this.shared.setFolderID(this.fileIn, this.folder[temp].id)
+     this.shared.setFolderID( "allMails", this.folder[tempAll].id)
+     let MAILS = this.shared.getMails()
+     this.id = this.folder[temp].id
+     this.mails = []
+     this.selectedMails = []
+     for(let i of this.id)
+      this.mails.push(MAILS[i])
+  //    if(this.selectedMails.includes(this.mails[i].id))
+  //    {
+  //      let fol =this.route.snapshot.paramMap.get('name')!;
+  //      var result = this.folder.filter(obj => {
+  //       return obj.name === fol
+  //     })
+  //     // if(FOLDERS[this.map.get(result)].id.includes())
+  //     // FOLDERS[this.map.get(result)].id.splice()
+  //    }
+  //    this.mails.splice(i, 1)
+  //    MAILS.splice(i,1)
+    }
+   this.dataSource = new MatTableDataSource<Mail>(this.mails);
  }
 }

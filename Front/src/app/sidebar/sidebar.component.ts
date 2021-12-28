@@ -22,8 +22,9 @@ export class SidebarComponent implements OnInit {
   res: any
   faBookmark=faBookmark;
   faTrash=faTrash
-  mails =MAILS
-  folders=FOLDERS
+  mails=this.shared.getMails()
+
+  folders=this.shared.getFolders()
   newFolderName:String="";
   curFolder:String="";
   reloadComponent() {

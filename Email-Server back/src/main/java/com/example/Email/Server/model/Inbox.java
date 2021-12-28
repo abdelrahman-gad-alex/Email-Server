@@ -17,7 +17,7 @@ public class Inbox {
 
     public Inbox(){
         folders.put("inbox", new Folder("inbox")) ;
-        folders.put("all-mail", new Folder("all-mail")) ;
+        folders.put("allMails", new Folder("allMails")) ;
         folders.put("sent", new Folder("sent")) ;
         folders.put("draft", new Folder("draft")) ;
         folders.put("trash", new Folder("trash")) ;
@@ -28,7 +28,7 @@ public class Inbox {
         message.setAttr("id",Long.toString(ID));
         allMails.put(ID, message) ;
         folders.get(name).addMessage(ID);
-        folders.get("all-mail").addMessage(ID);
+        folders.get("allMails").addMessage(ID);
 
         ID += 1 ;
         return ID-1 ;
@@ -55,7 +55,7 @@ public class Inbox {
         }
         if(folders.get(folder).haveMessage(ID)){
             folders.get(folder).removeMessage(ID);
-            folders.get("all-mail").removeMessage(ID);
+            folders.get("allMails").removeMessage(ID);
             folders.get("trash").addMessage(ID);
             return true ;
         }

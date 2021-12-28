@@ -97,6 +97,19 @@ public class MainController {
         // save mails
     }
 
+    public String draftEmail (String mailStr){
+        System.out.println(mailStr);
+
+        Message m = new Message(mailStr);
+
+        User from = mails.getUser(m.getFrom()) ;
+        from.adddraft(m);
+        // save mails
+        update() ;
+
+        return "done" ;
+    }
+
     public String addcontact(String addcontact)
     {
         String user ;

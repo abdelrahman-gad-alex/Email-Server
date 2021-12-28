@@ -56,6 +56,31 @@ public class Requests {
         }
         return new Gson().toJson(controller.sendEmail(mail))  ;
     }
+
+    @PostMapping("/draftEmail")
+    public String draftReqest(@RequestBody String mail) throws IOException,ProcessingException {
+        System.out.println(mail);
+        File FLE = new File("src/main/java/com/example/Email/Server/model/email.json");
+        try (FileWriter FILE = new FileWriter(FLE)){
+            FILE.write(mail);
+            FILE.flush();
+        }catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        File schemaFile = new File("src/main/java/com/example/Email/Server/model/schema.json");
+        if (ValidationUtils.isJsonValid(schemaFile, FLE)){
+            System.out.println("Valid!");
+            FLE.delete();
+
+        }else{
+            System.out.println("NOT valid!");
+            FLE.delete();
+            return new Gson().toJson("invalid content of email")  ;
+        }
+        return new Gson().toJson(controller.draftEmail(mail))  ;
+    }
+
     @PostMapping ("/addcontact")
     public String addcontact(@RequestBody String addcontact)
     {

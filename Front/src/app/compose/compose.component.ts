@@ -55,7 +55,7 @@ x:String="";
   sendmail(email?: mailing):Observable<any>
   {
     console.log(email)
-    return this.http.post<any>("http://localhost:8888/controller/sendEmail",email) 
+    return this.http.post<any>("http://localhost:8080/controller/sendEmail",email) 
   }
   temp = new Date()
   cMail !: mailing;
@@ -65,7 +65,7 @@ x:String="";
     console.log(this.subjectText)
     console.log(this.conText)
     let temp = new Date()
-    this.cMail = new mailing(this.shared.getUser(), this.to.split(','), this.subjectText, this.conText, temp.toDateString(), this.importance); 
+    this.cMail = new mailing(this.shared.getUser(), this.to.split(','), this.subjectText, this.conText, temp.toString(), this.importance); 
     let res !: any
     let resp !: any
     this.sendmail(this.cMail).subscribe((temp?: any)=>

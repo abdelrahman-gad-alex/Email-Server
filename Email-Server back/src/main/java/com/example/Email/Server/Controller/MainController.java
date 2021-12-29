@@ -253,6 +253,7 @@ public class MainController {
             String secondFolder = jas.getString("to") ;
             JSONArray IDs = jas.getJSONArray("id") ;
 
+
             for(int i=0 ; i< IDs.length() ; i++){
                 long ID = IDs.getLong(i);
                 User user = mails.getUser(email) ;
@@ -260,7 +261,6 @@ public class MainController {
                 System.out.println("Done");
                 update() ;
             }
-
         } catch (Exception e) {
             e.printStackTrace();
             return "Can not move contact" ;

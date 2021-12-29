@@ -58,7 +58,7 @@ x:String="";
   sendmail(email: mailing):Observable<HttpEvent<any>>
   {
     console.log(email)
-    return this.http.post<any>("http://localhost:8080/controller/sendEmail",email)
+    return this.http.post<any>("http://localhost:8888/controller/sendEmail",email)
  
 
   }
@@ -82,7 +82,7 @@ x:String="";
         for (let file of this.attachedFile){
         fd.append('file',file)
         }
-        this.http.post<any>("http://localhost:8080/controller/sendfile",fd).subscribe(tem=>{
+        this.http.post<any>("http://localhost:8888/controller/sendEmail",fd).subscribe(tem=>{
           console.log(tem)
         })
         

@@ -136,7 +136,7 @@ public class Requests {
     }
 
     // for sorting
-    @GetMapping("/sort")
+ @GetMapping("/sort")
     public String sort(@RequestParam String body, @RequestParam String foldr, @RequestParam String method)
     {
         HashMap<String, Object> tempHM = new HashMap<String, Object>();

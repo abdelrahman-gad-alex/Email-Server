@@ -34,7 +34,7 @@ public class FilterController {
             filter = new GeneralCriteria(searchBy, equal) ;
         }
 
-        LinkedList<String> filteredIDs =  filter.filter((LinkedList<Message>) messages.values()) ;
+        LinkedList<String> filteredIDs =  filter.filter(new LinkedList<Message>( messages.values()) );
 
         user.addFolder(name);
         for(String ID : filteredIDs){

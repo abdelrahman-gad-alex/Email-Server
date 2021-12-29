@@ -4,7 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dbd52f86-9bb7-4922-9953-8916cc424eeb" name="Changes" comment="" />
+    <list default="true" id="dbd52f86-9bb7-4922-9953-8916cc424eeb" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/Email/Server/Controller/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/Email/Server/Controller/MainController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/Email/Server/Controller/Requests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/Email/Server/Controller/Requests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/Email/Server/Filter/FilterController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/Email/Server/Filter/FilterController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/Email/Server/model/Inbox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/Email/Server/model/Inbox.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Front/src/app/compose/compose.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../Front/src/app/compose/compose.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Front/src/app/folder/folder.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../Front/src/app/folder/folder.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Front/src/app/folder/folder.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../Front/src/app/folder/folder.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Front/src/app/login/login.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../Front/src/app/login/login.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Front/src/app/sidebar/sidebar.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../Front/src/app/sidebar/sidebar.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Front/src/app/signup/signup.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../Front/src/app/signup/signup.component.ts" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

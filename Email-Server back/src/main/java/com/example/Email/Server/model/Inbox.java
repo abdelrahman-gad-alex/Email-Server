@@ -88,7 +88,7 @@ public class Inbox {
 
 
     public LinkedList getAllMail(){
-        checkTimeForTrash() ;
+        //checkTimeForTrash() ;
 
         return new LinkedList<>(allMails.values()) ;
     }

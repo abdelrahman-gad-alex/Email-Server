@@ -256,7 +256,7 @@ public class MainController {
             String email = jas.getString("email");
             String firstFolder = jas.getString("from");
             String secondFolder = jas.getString("to") ;
-            JSONArray IDs = jas.getJSONArray("id") ;
+            JSONArray IDs = jas.getJSONArray("IDs") ;
 
 
             for(int i=0 ; i< IDs.length() ; i++){

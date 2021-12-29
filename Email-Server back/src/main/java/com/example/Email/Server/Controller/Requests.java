@@ -75,6 +75,7 @@ public class Requests {
     @PostMapping("/draftEmail")
     public String draftReqest(@RequestBody String mail) throws IOException,ProcessingException {
         System.out.println(mail);
+        /*
         File FLE = new File("src/main/java/com/example/Email/Server/model/email.json");
         try (FileWriter FILE = new FileWriter(FLE)){
             FILE.write(mail);
@@ -93,6 +94,8 @@ public class Requests {
             FLE.delete();
             return new Gson().toJson("invalid content of email")  ;
         }
+        */
+
         return new Gson().toJson(controller.draftEmail(mail))  ;
     }
 

@@ -11,6 +11,7 @@ import { SharedService } from '../shared/shared.service';
 import { Ifolders } from '../Ifolders';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Icontacts } from '../Icontacts';
 // import { HttpClient } from '@angular/common/http';
 
 
@@ -193,6 +194,7 @@ export class FolderComponent implements OnInit {
     document.getElementById("butDiv")!.style.display="block"
     document.getElementById("textDiv2")!.style.display="block"
     this.operation= "filter"
+    this.colParam = col
   }
   sortClick(col: string, order:string)
   {
@@ -223,11 +225,11 @@ export class FolderComponent implements OnInit {
         this.folder[foldIdx].id = this.res.ans
         if(order == 'asc')
         {
-          this.id = this.folder[foldIdx].id.reverse()
+          this.id = this.folder[foldIdx].id
         }
         else
         {
-          this.id = this.folder[foldIdx].id
+          this.id = this.folder[foldIdx].id.reverse()
         }
         this.mails = []
         let MAILS = this.shared.getMails()
@@ -348,50 +350,7 @@ export class FolderComponent implements OnInit {
         }
       }
       console.log("here")
-      // console.log("how" + this.selectedMails)
-      /////////////////////////
-      // for(let i = 0; i < this.selectedMails.length; i++)
-      // {
-      //   for(let j = 0; j < this.folder.length; j++)
-      //   {
-      //     if(this.folder[j].name == this.fileIn || (this.folder[j].name == "allMails" && this.operation=="delete"))
-      //     {
-      //       if(this.operation=="delete")
-      //       {
-      //         allMailsIdx = j
-      //         let hh = -99
-      //         for(let k = 0; k < this.folder[j].id.length; k++)
-      //         {
-      //           if(this.folder[j].id[k] ==  Number(this.selectedMails[i]))
-      //           {
-      //             hh = k
-      //             console.log("***" + hh)
-      //             break
-      //           }
-      //         }
-      //         // console.log("hiiii" + this.folder[j].id.indexOf(Number(this.selectedMails[i])))
-      //         this.folder[j].id.splice(hh, 1)
-      //       }
-      //       let hh = -99
-      //       for(let k = 0; k < this.folder[j].id.length; k++)
-      //         {
-      //           if(this.folder[j].id[k] == Number(this.selectedMails[i]))
-      //           {
-      //             hh = k
-      //             console.log("***" + hh)
-      //             break
-      //           }
-      //         }
-      //       tempIdx = j
-      //       this.folder[j].id.splice(hh, 1)
-      //     }
-      //     // else if(this.folder[j].name == temp)
-      //     // {
-      //     //   
-      //     // }
-      //   }
-      // }
-      /////////////////////////////
+      
       this.shared.setFolderID(this.fileIn, hArr1)
       // let tempArr = hArr
       let tempArr = hArr.concat(this.folder[tempToFolder].id)
@@ -503,6 +462,8 @@ export class FolderComponent implements OnInit {
         alert("Enter folder to move to")
         return
       }
+      let temp = this.foldText
+      let temp1 = this.foldText
 ////////////////////////////////////////////////////
       if(this.foldText=="")
     alert("Please Enter A folder Name")
@@ -514,11 +475,94 @@ export class FolderComponent implements OnInit {
       }
       else{
         this.shared.getFolders().push(  {"name": this.foldText ,"id":[] }    )
-      this.foldText=""
+      // this.foldText=""
       }
     }
     console.log(this.shared.getFolders())
-    
+    this.http.get("http://localhost:8888/controller/filter",{
+      responseType:'text',
+      params:{
+          user: this.shared.getUser(),
+          folder: this.fileIn,
+          searchBy: this.colParam,
+          equal: this.keyText,
+          name: temp
+      },
+      observe:'response'
+    }).subscribe(response=>
+      {
+        this.res = response.body
+        console.log(this.res)
+        // let folders: Ifolders[] = []
+        // for(let i =0; i < this.res.length; i++)
+        // {
+        //   let temp : Ifolders = new Ifolders(this.res[i].name,this.res[i].id)
+        //   folders.push(temp)
+          
+        // }
+        // this.shared.setFolders(folders)
+        this.http.get("http://localhost:8888/controller/login",{
+          responseType:'text',
+          params:{
+              email: this.shared.getUser(),
+              password: this.shared.getPass()
+          },
+          observe:'response'
+        })
+        .subscribe(response=>{      
+              
+          try
+          {
+            console.log(response.body)
+            this.res=JSON.parse(<string>response.body)
+            console.log(this.res)
+            let tempArr = this.res.folders
+            let tempName !: string
+            let folders: Ifolders[] = []
+            let contacts: Icontacts[] = []
+            let mails: Mail[] = []
+            for(let i =0; i < tempArr.length; i++)
+            {
+              let temp : Ifolders = new Ifolders(tempArr[i].name, tempArr[i].id.reverse())
+              folders.push(temp)
+            }
+            tempArr = this.res.contacts
+            for(let i =0; i < tempArr.length; i++)
+            {
+              let temp : Icontacts = new Icontacts()
+              temp.mail = tempArr[i].nameValuePairs.emails
+              temp.name = tempArr[i].nameValuePairs.name
+              contacts.push(temp)
+            }
+            tempArr = this.res.mails
+            for(let i =0; i < tempArr.length; i++)
+            {
+              let temp : Mail = new Mail()
+              temp.id = tempArr[i].massageMap.id
+              temp.time = tempArr[i].massageMap.time
+              temp.from = tempArr[i].massageMap.from
+              temp.importance = tempArr[i].massageMap.importance
+              temp.to = tempArr[i].massageMap.to
+              temp.subject = tempArr[i].massageMap.subject
+              temp.mailContent = tempArr[i].massageMap.mailContent
+              temp.file = tempArr[i].massageMap.file
+              mails.push(temp)
+              // console.log(temp)
+            }
+            this.shared.setContacts(contacts)
+            this.shared.setFolders(folders)
+            this.shared.setMails(mails)
+            this.router.navigate(['folder', this.foldText] )
+            // this.shared.setUser(this.myText)
+            // this.route.navigate(['folder',"inbox"])
+          }
+          catch(e)
+          {
+            alert("Wrong Email or Wrong Password!!")
+          }
+        })
+        
+      })
 //////////////////////////////////////////////////////////////
     } 
   }
@@ -531,7 +575,7 @@ export class FolderComponent implements OnInit {
     console.log("Lol")
     // let tempParam = new deletePar(this.shared.getUser(), this.fileIn, this.selectedMails)
     this.http.delete("http://localhost:8888/controller/deleteEmail",{
-     responseType:"text",   
+     responseType:"text",  
      params:{
       user: this.shared.getUser(),
       folder: this.fileIn,

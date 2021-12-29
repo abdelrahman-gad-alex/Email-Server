@@ -4,7 +4,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { faStar,faFile,faClock,faPaperPlane,faBookmark ,faTrash } from '@fortawesome/free-solid-svg-icons';
 import { observable } from 'rxjs';
 import { CONTACTS } from '../contacts';
+import { Icontacts } from '../Icontacts';
 import { SharedService } from '../shared/shared.service';
+import { Mail } from '../mail';
+import { Ifolders } from '../Ifolders';
 
 @Component({
   selector: 'app-contacts',
@@ -30,7 +33,8 @@ export class ContactsComponent implements OnInit {
   arr:String[]=[]
   showededit:Boolean=false
   array:String[]=[]
-
+  keyText!:string
+  res: any
 
 
 
@@ -88,7 +92,7 @@ export class ContactsComponent implements OnInit {
       console.log("aaa")
       this.shared.getContacts().push( {"name": this.newContactName ,"mail":[this.newContactMail] }  )
       var map = new Map();    
-      this.http.post<string>("http://localhost:8080/controller/addcontact",{"user":this.shared.getUser(),"name":(this.newContactName),"emails":[this.newContactMail]}).subscribe((res?:any)=>
+      this.http.post<string>("http://localhost:8888/controller/addcontact",{"user":this.shared.getUser(),"name":(this.newContactName),"emails":[this.newContactMail]}).subscribe((res?:any)=>
       {
        console.log(res)
      })
@@ -153,7 +157,7 @@ edit(){
   
     observe:'response'
     console.log("aaa")
-    this.http.get("http://localhost:8080/controller/editcontact",{
+    this.http.get("http://localhost:8888/controller/editcontact",{
       responseType:'text',
       params:{
        user:this.shared.getUser(),
@@ -193,7 +197,7 @@ delete(){
   }
   else{
     console.log("show")
-    this.http.delete("http://localhost:8080/controller/deletecontact",
+    this.http.delete("http://localhost:8888/controller/deletecontact",
     {
       responseType:"text",
       params:{
@@ -222,7 +226,7 @@ onEnter(){
   }
    if (st){
     this.shared.getContacts()[this.selected].mail.push(this.newContactMail)
-    this.http.get("http://localhost:8080/controller/editcontact",{
+    this.http.get("http://localhost:8888/controller/editcontact",{
       responseType:'text',
       params:{
        user:this.shared.getUser(),
@@ -246,7 +250,178 @@ onEnter(){
 
    }
 }
-
+sortClick()
+{
+  this.http.get("http://localhost:8888/controller/sortcontact",{
+    responseType: 'text',
+    params:{
+      body: this.shared.getUser()
+    },
+    observe: 'response'
+  }).subscribe(response=>{
+    this.res = JSON.parse(<string>response.body)
+    console.log(this.res)
+    let tempArr = this.res
+    let cont:Icontacts[] = []
+    for(let i = 0; i < tempArr.length; i++)
+    {
+      let temp:Icontacts = new Icontacts()
+      temp.mail = tempArr[i].nameValuePairs.emails
+      temp.name = tempArr[i].nameValuePairs.name
+      cont.push(temp)
+    }
+    this.http.get("http://localhost:8888/controller/login",{
+      responseType:'text',
+      params:{
+          email: this.shared.getUser(),
+          password: this.shared.getPass()
+      },
+      observe:'response'
+    })
+    .subscribe(response=>{      
+          
+      try
+      {
+        console.log(response.body)
+        this.res=JSON.parse(<string>response.body)
+        console.log(this.res)
+        let tempArr = this.res.folders
+        let tempName !: string
+        let folders: Ifolders[] = []
+        let contacts: Icontacts[] = []
+        let mails: Mail[] = []
+        for(let i =0; i < tempArr.length; i++)
+        {
+          let temp : Ifolders = new Ifolders(tempArr[i].name, tempArr[i].id.reverse())
+          folders.push(temp)
+        }
+        tempArr = this.res.contacts
+        for(let i =0; i < tempArr.length; i++)
+        {
+          let temp : Icontacts = new Icontacts()
+          temp.mail = tempArr[i].nameValuePairs.emails
+          temp.name = tempArr[i].nameValuePairs.name
+          contacts.push(temp)
+        }
+        tempArr = this.res.mails
+        for(let i =0; i < tempArr.length; i++)
+        {
+          let temp : Mail = new Mail()
+          temp.id = tempArr[i].massageMap.id
+          temp.time = tempArr[i].massageMap.time
+          temp.from = tempArr[i].massageMap.from
+          temp.importance = tempArr[i].massageMap.importance
+          temp.to = tempArr[i].massageMap.to
+          temp.subject = tempArr[i].massageMap.subject
+          temp.mailContent = tempArr[i].massageMap.mailContent
+          temp.file = tempArr[i].massageMap.file
+          mails.push(temp)
+          // console.log(temp)
+        }
+        this.shared.setContacts(contacts)
+        this.shared.setFolders(folders)
+        this.shared.setMails(mails)
+        // this.shared.setUser(this.myText)
+        // this.route.navigate(['folder',"inbox"])
+      }
+      catch(e)
+      {
+        alert("Wrong Email or Wrong Password!!")
+      }
+    })
+  })
+}
+searchClick()
+{
+  let currentUrl = this.router.url;
+        this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+        this.router.onSameUrlNavigation = 'reload';
+  if(this.keyText == "")
+  {
+    alert("Enter key text")
+    return
+  }
+  this.http.get("http://localhost:8888/controller/searchcontact",{
+    responseType: 'text',
+    params:{
+      user: this.shared.getUser(),
+      searchEqual: this.keyText
+    },
+    observe: 'response'
+  }).subscribe(response=>{
+    this.res = JSON.parse(<string>response.body)
+    console.log(this.res)
+    let tempArr = this.res
+    let cont:Icontacts[] = []
+    for(let i = 0; i < tempArr.length; i++)
+    {
+      let temp:Icontacts = new Icontacts()
+      temp.mail = tempArr[i].nameValuePairs.emails
+      temp.name = tempArr[i].nameValuePairs.name
+      cont.push(temp)
+    }
+    this.shared.setContacts(cont)
+    this.http.get("http://localhost:8888/controller/login",{
+      responseType:'text',
+      params:{
+          email: this.shared.getUser(),
+          password: this.shared.getPass()
+      },
+      observe:'response'
+    })
+    .subscribe(response=>{      
+          
+      try
+      {
+        console.log(response.body)
+        this.res=JSON.parse(<string>response.body)
+        console.log(this.res)
+        let tempArr = this.res.folders
+        let tempName !: string
+        let folders: Ifolders[] = []
+        let contacts: Icontacts[] = []
+        let mails: Mail[] = []
+        for(let i =0; i < tempArr.length; i++)
+        {
+          let temp : Ifolders = new Ifolders(tempArr[i].name, tempArr[i].id.reverse())
+          folders.push(temp)
+        }
+        tempArr = this.res.contacts
+        for(let i =0; i < tempArr.length; i++)
+        {
+          let temp : Icontacts = new Icontacts()
+          temp.mail = tempArr[i].nameValuePairs.emails
+          temp.name = tempArr[i].nameValuePairs.name
+          contacts.push(temp)
+        }
+        tempArr = this.res.mails
+        for(let i =0; i < tempArr.length; i++)
+        {
+          let temp : Mail = new Mail()
+          temp.id = tempArr[i].massageMap.id
+          temp.time = tempArr[i].massageMap.time
+          temp.from = tempArr[i].massageMap.from
+          temp.importance = tempArr[i].massageMap.importance
+          temp.to = tempArr[i].massageMap.to
+          temp.subject = tempArr[i].massageMap.subject
+          temp.mailContent = tempArr[i].massageMap.mailContent
+          temp.file = tempArr[i].massageMap.file
+          mails.push(temp)
+          // console.log(temp)
+        }
+        // this.shared.setContacts(contacts)
+        this.shared.setFolders(folders)
+        this.shared.setMails(mails)
+        // this.shared.setUser(this.myText)
+        this.router.navigate([currentUrl]);
+      }
+      catch(e)
+      {
+        alert("Wrong Email or Wrong Password!!")
+      }
+    })
+  })
+}
 
 }
 

@@ -1,8 +1,32 @@
-<app-mainbar></app-mainbar>
+<header class="global-nav" >
+  <div class="Logo">
+    <img alt="Mail Server Logo" src="./assets/img/myMail.png" width=50>
+    <span>Bro Mail</span>
+  </div>
+
+
+  <button mat-button [matMenuTriggerFor]="operations">Operations</button>
+  <mat-menu #operations="matMenu">
+    <button mat-menu-item [matMenuTriggerFor]="sortby">Sort by</button>
+    <!-- <button mat-menu-item [matMenuTriggerFor]="filterby">Filter by</button> -->
+    <button mat-menu-item [matMenuTriggerFor]="searchby">Search by</button>
+  </mat-menu>
+  <mat-menu #sortby="matMenu" >
+    <button mat-menu-item (click)="sortClick()">Name</button>
+  </mat-menu>
+  <mat-menu #searchby="matMenu">
+    <button mat-menu-item (click)="searchClick()">Name</button>
+  </mat-menu>
+  <div id="textDiv1" >
+    <input type="text" id="firstText" placeholder="Key" [(ngModel)]="keyText">
+    </div>
+    <div class="Sign" routerLink="/" >
+      Sign Out
+    </div>
+</header>
 
 <section class="main-container" style="display: block">
     <div class="flex-container">
-         
       <app-sidebar></app-sidebar>
           <main class="main-content">
              
@@ -89,3 +113,22 @@
       </div>
   </section>
   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <!-- <div class="cont"> -->
+    
+    <!-- </div> -->

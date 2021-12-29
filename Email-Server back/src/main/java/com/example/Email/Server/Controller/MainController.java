@@ -191,12 +191,11 @@ public class MainController {
         }else
             return "contact do not edited" ;
     }
-    public String deletecontact(String user, String names[] )
+    public String deletecontact(String user, String name )
     {
         User theUser = mails.getUser(user) ;
-        for (String contact : names){
-            theUser.deletecontact(contact);
-        }
+        theUser.deletecontact(name);
+
         update() ;
         return "contact deleted";
     }

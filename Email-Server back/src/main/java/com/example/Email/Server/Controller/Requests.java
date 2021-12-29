@@ -104,8 +104,8 @@ public class Requests {
     }
 
     @DeleteMapping("/deletecontact")
-    public String deletecontact(@RequestParam String user, @RequestParam String[] names) {
-        return controller.deletecontact(user, names);
+    public String deletecontact(@RequestParam String user, @RequestParam String name) {
+        return controller.deletecontact(user, name);
     }
 
 

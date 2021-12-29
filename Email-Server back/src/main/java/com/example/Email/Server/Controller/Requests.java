@@ -184,22 +184,19 @@ public class Requests {
     }
 
     @GetMapping("/getfiles")
-    public ResponseEntity<UrlResource> getFiles (@RequestParam String email,@RequestParam String ID){
-        Path[] paths = controller.getfiles(email,ID) ;
-        String[] names = controller.filesNames(email,ID) ;
+    public ResponseEntity<UrlResource> getFiles (@RequestParam String fileName){
+        Path paths = controller.getfiles(fileName) ;
         try {
-            UrlResource resource = new UrlResource(paths[0].toUri());
+            UrlResource resource = new UrlResource(paths.toUri());
             HttpHeaders httpHeaders = new HttpHeaders() ;
-            httpHeaders.add("File-Name", names[0]);
+            httpHeaders.add("File-Name", fileName);
             httpHeaders.add(HttpHeaders.CONTENT_DISPOSITION, "attachment;File-Name="+resource.getFilename());
-            return ResponseEntity.ok().contentType(MediaType.parseMediaType(Files.probeContentType(paths[0]))).headers(httpHeaders).body( resource) ;
+            return ResponseEntity.ok().contentType(MediaType.parseMediaType(Files.probeContentType(paths))).headers(httpHeaders).body( resource) ;
         } catch (Exception e) {
             e.printStackTrace();
             return null ;
         }
-
     }
-
 
 
 

@@ -164,15 +164,17 @@ public class MainController {
 
     public String addcontact(String addcontact)
     {
+
         String user ;
         String name ;
         String emails ;
         try {
             JSONObject jas = new JSONObject(addcontact) ;
             user = jas.getString("user");
+
             name = jas.getString("name") ;
             emails = jas.getString("emails") ;
-
+            System.out.println(user);
             String contact = new JSONObject().put(name, emails).toString() ;
 
             User theUser = mails.getUser(user) ;
@@ -233,21 +235,13 @@ public class MainController {
         }
     }
 
-    public String deleteFolder(String deletefolder){
-        try {
-            JSONObject jas = new JSONObject(deletefolder) ;
-            String email = jas.getString("email");
-            String name = jas.getString("name") ;
+    public String deleteFolder(String email, String name){
+        User user = mails.getUser(email) ;
+        user.deleteFolder(name);
+        System.out.println("Done");
+        update() ;
+        return "Done" ;
 
-            User user = mails.getUser(email) ;
-            user.deleteFolder(name);
-            System.out.println("Done");
-            update() ;
-            return "Done" ;
-        } catch (JSONException e) {
-            e.printStackTrace();
-            return "Can not delete contact" ;
-        }
     }
 
     public String moveFromFolderToFolder(String move){
@@ -257,17 +251,21 @@ public class MainController {
             String email = jas.getString("email");
             String firstFolder = jas.getString("from");
             String secondFolder = jas.getString("to") ;
-            long ID = jas.getLong("id") ;
+            JSONArray IDs = jas.getJSONArray("id") ;
 
-            User user = mails.getUser(email) ;
-            user.moveFromFolderToFolder(ID, firstFolder,secondFolder);
-            System.out.println("Done");
-            update() ;
-            return "Done" ;
+            for(int i=0 ; i< IDs.length() ; i++){
+                long ID = IDs.getLong(i);
+                User user = mails.getUser(email) ;
+                user.moveFromFolderToFolder(ID, firstFolder,secondFolder);
+                System.out.println("Done");
+                update() ;
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
-            return "Can not delete contact" ;
+            return "Can not move contact" ;
         }
+        return "Done" ;
     }
 
     public String renameFolder(String email, String oldname, String newname){

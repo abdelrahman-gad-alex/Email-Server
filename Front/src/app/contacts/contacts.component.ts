@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faStar,faFile,faClock,faPaperPlane,faBookmark ,faTrash } from '@fortawesome/free-solid-svg-icons';
+import { observable } from 'rxjs';
 import { CONTACTS } from '../contacts';
 import { SharedService } from '../shared/shared.service';
 
@@ -84,9 +85,13 @@ export class ContactsComponent implements OnInit {
        }
       }
     if (st){
+      console.log("aaa")
       this.shared.getContacts().push( {"name": this.newContactName ,"mail":[this.newContactMail] }  )
       var map = new Map();    
-      this.http.post<string>("http://localhost:8080/controller/addcontact",{"user":this.shared.getUser(),"name":(this.newContactName),"emails":[this.newContactMail]})
+      this.http.post<string>("http://localhost:8080/controller/addcontact",{"user":this.shared.getUser(),"name":(this.newContactName),"emails":[this.newContactMail]}).subscribe((res?:any)=>
+      {
+       console.log(res)
+     })
       document.getElementById("cnameI")!.style.display="none"
     document.getElementById("cemailI")!.style.display="none"
     document.getElementById("cnameBTN2")!.style.display="none"
@@ -138,19 +143,38 @@ edit(){
   else{
     console.log(this.editName)
     var x=this.shared.getContacts()[this.selected].name
+    var y=this.shared.getContacts()[this.selected].mail
     this.shared.getContacts()[this.selected].name=this.editName
     for (let i=0 ;i<this.arr.length;i++){
       this.shared.getContacts()[this.selected].mail[i]=this.arr[i]
       console.log(this.shared.getContacts()[this.selected].mail[i])
     }
+    
+  
+    observe:'response'
+    console.log("aaa")
     this.http.get("http://localhost:8080/controller/editcontact",{
+      responseType:'text',
       params:{
        user:this.shared.getUser(),
        oldname:x.toString(),
        newname:this.shared.getContacts()[this.selected].name.toString(),
        emails: this.shared.getContacts()[this.selected].mail.toString()
+      },
+     
+      observe:'response'
+    }).subscribe(response=>{
+      console.log(response)
+            if (response.body=="contact do not edited"){
+              this.shared.getContacts()[this.selected].name=x
+               // mento hy3ml haga hena 
+              this.shared.getContacts()[this.selected].mail=y
+              alert("This mail is not registered")
       }
-    })  
+    })
+    {
+      
+    }  
     let currentUrl = this.router.url;
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.router.onSameUrlNavigation = 'reload';
@@ -165,17 +189,24 @@ trackByIdx(index: number, obj: any): any {
 delete(){
   if (this.selected==-1){
     alert("Please Select a contact before press edit")
+   
+  }
+  else{
+    console.log("show")
     this.http.delete("http://localhost:8080/controller/deletecontact",
     {
+      responseType:"text",
       params:{
         user:this.shared.getUser(),
         name:this.shared.getContacts()[this.selected].name.toString()
-      }
+      },
+      observe:"response"
       
+    }).subscribe(response=>{
+      console.log(response);
     })
-  }
-  else{
     this.shared.getContacts().splice (this.selected,1)
+
   }
 }
 
@@ -191,6 +222,23 @@ onEnter(){
   }
    if (st){
     this.shared.getContacts()[this.selected].mail.push(this.newContactMail)
+    this.http.get("http://localhost:8080/controller/editcontact",{
+      responseType:'text',
+      params:{
+       user:this.shared.getUser(),
+       oldname:this.shared.getContacts()[this.selected].name.toString(),
+       newname:this.shared.getContacts()[this.selected].name.toString(),
+       emails: this.shared.getContacts()[this.selected].mail.toString()
+      },
+      observe:'response'
+    }).subscribe(response=>{
+      console.log(response)
+      if (response.body=="contact do not edited"){
+        this.shared.getContacts()[this.selected].mail.splice((this.shared.getContacts()[this.selected].mail.length-1),1)
+        alert("This mail is not registered")
+      }
+    })
+    
     let currentUrl = this.router.url;
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.router.onSameUrlNavigation = 'reload';

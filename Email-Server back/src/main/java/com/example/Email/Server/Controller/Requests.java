@@ -121,8 +121,8 @@ public class Requests {
     }
 
     @DeleteMapping("/deletefolder")
-    public String deletefolder(@RequestParam String deletefolder) {
-        return new Gson().toJson(controller.deleteFolder(deletefolder));
+    public String deletefolder(@RequestParam String email,@RequestParam String name) {
+        return new Gson().toJson(controller.deleteFolder(email, name));
     }
 
     @PostMapping("/movemailtofolder")

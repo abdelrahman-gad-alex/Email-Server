@@ -119,35 +119,6 @@ public class Message {
     }
 
 
-
-    public Path[] getAttach(){
-        String[] attachNames = new String[0] ;
-        if(massageMap.get("file")==null){
-            return  null;
-        }
-        try {
-            JSONArray arr = new JSONArray(massageMap.get("file")); ;
-            attachNames = new String[arr.length()] ;
-            for(int i = 0; i<arr.length(); i++){
-                attachNames[i] = arr.getString(i) ;
-            }
-            System.out.println(attachments.size());
-
-        }catch (JSONException  e){
-            System.out.println("Error "+e.toString());
-        }
-        Path[] res = new Path[attachNames.length] ;
-        for (int i = 0; i< attachNames.length ; i++){
-            String name = attachNames[i] ;
-            Path filePath = Paths.get("files/").toAbsolutePath().normalize().resolve(name) ;
-            if(Files.exists(filePath)){
-                res[i] = filePath;
-            }
-
-        }
-        return res ;
-    }
-
     public String[] getAttachNames(){
         String[] attachNames = new String[0] ;
         if(massageMap.get("file")==null){
@@ -169,7 +140,7 @@ public class Message {
 
     public void startWithAttachments(){
         if(massageMap.get("file")==null){
-            return  ;
+            return  ;   
         }
         try {
             JSONArray arr = new JSONArray(massageMap.get("file")); ;

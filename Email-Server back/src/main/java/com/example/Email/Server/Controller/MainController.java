@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.json.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.LinkedList;
@@ -123,9 +124,13 @@ public class MainController {
 
     }
 
-    public Path[] getfiles(String email, String ID) {
-        Message m = mails.getUser(email).inbox.getMessage(Long.parseLong(ID));
-        return m.getAttach();
+    public Path getfiles(String fileName) {
+        Path res = Paths.get("files/").toAbsolutePath().normalize().resolve(fileName) ;
+        if(Files.exists(res)){
+            return res ;
+        }
+        return null ;
+
     }
 
     public String[] filesNames(String email, String ID){
@@ -253,6 +258,7 @@ public class MainController {
             String secondFolder = jas.getString("to") ;
             JSONArray IDs = jas.getJSONArray("id") ;
 
+
             for(int i=0 ; i< IDs.length() ; i++){
                 long ID = IDs.getLong(i);
                 User user = mails.getUser(email) ;
@@ -260,7 +266,6 @@ public class MainController {
                 System.out.println("Done");
                 update() ;
             }
-
         } catch (Exception e) {
             e.printStackTrace();
             return "Can not move contact" ;

@@ -6,4 +6,5 @@ export class Mail{
   public mailContent!:string;
   public time!: string;
   public importance!:number;
+  public file!:string[];
 }

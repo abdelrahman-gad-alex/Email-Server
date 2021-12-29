@@ -2,7 +2,6 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import {ActivatedRoute, Router } from '@angular/router';
-import { MAILS } from '../inboxMail';
 import { SharedService } from '../shared/shared.service';
 @Component({
   selector: 'app-mail-view',
@@ -17,9 +16,8 @@ export class MailViewComponent implements OnInit {
   mails=this.shared.getMails()
   x2:any
   xname:any="Hello World"
-  constructor(private route:ActivatedRoute,private router: Router, private shared : SharedService, private http:HttpClient,private sanitizer: DomSanitizer) {  
-    
-  }
+  constructor(private route:ActivatedRoute,private router: Router, private shared : SharedService, private http:HttpClient,private sanitizer: DomSanitizer) {  }
+  importance=0
 
   ngOnInit(): void {
     let id =+this.route.snapshot.paramMap.get('id')!;
@@ -39,7 +37,7 @@ export class MailViewComponent implements OnInit {
     this.from = this.mails[foundIdx].from
     this.to= this.mails[foundIdx].to
     this.subject=this.mails[foundIdx].subject
-    
+    this.importance=this.mails[foundIdx].importance
     document.getElementById("mailContent")!.innerHTML = this.mails[foundIdx].mailContent
     this.http.get("http://localhost:8080/controller/getfiles",{
       responseType:'blob',
@@ -49,14 +47,16 @@ export class MailViewComponent implements OnInit {
       },
       observe:'response'
     }).subscribe(response =>{
-      console.log(response)
-      console.log(URL.createObjectURL(response.body!))
+      //console.log(response)
       this.x2=URL.createObjectURL(response.body!)
       this.x2= <string>this.sanitizer.bypassSecurityTrustUrl(this.x2)
     },(error:HttpErrorResponse) =>{
       console.log(error)
     })  
   }
+    //if(this.mails[foundIdx].)
+  
+
 
   reply(){
     this.router.navigate(['compose',this.from])

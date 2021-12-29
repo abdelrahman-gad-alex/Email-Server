@@ -66,9 +66,10 @@ public  class User implements Ibulider1{
     }
 
     @Override
-    public void addsend(Message m) {
+    public long addsend(Message m) {
         long ID = inbox.addMessage2Folder(m, "sent") ;
         System.out.println("message sent from "+user.getEmail());
+        return ID;
     }
 
     @Override

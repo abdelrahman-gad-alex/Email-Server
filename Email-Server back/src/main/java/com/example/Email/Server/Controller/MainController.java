@@ -120,11 +120,11 @@ public class MainController {
 
     }
 
-    public LinkedList<MultipartFile> getfiles(String email, String ID){
-        Message m = mails.getUser(email).inbox.getMessage(Long.parseLong(ID)) ;
-        return m.getAttach() ;
+    public LinkedList<MultipartFile> getfiles(String email, String ID) {
+        Message m = mails.getUser(email).inbox.getMessage(Long.parseLong(ID));
+        return m.getAttach();
 
-
+    }
     public String draftEmail (String mailStr){
         System.out.println(mailStr);
 

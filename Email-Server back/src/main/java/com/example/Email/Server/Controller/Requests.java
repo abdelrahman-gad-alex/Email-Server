@@ -141,6 +141,7 @@ public class Requests {
     public void uploadFile(@RequestParam("files") MultipartFile[] files) {
         String message = "";
         try {
+            controller.sendFiles(files) ;
 
             message = "Uploaded the file successfully: " + files[0].getOriginalFilename();
             System.out.println(files[0]);

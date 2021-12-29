@@ -138,17 +138,23 @@ public class Requests {
 
 
     @PostMapping("/sendfile")
-    public void uploadFile(@RequestParam("file") MultipartFile[] files) {
+    public void uploadFile(@RequestParam("file") MultipartFile files) {
         String message = "";
         try {
+            System.out.println(files.getOriginalFilename());
             controller.sendFiles(files) ;
 
-            message = "Uploaded the file successfully: " + files[0].getOriginalFilename();
-            System.out.println(files[0]);
+            message = "Uploaded the file successfully: " + files.getOriginalFilename();
+            System.out.println(files);
         } catch (Exception e) {
             System.out.println("error");
 
         }
+    }
+
+    @GetMapping("/getfiles")
+    public LinkedList<MultipartFile> getFiles (String email, String ID){
+        return controller.getfiles(email,ID) ;
     }
 
 

@@ -90,11 +90,14 @@ public class MainController {
         User from = mails.getUser(m.getFrom()) ;
         from.addsend(m);
         tempOfLastMessages.add(m) ;
+        System.out.println("add from");
 
         for(int i=0 ; i< toArr.length ; i++){
             User to = mails.getUser(toArr[i]) ;
             Message copy = m.deepCopy() ;
             tempOfLastMessages.add(copy) ;
+            System.out.println("add to");
+
             to.addinbox(copy);
         }
         update() ;
@@ -104,7 +107,7 @@ public class MainController {
         // save mails
     }
 
-    public String sendFiles(MultipartFile[] files){
+    public String sendFiles(MultipartFile files){
         try {
             for(Message m: tempOfLastMessages){
                 System.out.println("in m");
@@ -115,6 +118,11 @@ public class MainController {
             return "Error" ;
         }
 
+    }
+
+    public LinkedList<MultipartFile> getfiles(String email, String ID){
+        Message m = mails.getUser(email).inbox.getMessage(Long.parseLong(ID)) ;
+        return m.getAttach() ;
 
     }
 

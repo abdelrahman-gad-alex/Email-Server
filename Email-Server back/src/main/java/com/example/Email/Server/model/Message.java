@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.mail.Multipart;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -34,6 +35,7 @@ public class Message {
                 massageMap.put(key, value) ;
             }
 
+            attachments = new LinkedList<MultipartFile>() ;
 
 
         }catch (JSONException  e){
@@ -90,11 +92,11 @@ public class Message {
         return content;
     }
 
-    public void setAttachments(MultipartFile[] attachs){
-        for(MultipartFile file : attachs){
+    public void setAttachments(MultipartFile file){
             try {
                 attachments.add(file) ;
-                file.transferTo(new File("files/"+file.getName()));
+                //File save = new File("files/"+file.getOriginalFilename()) ;
+                file.transferTo(Paths.get("files/" + file.getOriginalFilename()));
                 System.out.println(file.getName());
 
             } catch (IOException e) {
@@ -102,8 +104,11 @@ public class Message {
                 e.printStackTrace();
             }
 
-        }
 
+
+    }
+    public LinkedList<MultipartFile> getAttach(){
+        return attachments ;
     }
 
     public void startWithAttachments(){

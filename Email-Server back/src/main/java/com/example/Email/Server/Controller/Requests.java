@@ -138,13 +138,13 @@ public class Requests {
 
 
     @PostMapping("/sendfile")
-    public void uploadFile(@RequestParam("file") MultipartFile files) {
+    public void uploadFile(@RequestParam("file") MultipartFile[] files) {
         String message = "";
         try {
-            System.out.println(files.getOriginalFilename());
+            System.out.println(files[0].getOriginalFilename());
             controller.sendFiles(files) ;
 
-            message = "Uploaded the file successfully: " + files.getOriginalFilename();
+            message = "Uploaded the file successfully: " + files[0].getOriginalFilename();
             System.out.println(files);
         } catch (Exception e) {
             System.out.println("error");

@@ -107,7 +107,7 @@ public class MainController {
         // save mails
     }
 
-    public String sendFiles(MultipartFile files){
+    public String sendFiles(MultipartFile[] files){
         try {
             for(Message m: tempOfLastMessages){
                 System.out.println("in m");

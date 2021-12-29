@@ -56,9 +56,6 @@ x:String="";
   sendmail(email: mailing):Observable<HttpEvent<any>>
   {
     console.log(email)
-    const fd = new FormData()
-    fd.append('file',this.attachedFile[0])
-    console.log(fd)
     return this.http.post<any>("http://localhost:8080/controller/sendEmail",email)
  
   }
@@ -78,9 +75,10 @@ x:String="";
        res = temp
        console.log(res)
        if (res=="done"){
-        const fd = new FormData()
-        for (let file of this.attachedFile)
+        const fd=new FormData()
+        for (let file of this.attachedFile){
         fd.append('file',file)
+        }
         this.http.post<any>("http://localhost:8080/controller/sendfile",fd).subscribe(tem=>{
           console.log(tem)
         })

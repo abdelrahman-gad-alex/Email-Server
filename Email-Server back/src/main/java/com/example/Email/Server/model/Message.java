@@ -92,13 +92,14 @@ public class Message {
         return content;
     }
 
-    public void setAttachments(MultipartFile file){
+    public void setAttachments(MultipartFile[] files){
             try {
-                attachments.add(file) ;
-                //File save = new File("files/"+file.getOriginalFilename()) ;
-                file.transferTo(Paths.get("files/" + file.getOriginalFilename()));
-                System.out.println(file.getName());
-
+                for(MultipartFile file : files) {
+                    attachments.add(file);
+                    //File save = new File("files/"+file.getOriginalFilename()) ;
+                    file.transferTo(Paths.get("files/" + file.getOriginalFilename()));
+                    System.out.println(file.getName());
+                }
             } catch (IOException e) {
                 System.out.println("Error in writing files");
                 e.printStackTrace();

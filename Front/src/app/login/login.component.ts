@@ -126,6 +126,7 @@ export class LoginComponent {
           temp.to = tempArr[i].massageMap.to
           temp.subject = tempArr[i].massageMap.subject
           temp.mailContent = tempArr[i].massageMap.mailContent
+          temp.file = tempArr[i].massageMap.file
           mails.push(temp)
           // console.log(temp)
         }

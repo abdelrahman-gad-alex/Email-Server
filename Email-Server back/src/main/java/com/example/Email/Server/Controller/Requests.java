@@ -184,7 +184,7 @@ public class Requests {
     }
 
     @GetMapping("/getfiles")
-    public ResponseEntity<UrlResource> getFiles (String email, String ID){
+    public ResponseEntity<UrlResource> getFiles (@RequestParam String email,@RequestParam String ID){
         Path[] paths = controller.getfiles(email,ID) ;
         String[] names = controller.filesNames(email,ID) ;
         try {

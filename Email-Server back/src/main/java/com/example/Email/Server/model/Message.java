@@ -106,7 +106,7 @@ public class Message {
                     //File save = new File("files/"+file.getOriginalFilename()) ;
                     String fileName = StringUtils.cleanPath(file.getOriginalFilename()) ;
                     Path filePath = Paths.get("files/" , fileName).toAbsolutePath().normalize()  ;
-                    copy(file.getInputStream(), filePath) ;
+                    file.transferTo(filePath);
                     System.out.println(file.getName());
                 }
             } catch (Exception e) {

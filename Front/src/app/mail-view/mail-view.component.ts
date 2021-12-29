@@ -15,10 +15,16 @@ export class MailViewComponent implements OnInit {
   subject="";
   mails=this.shared.getMails()
   x2:any
+  count:number=0
   xname:any="Hello World"
   constructor(private route:ActivatedRoute,private router: Router, private shared : SharedService, private http:HttpClient,private sanitizer: DomSanitizer) {  }
   importance=0
-
+  temp2:string[]=[]
+  temp3:string=""
+  temp:string[]=[]
+  attachedFile:string[]=[]
+  attachedFileURL:string[]=[]
+  names:any[]=[];
   ngOnInit(): void {
     let id =+this.route.snapshot.paramMap.get('id')!;
     this.id=id;
@@ -38,25 +44,51 @@ export class MailViewComponent implements OnInit {
     this.to= this.mails[foundIdx].to
     this.subject=this.mails[foundIdx].subject
     this.importance=this.mails[foundIdx].importance
+    this.temp=this.shared.getMails()[foundIdx].file
+    console.log(this.temp)
+    
     document.getElementById("mailContent")!.innerHTML = this.mails[foundIdx].mailContent
-    this.http.get("http://localhost:8080/controller/getfiles",{
+    for (let  i=0;i< this.temp.length;i++){
+      if(this.temp[i]!="," && this.temp[i]!='"' &&this.temp[i]!=" " && this.temp[i]!="[" && this.temp[i]!="]")
+      { 
+        console.log(this.temp[i])
+          this.temp3=this.temp3+this.temp[i]
+      }
+      else
+      {
+        console.log(this.temp3)
+        this.temp2.push(this.temp3);
+        this.temp3=""
+       
+      }
+
+    }
+    console.log(this.temp2.length)
+      for(let i of this.temp2){
+        if (i!=""){
+          this.attachedFile.push(i)
+        }
+      }
+      for(let i of this.attachedFile){
+
+        this.http.get("http://localhost:8080/controller/getfiles",{
       responseType:'blob',
       params:{
-        email: this.shared.getUser(),
-        ID: this.id
+        fileName: i
       },
       observe:'response'
     }).subscribe(response =>{
-      //console.log(response)
       this.x2=URL.createObjectURL(response.body!)
       this.x2= <string>this.sanitizer.bypassSecurityTrustUrl(this.x2)
+      this.attachedFileURL.push(this.x2)
     },(error:HttpErrorResponse) =>{
       console.log(error)
     })  
   }
+
     //if(this.mails[foundIdx].)
   
-
+  }
 
   reply(){
     this.router.navigate(['compose',this.from])

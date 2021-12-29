@@ -88,7 +88,7 @@ x:String="";
         for (let file of this.attachedFile){
         fd.append('file',file)
         }
-        this.http.post<any>("http://localhost:8080/controller/sendEmail",fd).subscribe(tem=>{
+        this.http.post<any>("http://localhost:8080/controller/sendfile",fd).subscribe(tem=>{
           console.log(tem)
         })
         
@@ -200,15 +200,6 @@ x:String="";
   }
 
 file64:string=""
-  convert(){
-  
-    let reader=new FileReader();
-  reader.readAsDataURL(this.attachedFile[0] as Blob)
-  reader.onload=() => {
-    this.file64=(reader.result as string)
-  }
-
-}
 
 }
 

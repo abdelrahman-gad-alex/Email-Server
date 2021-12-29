@@ -103,7 +103,7 @@ public class Inbox {
         //2017-01-23
         Folder trash = folders.get("trash") ;
         for(long Id : trash.id){
-            String date = allMails.get(Id).getAttr("date") ;
+            String date = allMails.get(Id).getAttr("time") ;
 
             SimpleDateFormat formatter =new SimpleDateFormat("E MMM dd yyyy HH:mm:ss");
 

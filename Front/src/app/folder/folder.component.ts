@@ -166,7 +166,7 @@ export class FolderComponent implements OnInit {
       }
     }
     // this.folder[foldIdx].id 
-    this.http.get("http://localhost:8888/controller/sort",{
+    this.http.get("http://localhost:8080/controller/sort",{
       responseType:'text',
       params:{
           body: this.shared.getUser(),

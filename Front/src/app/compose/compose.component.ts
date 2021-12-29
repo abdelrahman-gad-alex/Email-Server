@@ -60,6 +60,7 @@ x:String="";
     console.log(email)
     return this.http.post<any>("http://localhost:8080/controller/sendEmail",email)
  
+
   }
   temp = new Date()
   cMail !: mailing;

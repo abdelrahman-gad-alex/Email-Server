@@ -43,11 +43,47 @@ export class FolderComponent implements OnInit {
     butDiv = document.getElementById('butDiv')
   constructor(private route: ActivatedRoute, private router: Router, private shared:SharedService , private http:HttpClient) {
     
-    console.log('MEntoconst')
-    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-    // setInterval(() => {
+    // console.log('MEntoconst')
+    // this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    // // setInterval(() => {
 
-    // }, 1);
+    // // }, 1);
+    // this.folder = this.shared.getFolders()
+    // let fol =this.route.snapshot.paramMap.get('name')!;
+    // console.log("hi    " + fol)
+    // this.fileIn = fol
+    // for(let i = 0; i < this.folder.length; i++)
+    // {
+    //   if(this.folder[i].name == fol)
+    //   {
+    //     this.id = this.folder[i].id
+    //     break
+    //   }
+    // }
+    // // console.log(fol)
+    // // console.log(result[0])
+    // // this.id =result[0].id
+    
+    // let MAILS = this.shared.getMails()
+    // for(let i of this.id)
+    //   {
+    //     // let h !: number
+    //     for(let j = 0; j < MAILS.length; j++)
+    //     {
+    //       if(i == MAILS[j].id)
+    //       {
+    //         this.mails.push(MAILS[j])
+    //         break
+    //       }
+    //     }
+    //   }
+    
+    // // this.dataSource = this.mails;
+    // this.user = this.shared.getUser()
+    // console.log(this.user)
+   }
+   displayedColumns: string[] = ['select', 'from', 'to', 'importance', 'subject', 'time'];
+  ngOnInit(): void {
     this.folder = this.shared.getFolders()
     let fol =this.route.snapshot.paramMap.get('name')!;
     console.log("hi    " + fol)
@@ -65,14 +101,21 @@ export class FolderComponent implements OnInit {
     
     let MAILS = this.shared.getMails()
     for(let i of this.id)
-    this.mails.push(MAILS[i])
+      {
+        // let h !: number
+        for(let j = 0; j < MAILS.length; j++)
+        {
+          if(i == MAILS[j].id)
+          {
+            this.mails.push(MAILS[j])
+            break
+          }
+        }
+      }
     
     // this.dataSource = this.mails;
     this.user = this.shared.getUser()
     console.log(this.user)
-   }
-   displayedColumns: string[] = ['select', 'from', 'to', 'importance', 'subject', 'time'];
-  ngOnInit(): void {
     // this.folder = this.shared.getFolders()
     // let fol =this.route.snapshot.paramMap.get('name')!;
     // console.log("hi    " + fol)
@@ -115,7 +158,7 @@ export class FolderComponent implements OnInit {
     if(this.selectedMails.includes(id))
     {
       
-      this.selectedMails.splice(this.selectedMails.indexOf(id), 1)
+      this.selectedMails.splice(Number(this.selectedMails.indexOf(id)), 1)
     }
     else
     {
@@ -189,17 +232,28 @@ export class FolderComponent implements OnInit {
         this.mails = []
         let MAILS = this.shared.getMails()
         for(let i of this.id)
-          this.mails.push(MAILS[i])
+      {
+        // let h !: number
+        for(let j = 0; j < MAILS.length; j++)
+        {
+          if(i == MAILS[j].id)
+          {
+            this.mails.push(MAILS[j])
+          }
+        }
+      }
         this.dataSource = new MatTableDataSource<Mail>(this.mails);
       }
     )
   }
   operButClick()
   {
+    console.log("apple")
     let tempIdx : number = -1
     let tempToFolder : number = -1
     if(this.operation == "move" || this.operation=="delete")
     {
+      console.log("bag")
       let allMailsIdx = -1
       let temp = this.foldText
       if(this.operation == "delete")
@@ -234,40 +288,128 @@ export class FolderComponent implements OnInit {
         alert("File not found")
         return
       }
-      for(let i = 0; i < this.selectedMails.length; i++)
+      for(let i =0; i < this.folder.length; i++)
       {
-        for(let j = 0; j < this.folder.length; j++)
+        console.log("cat")
+        if(this.folder[i].name == this.fileIn)
         {
-          if(this.folder[j].name == this.fileIn || (this.folder[j].name == "allMails" && this.operation=="delete"))
-          {
-            if(this.operation=="delete")
-            {
-              allMailsIdx = j
-              this.folder[j].id.splice(this.folder[j].id.indexOf(this.selectedMails[i]), 1)
-            }
-            tempIdx = j
-            this.folder[j].id.splice(this.folder[j].id.indexOf(this.selectedMails[i]), 1)
-          }
-          // else if(this.folder[j].name == temp)
-          // {
-          //   
-          // }
+          tempIdx = i
+          break
         }
       }
-      this.shared.setFolderID(this.fileIn, this.folder[tempIdx].id)
-      let tempArr = this.selectedMails.concat(this.folder[tempToFolder].id)
+      for(let i =0; i < this.folder.length; i++)
+      {
+        if(this.folder[i].name == "allMails")
+        {
+          allMailsIdx = i
+          break
+        }
+      }
+      let hArr = []
+      console.log("!!!!!")
+      console.log(this.selectedMails.length)
+      for(let i =0; i < this.selectedMails.length; i++)
+      {
+        hArr.push(Number(this.selectedMails[i]))
+        console.log("Number(this.selectedMails[i])")
+      }
+      let hArr1 = []
+      for(let i = 0; i < this.folder[tempIdx].id.length; i++)
+      {
+        if(!(hArr.includes(this.folder[tempIdx].id[i])))
+        {
+          hArr1.push(this.folder[tempIdx].id[i])
+          console.log("here")
+        }
+      }
+      let hAll = []
+      if(this.operation == "delete")
+      {
+        for(let i = 0; i < this.folder[allMailsIdx].id.length; i++)
+        {
+          if(!(hArr.includes(this.folder[allMailsIdx].id[i])))
+          {
+            hAll.push(this.folder[allMailsIdx].id[i])
+            // console.log("here")
+          }
+        }
+      }
+      console.log("here")
+      // console.log("how" + this.selectedMails)
+      /////////////////////////
+      // for(let i = 0; i < this.selectedMails.length; i++)
+      // {
+      //   for(let j = 0; j < this.folder.length; j++)
+      //   {
+      //     if(this.folder[j].name == this.fileIn || (this.folder[j].name == "allMails" && this.operation=="delete"))
+      //     {
+      //       if(this.operation=="delete")
+      //       {
+      //         allMailsIdx = j
+      //         let hh = -99
+      //         for(let k = 0; k < this.folder[j].id.length; k++)
+      //         {
+      //           if(this.folder[j].id[k] ==  Number(this.selectedMails[i]))
+      //           {
+      //             hh = k
+      //             console.log("***" + hh)
+      //             break
+      //           }
+      //         }
+      //         // console.log("hiiii" + this.folder[j].id.indexOf(Number(this.selectedMails[i])))
+      //         this.folder[j].id.splice(hh, 1)
+      //       }
+      //       let hh = -99
+      //       for(let k = 0; k < this.folder[j].id.length; k++)
+      //         {
+      //           if(this.folder[j].id[k] == Number(this.selectedMails[i]))
+      //           {
+      //             hh = k
+      //             console.log("***" + hh)
+      //             break
+      //           }
+      //         }
+      //       tempIdx = j
+      //       this.folder[j].id.splice(hh, 1)
+      //     }
+      //     // else if(this.folder[j].name == temp)
+      //     // {
+      //     //   
+      //     // }
+      //   }
+      // }
+      /////////////////////////////
+      this.shared.setFolderID(this.fileIn, hArr1)
+      // let tempArr = hArr
+      let tempArr = hArr.concat(this.folder[tempToFolder].id)
+      console.log("Bosss")
+      console.log(hArr1)
+      // console.log(this.folder[tempToFolder].id)
       this.folder[tempToFolder].id = tempArr
       if(this.operation == "delete")
       {
-        this.shared.setFolderID("allMails", this.folder[allMailsIdx].id)
+        this.shared.setFolderID("allMails", hAll)
       }
       this.shared.setFolderID(temp, tempArr)
       let MAILS = this.shared.getMails()
-      this.id = this.folder[tempIdx].id
+      console.log("watch")
+      // console.log(MAILS)
+      this.id = hArr1
       this.mails = []
       this.selectedMails = []
       for(let i of this.id)
-        this.mails.push(MAILS[i])
+      {
+        // let h !: number
+        for(let j = 0; j < MAILS.length; j++)
+        {
+          if(i == MAILS[j].id)
+          {
+            this.mails.push(MAILS[j])
+            console.log(MAILS[j])
+            break
+          }
+        }
+      }
       this.dataSource = new MatTableDataSource<Mail>(this.mails);
 
     }
@@ -282,19 +424,43 @@ export class FolderComponent implements OnInit {
       params:{
           user: this.shared.getUser(),
           folder: this.fileIn,
-          seatchBy: this.colParam,
+          searchBy: this.colParam,
           equal: this.keyText
       },
       observe:'response'
     }).subscribe(
       response =>{
-        this.res =JSON.parse(<string>response.body)
-        this.id = this.res.ans
-        this.mails = []
+        this.res = response.body
+        let foldIdx!: number
+        for(let i = 0; i < this.folder.length; i++)
+        {
+          if(this.fileIn == this.folder[i].name)
+          {
+            foldIdx = i
+            break
+          }
+        }
+        this.id = []
+        for(let i = 0; i < this.res.length; i++)
+        {
+          this.id.push(Number(this.res[i]))
+        }
         let MAILS = this.shared.getMails()
+        // this.id = this.folder[temp].id
+        this.mails = []
+        // this.selectedMails = []
         for(let i of this.id)
-          this.mails.push(MAILS[i])
-        this.dataSource = new MatTableDataSource<Mail>(this.mails);
+      {
+        // let h !: number
+        for(let j = 0; j < MAILS.length; j++)
+        {
+          if(i == MAILS[j].id)
+          {
+            this.mails.push(MAILS[j])
+          }
+        }
+      }
+      this.dataSource = new MatTableDataSource<Mail>(this.mails);
         // this.folder[foldIdx].id = this.res.ans
         // if(order == 'asc')
         // {
@@ -349,6 +515,11 @@ export class FolderComponent implements OnInit {
     document.getElementById("butDiv")!.style.display="none"
     document.getElementById("textDiv2")!.style.display="none"
     this.operation ="delete"
+    // this.http.delete("http://localhost:8888/controller/delete",
+    // params:{
+    //   a:x
+    // }
+    // )
     if(this.fileIn != "trash")
     {
       let trashIdx = -1
@@ -408,7 +579,7 @@ export class FolderComponent implements OnInit {
           {
             tempAll = j
           }
-          this.folder[j].id.splice(this.folder[j].id.indexOf(this.selectedMails[i]), 1)
+          this.folder[j].id.splice(this.folder[j].id.indexOf(Number(this.selectedMails[i]) ), 1)
         }
       }
     }
@@ -419,7 +590,17 @@ export class FolderComponent implements OnInit {
       this.mails = []
       this.selectedMails = []
       for(let i of this.id)
-        this.mails.push(MAILS[i])
+      {
+        // let h !: number
+        for(let j = 0; j < MAILS.length; j++)
+        {
+          if(i == MAILS[j].id)
+          {
+            this.mails.push(MAILS[j])
+            break;
+          }
+        }
+      }
     this.dataSource = new MatTableDataSource<Mail>(this.mails);
   }
 }

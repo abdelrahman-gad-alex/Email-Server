@@ -20,7 +20,7 @@ public class FilterController {
             filter = new GeneralCriteria(searchBy, equal) ;
         }
 
-        return filter.filter((LinkedList<Message>) messages.values()) ;
+        return filter.filter(new LinkedList<Message>( messages.values()) ) ;
 
     }
 

@@ -28,9 +28,9 @@
             </div>
 
         </div>
-        <div class="labels">
+        <div class="labels" *ngFor="let file of attachedFileURL;let i = index">
             <div >
-                <a id="att" [href]="x2" target="_blank" style="display: inline;">{{xname}}</a>
+                <a id="att" [href]="file" target="_blank" style="display: inline;">{{attachedFile[i]}}</a>
             </div>
 
         </div>

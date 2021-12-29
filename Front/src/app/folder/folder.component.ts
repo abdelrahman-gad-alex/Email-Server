@@ -8,7 +8,6 @@ import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import { SelectionModel } from '@angular/cdk/collections';
 import { SharedService } from '../shared/shared.service';
-import { MAILS } from '../inboxMail';
 import { Ifolders } from '../Ifolders';
 import { HttpClient } from '@angular/common/http';
 // import { HttpClient } from '@angular/common/http';

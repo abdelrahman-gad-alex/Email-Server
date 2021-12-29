@@ -22,14 +22,14 @@
 }
 
 .mail-compose span{
-    width: 70px;
+    width: 100px;
     display: inline-block;
 
     padding: 0.5rem 0.3rem;
 }
 
 .mail-compose input{
-    width: 90%;
+    width: 80%;
     border:none;
     padding: 0.6rem 0.0 ;
     outline: none;

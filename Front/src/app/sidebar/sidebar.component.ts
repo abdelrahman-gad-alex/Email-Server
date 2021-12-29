@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { faStar,faFile,faClock,faPaperPlane,faBookmark ,faTrash } from '@fortawesome/free-solid-svg-icons';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MAILS } from '../inboxMail';
 import { FOLDERS } from '../folders';
 import { zip } from 'rxjs';
 import { SharedService } from '../shared/shared.service';
@@ -24,14 +23,16 @@ export class SidebarComponent implements OnInit {
   faTrash=faTrash
   mails=this.shared.getMails()
 
+  singleton: any = null
+
   folders=this.shared.getFolders()
   newFolderName:String="";
   curFolder:String="";
-  reloadComponent() {
+  public reloadComponent(boo:boolean) {
     let currentUrl = this.router.url;
         this.router.routeReuseStrategy.shouldReuseRoute = () => false;
         this.router.onSameUrlNavigation = 'reload';
-        this.http.get("http://localhost:8888/controller/login",{
+        this.http.get("http://localhost:8080/controller/login",{
       responseType:'text',
       params:{
           email: this.shared.getUser(),
@@ -75,6 +76,7 @@ export class SidebarComponent implements OnInit {
           temp.to = tempArr[i].massageMap.to
           temp.subject = tempArr[i].massageMap.subject
           temp.mailContent = tempArr[i].massageMap.mailContent
+          temp.file = tempArr[i].massageMap.file
           mails.push(temp)
           // console.log(temp)
         }
@@ -95,8 +97,7 @@ export class SidebarComponent implements OnInit {
 
 
 
-
-
+    
 
 
 
@@ -109,17 +110,21 @@ export class SidebarComponent implements OnInit {
         this.router.navigate([currentUrl]);
     }
 
+    /**
+     * name
+     */
+
     constructor(private http:HttpClient, private route: ActivatedRoute, private router: Router, private shared: SharedService) {
       console.log('MEntoconst')
       this.router.routeReuseStrategy.shouldReuseRoute = () => false;
       setInterval(() => {
   
       }, 1);
-  
     }
   ngOnInit(): void {
     this.curFolder =this.route.snapshot.paramMap.get('name')!;
-
+    if (this.curFolder=="sent"){
+    }
   }
 
   showA(){

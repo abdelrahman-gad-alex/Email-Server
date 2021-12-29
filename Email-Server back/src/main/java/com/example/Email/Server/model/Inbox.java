@@ -137,6 +137,9 @@ public class Inbox {
 
 
     }
+    public Message getMessage(Long ID){
+        return allMails.get(ID) ;
+    }
 
 
 

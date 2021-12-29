@@ -4,11 +4,12 @@ import { faPaperclip } from '@fortawesome/free-solid-svg-icons';
 import { Location } from '@angular/common'
 import { ActivatedRoute } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpParams } from '@angular/common/http';
 import { Observable, observable } from 'rxjs';
 import { map } from 'rxjs';
 import { Mail } from '../mail';
 import { SharedService } from '../shared/shared.service';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 @Injectable({
   providedIn: 'root' 
 })
@@ -54,10 +55,11 @@ x:String="";
       console.log(this.shared.getFolders())
 
   }
-  sendmail(email?: mailing):Observable<any>
+  sendmail(email: mailing):Observable<HttpEvent<any>>
   {
     console.log(email)
-    return this.http.post<any>("http://localhost:8888/controller/sendEmail",email) 
+    return this.http.post<any>("http://localhost:8080/controller/sendEmail",email)
+ 
   }
   temp = new Date()
   cMail !: mailing;
@@ -67,14 +69,25 @@ x:String="";
     console.log(this.subjectText)
     console.log(this.conText)
     let temp = new Date()
-    this.cMail = new mailing(this.shared.getUser(), this.to.split(','), this.subjectText, this.conText, temp.toString(), this.importance); 
+    this.cMail = new mailing(this.shared.getUser(), this.to.split(','), this.subjectText, this.conText, temp.toDateString(), this.importance ,this.attachedFileName); 
     let res !: any
     let resp !: any
-    this.sendmail(this.cMail).subscribe((temp?: any)=>
+    this.sendmail(this.cMail).subscribe(temp =>
     {
-      res = temp
-      resp = temp.res
-      console.log(resp)
+       res = temp
+       console.log(res)
+       if (res=="done"){
+        const fd=new FormData()
+        for (let file of this.attachedFile){
+        fd.append('file',file)
+        }
+        this.http.post<any>("http://localhost:8080/controller/sendfile",fd).subscribe(tem=>{
+          console.log(tem)
+        })
+        
+       }
+       
+
     })
    
   
@@ -91,7 +104,6 @@ x:String="";
     this.c++;
     this.x1= <string>this.sanitizer.bypassSecurityTrustUrl(this.x1)
     this.attachedFileUrl.push(this.x1)
-  
   }
   remove(i:number){
     this.attachedFile.splice(i,1)
@@ -100,10 +112,20 @@ x:String="";
     this.x1=""
   }
 
+file64:string=""
+  convert(){
+  
+    let reader=new FileReader();
+  reader.readAsDataURL(this.attachedFile[0] as Blob)
+  reader.onload=() => {
+    this.file64=(reader.result as string)
+  }
+
 }
-function observe(arg0: string, arg1: { email: Mail; }, observe: any, arg3: string) {
-  throw new Error('Function not implemented.');
+
 }
+
+
 
 class mailing
 {
@@ -113,7 +135,8 @@ class mailing
   mailContent!:string;
   time!: string;
   importance!:number;
-  constructor(a:string, b: string[], c: string, d: string, e: string,f: number)
+  file!:String[];
+  constructor(a:string, b: string[], c: string, d: string, e: string,f: number,g:String[])
   {
     this.from = a
     this.to = b
@@ -121,6 +144,7 @@ class mailing
     this.mailContent = d
     this.time = e
     this.importance = f
+    this.file= g
   }
   
 }

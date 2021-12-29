@@ -24,6 +24,17 @@
     },
     "importance": {
       "type": "string"
+    },
+    "file": {
+      "type": "array",
+      "items": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "string"
+        }
+      ]
     }
   },
   "required": [
@@ -32,6 +43,7 @@
     "subject",
     "mailContent",
     "time",
-    "importance"
+    "importance",
+    "file"
   ]
 }

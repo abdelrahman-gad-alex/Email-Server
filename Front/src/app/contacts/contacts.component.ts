@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faStar,faFile,faClock,faPaperPlane,faBookmark ,faTrash } from '@fortawesome/free-solid-svg-icons';
@@ -32,7 +33,7 @@ export class ContactsComponent implements OnInit {
 
 
 
-  constructor(private route: ActivatedRoute,  private shared:SharedService, private router: Router) {
+  constructor(private route: ActivatedRoute,  private shared:SharedService, private router: Router, private http:HttpClient) {
     console.log('MEntoconst')
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     setInterval(() => {
@@ -84,18 +85,20 @@ export class ContactsComponent implements OnInit {
       }
     if (st){
       this.shared.getContacts().push( {"name": this.newContactName ,"mail":[this.newContactMail] }  )
-    document.getElementById("cnameI")!.style.display="none"
+      var map = new Map();    
+      this.http.post<string>("http://localhost:8080/controller/addcontact",{"user":this.shared.getUser(),"name":(this.newContactName),"emails":[this.newContactMail]})
+      document.getElementById("cnameI")!.style.display="none"
     document.getElementById("cemailI")!.style.display="none"
     document.getElementById("cnameBTN2")!.style.display="none"
     this.newContactName=""
     this.newContactMail=""
-    }
+
     }
   }
-  }
+}}
 
   
-  update(x:number){
+update(x:number){
     this.selected=x
     this.editName=this.shared.getContacts()[x].name
     this.arr=this.shared.getContacts()[x].mail
@@ -109,7 +112,7 @@ export class ContactsComponent implements OnInit {
       document.getElementById("mail"+i)!.style.display="none"
     }
   }
-  }
+}
 
   showEdit(){
     if (this.selected==-1){
@@ -134,11 +137,20 @@ edit(){
   }
   else{
     console.log(this.editName)
+    var x=this.shared.getContacts()[this.selected].name
     this.shared.getContacts()[this.selected].name=this.editName
     for (let i=0 ;i<this.arr.length;i++){
       this.shared.getContacts()[this.selected].mail[i]=this.arr[i]
       console.log(this.shared.getContacts()[this.selected].mail[i])
     }
+    this.http.get("http://localhost:8080/controller/editcontact",{
+      params:{
+       user:this.shared.getUser(),
+       oldname:x.toString(),
+       newname:this.shared.getContacts()[this.selected].name.toString(),
+       emails: this.shared.getContacts()[this.selected].mail.toString()
+      }
+    })  
     let currentUrl = this.router.url;
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.router.onSameUrlNavigation = 'reload';
@@ -153,6 +165,14 @@ trackByIdx(index: number, obj: any): any {
 delete(){
   if (this.selected==-1){
     alert("Please Select a contact before press edit")
+    this.http.delete("http://localhost:8080/controller/deletecontact",
+    {
+      params:{
+        user:this.shared.getUser(),
+        name:this.shared.getContacts()[this.selected].name.toString()
+      }
+      
+    })
   }
   else{
     this.shared.getContacts().splice (this.selected,1)

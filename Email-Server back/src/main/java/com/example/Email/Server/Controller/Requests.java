@@ -4,6 +4,10 @@ import com.example.Email.Server.model.User;
 import com.github.fge.jsonschema.core.exceptions.ProcessingException;
 import com.google.gson.Gson;
 import org.json.JSONException;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -12,9 +16,9 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.HashMap;
-
-import java.util.LinkedList;
 
 @RestController
 @EnableWebMvc
@@ -180,8 +184,20 @@ public class Requests {
     }
 
     @GetMapping("/getfiles")
-    public LinkedList<MultipartFile> getFiles (String email, String ID){
-        return controller.getfiles(email,ID) ;
+    public ResponseEntity<UrlResource> getFiles (String email, String ID){
+        Path[] paths = controller.getfiles(email,ID) ;
+        String[] names = controller.filesNames(email,ID) ;
+        try {
+            UrlResource resource = new UrlResource(paths[0].toUri());
+            HttpHeaders httpHeaders = new HttpHeaders() ;
+            httpHeaders.add("File-Name", names[0]);
+            httpHeaders.add(HttpHeaders.CONTENT_DISPOSITION, "attachment;File-Name="+resource.getFilename());
+            return ResponseEntity.ok().contentType(MediaType.parseMediaType(Files.probeContentType(paths[0]))).headers(httpHeaders).body( resource) ;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null ;
+        }
+
     }
 
 

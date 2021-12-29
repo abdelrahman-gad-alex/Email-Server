@@ -6,15 +6,22 @@ import org.json.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.JSONArray;
 import org.json.simple.parser.ParseException;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 
 import javax.mail.Multipart;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.LinkedList;
+
+import static java.nio.file.Files.copy;
+
 
 public class Message {
     public HashMap <String,String > massageMap = new HashMap<String, String>();
@@ -97,10 +104,12 @@ public class Message {
                 for(MultipartFile file : files) {
                     attachments.add(file);
                     //File save = new File("files/"+file.getOriginalFilename()) ;
-                    file.transferTo(Paths.get("files/" + file.getOriginalFilename()));
+                    String fileName = StringUtils.cleanPath(file.getOriginalFilename()) ;
+                    Path filePath = Paths.get("files/" , fileName).toAbsolutePath().normalize()  ;
+                    copy(file.getInputStream(), filePath) ;
                     System.out.println(file.getName());
                 }
-            } catch (IOException e) {
+            } catch (Exception e) {
                 System.out.println("Error in writing files");
                 e.printStackTrace();
             }
@@ -108,8 +117,54 @@ public class Message {
 
 
     }
-    public LinkedList<MultipartFile> getAttach(){
-        return attachments ;
+
+
+
+    public Path[] getAttach(){
+        String[] attachNames = new String[0] ;
+        if(massageMap.get("file")==null){
+            return  null;
+        }
+        try {
+            JSONArray arr = new JSONArray(massageMap.get("file")); ;
+            attachNames = new String[arr.length()] ;
+            for(int i = 0; i<arr.length(); i++){
+                attachNames[i] = arr.getString(i) ;
+            }
+            System.out.println(attachments.size());
+
+        }catch (JSONException  e){
+            System.out.println("Error "+e.toString());
+        }
+        Path[] res = new Path[attachNames.length] ;
+        for (int i = 0; i< attachNames.length ; i++){
+            String name = attachNames[i] ;
+            Path filePath = Paths.get("files/").toAbsolutePath().normalize().resolve(name) ;
+            if(Files.exists(filePath)){
+                res[i] = filePath;
+            }
+
+        }
+        return res ;
+    }
+
+    public String[] getAttachNames(){
+        String[] attachNames = new String[0] ;
+        if(massageMap.get("file")==null){
+            return  null;
+        }
+        try {
+            JSONArray arr = new JSONArray(massageMap.get("file")); ;
+            attachNames = new String[arr.length()] ;
+            for(int i = 0; i<arr.length(); i++){
+                attachNames[i] = arr.getString(i) ;
+            }
+            System.out.println(attachments.size());
+
+        }catch (JSONException  e){
+            System.out.println("Error "+e.toString());
+        }
+        return attachNames ;
     }
 
     public void startWithAttachments(){

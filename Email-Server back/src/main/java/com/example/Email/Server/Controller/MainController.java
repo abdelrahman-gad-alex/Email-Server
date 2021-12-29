@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import org.json.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.LinkedList;
 
 public class MainController {
@@ -121,11 +123,17 @@ public class MainController {
 
     }
 
-    public LinkedList<MultipartFile> getfiles(String email, String ID) {
+    public Path[] getfiles(String email, String ID) {
         Message m = mails.getUser(email).inbox.getMessage(Long.parseLong(ID));
         return m.getAttach();
+    }
+
+    public String[] filesNames(String email, String ID){
+        Message m = mails.getUser(email).inbox.getMessage(Long.parseLong(ID));
+        return m.getAttachNames();
 
     }
+
     public String draftEmail (String mailStr){
         System.out.println(mailStr);
 

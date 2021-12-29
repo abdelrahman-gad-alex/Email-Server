@@ -67,7 +67,7 @@
     <orderEntry type="library" scope="TEST" name="Maven: org.springframework:spring-test:5.3.13" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.xmlunit:xmlunit-core:2.8.3" level="project" />
     <orderEntry type="library" name="Maven: com.vaadin.external.google:android-json:0.0.20131108.vaadin1" level="project" />
-    <orderEntry type="library" name="Maven: com.google.code.gson:gson:2.8.6" level="project" />
+    <orderEntry type="library" name="Maven: com.google.code.gson:gson:2.8.9" level="project" />
     <orderEntry type="library" name="Maven: net.minidev:json-smart:2.4.7" level="project" />
     <orderEntry type="library" name="Maven: net.minidev:accessors-smart:2.4.7" level="project" />
     <orderEntry type="library" name="Maven: org.ow2.asm:asm:9.1" level="project" />
@@ -91,5 +91,6 @@
     <orderEntry type="library" name="Maven: church.i18n:processing.exception:0.1.0" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.32" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.jetbrains:annotations:20.1.0" level="project" />
+    <orderEntry type="library" name="Maven: com.sun.jini:sun-util:2.1" level="project" />
   </component>
 </module>

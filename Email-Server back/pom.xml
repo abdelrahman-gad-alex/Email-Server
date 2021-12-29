@@ -41,8 +41,7 @@
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
-			<version>2.8.6</version>
-		</dependency>
+        </dependency>
         <dependency>
             <groupId>net.minidev</groupId>
             <artifactId>json-smart</artifactId>
@@ -66,6 +65,12 @@
 			<groupId>church.i18n</groupId>
 			<artifactId>processing.exception</artifactId>
 			<version>0.1.0</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.jini</groupId>
+			<artifactId>sun-util</artifactId>
+			<version>2.1</version>
 			<scope>compile</scope>
 		</dependency>
 	</dependencies>

@@ -124,6 +124,19 @@ public class MainController {
         Message m = mails.getUser(email).inbox.getMessage(Long.parseLong(ID)) ;
         return m.getAttach() ;
 
+
+    public String draftEmail (String mailStr){
+        System.out.println(mailStr);
+
+        Message m = new Message(mailStr);
+
+        User from = mails.getUser(m.getFrom()) ;
+        from.adddraft(m);
+        // save mails
+        update() ;
+
+        return "done" ;
+
     }
 
     public String addcontact(String addcontact)

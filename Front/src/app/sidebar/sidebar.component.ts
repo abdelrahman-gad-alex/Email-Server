@@ -22,8 +22,9 @@ export class SidebarComponent implements OnInit {
   res: any
   faBookmark=faBookmark;
   faTrash=faTrash
-  mails =MAILS
-  folders=FOLDERS
+  mails=this.shared.getMails()
+
+  folders=this.shared.getFolders()
   newFolderName:String="";
   curFolder:String="";
   reloadComponent() {
@@ -52,7 +53,7 @@ export class SidebarComponent implements OnInit {
         let mails: Mail[] = []
         for(let i =0; i < tempArr.length; i++)
         {
-          let temp : Ifolders = new Ifolders(tempArr[i].name, tempArr[i].id)
+          let temp : Ifolders = new Ifolders(tempArr[i].name, tempArr[i].id.reverse())
           folders.push(temp)
         }
         tempArr = this.res.contacts
@@ -73,7 +74,7 @@ export class SidebarComponent implements OnInit {
           temp.importance = tempArr[i].massageMap.importance
           temp.to = tempArr[i].massageMap.to
           temp.subject = tempArr[i].massageMap.subject
-          temp.mailContent = tempArr[i].massageMap.emailcontent
+          temp.mailContent = tempArr[i].massageMap.mailContent
           mails.push(temp)
           // console.log(temp)
         }
@@ -147,18 +148,19 @@ export class SidebarComponent implements OnInit {
     if(this.newFolderName=="")
     alert("Please Enter A folder Name")
     else{
-      let obj = FOLDERS.find(f=>f.name==this.newFolderName);
+      let obj = this.shared.getFolders().find(f=>f.name==this.newFolderName);
       
       if (obj){
         alert("There ara a folder with the same selected name . Please choose new name.")
       }
       else{
-    FOLDERS.push(  {"name": this.newFolderName ,"id":[] }    )
+        this.shared.getFolders().push(  {"name": this.newFolderName ,"id":[] }    )
     document.getElementById("nameI")!.style.display="none";
       this.newFolderName=""
     document.getElementById("nameBTN")!.style.display="none";
       }
     }
+    console.log(this.shared.getFolders())
   }
   remove()
   {
@@ -173,15 +175,16 @@ export class SidebarComponent implements OnInit {
         alert("Main Folder Cannot Be Delated")
         break;
       default:
-        const index = FOLDERS.findIndex(object => {
+        const index = this.shared.getFolders().findIndex(object => {
           return object.name === 'this.curFolder';
         });
-        FOLDERS.splice (index,1)
+        this.shared.getFolders().splice (index,1)
         this.router.navigate(['folder',"inbox"])
       break;
 
     }
-  
+    console.log(this.shared.getFolders())
+
   }
   rename()
   {    
@@ -197,7 +200,8 @@ export class SidebarComponent implements OnInit {
           alert ("Main Folder Cannot Be Renamed");
           break;
         default:
-          let obj = FOLDERS.find(f=>f.name==this.curFolder);
+          let obj = this.shared.getFolders().find(f=>f.name==this.curFolder);
+          
           if (obj){
           obj!.name=this.newFolderName
           this.router.navigate(['folder',this.newFolderName])
@@ -206,6 +210,7 @@ export class SidebarComponent implements OnInit {
           document.getElementById("nameBTN2")!.style.display="none";
           }
     }
+
   }
 
 }

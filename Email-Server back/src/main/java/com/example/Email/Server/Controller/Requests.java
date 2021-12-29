@@ -21,6 +21,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+
+import java.util.HashMap;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -70,10 +73,37 @@ public class Requests {
         return new Gson().toJson(controller.sendEmail(mail));
     }
 
-    @PostMapping("/addcontact")
+
+  
+    @PostMapping("/draftEmail")
+    public String draftReqest(@RequestBody String mail) throws IOException,ProcessingException {
+        System.out.println(mail);
+        File FLE = new File("src/main/java/com/example/Email/Server/model/email.json");
+        try (FileWriter FILE = new FileWriter(FLE)){
+            FILE.write(mail);
+            FILE.flush();
+        }catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        File schemaFile = new File("src/main/java/com/example/Email/Server/model/schema.json");
+        if (ValidationUtils.isJsonValid(schemaFile, FLE)){
+            System.out.println("Valid!");
+            FLE.delete();
+
+        }else{
+            System.out.println("NOT valid!");
+            FLE.delete();
+            return new Gson().toJson("invalid content of email")  ;
+        }
+        return new Gson().toJson(controller.draftEmail(mail))  ;
+    }
+
+      @PostMapping("/addcontact")
     public String addcontact(@RequestBody String addcontact) {
         return new Gson().toJson(controller.addcontact(addcontact));
     }
+
 
     @GetMapping("/editcontact")
     public String editcontact(@RequestParam String contact, @RequestParam String email) {
@@ -110,8 +140,12 @@ public class Requests {
 
     // for sorting
     @GetMapping("/sort")
-    public int[] sort(@RequestParam String body, @RequestParam String foldr, @RequestParam String method) {
-        return controller.getarraysorted(body, foldr, method);
+    public String sort(@RequestParam String body, @RequestParam String foldr, @RequestParam String method)
+    {
+        HashMap<String, Object> tempHM = new HashMap<String, Object>();
+        tempHM.put("ans", controller.getarraysorted(body,foldr,method));
+        Gson gs = new Gson();
+        return gs.toJson(tempHM);
     }
 
     @GetMapping("/sortcontact")

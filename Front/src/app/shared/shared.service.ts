@@ -29,6 +29,16 @@ export class SharedService {
   {
     return this.user
   }
+  setFolderID(fileName : string, idArr: number[])
+  {
+    for(let j = 0; j < this.folders.length; j++)
+     {
+       if(this.folders[j].name == fileName)
+       {
+        this.folders[j].id = idArr
+       }
+     }
+  }
   getFolders()
   {
     return this.folders

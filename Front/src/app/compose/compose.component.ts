@@ -41,7 +41,7 @@ x:String="";
   toText:string = ""
   subjectText:string = ""
   conText:string = ""
-  importance :number=0;
+  importance :number=1;
   // Text:string = ""
   back(): void {
     this.location.back()
@@ -52,6 +52,8 @@ x:String="";
     let mail =this.route.snapshot.paramMap.get('mail')!;
     if (mail!="none")
       this.to=mail
+      console.log(this.shared.getFolders())
+
   }
   sendmail(email: mailing):Observable<HttpEvent<any>>
   {

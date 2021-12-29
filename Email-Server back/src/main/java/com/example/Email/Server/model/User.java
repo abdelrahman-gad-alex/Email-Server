@@ -1,9 +1,9 @@
 package com.example.Email.Server.model;
 
 import com.google.gson.Gson;
-//import org.json.simple.JSONObject;
+import org.json.simple.JSONObject;
 import org.json.JSONException;
-import org.json.JSONObject;
+//import org.json.JSONObject;
 import java.util.LinkedList;
 
 
@@ -115,7 +115,7 @@ public  class User implements Ibulider1{
             obj.put("mails", mails) ;
             obj.put("folders", folders) ;
             obj.put("contacts", contact.getContacts()) ;
-        } catch (JSONException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

@@ -53,16 +53,13 @@ x:String="";
     if (mail!="none")
       this.to=mail
   }
-  sendmail(email: File):Observable<HttpEvent<any>>
+  sendmail(email: mailing):Observable<HttpEvent<any>>
   {
     console.log(email)
     const fd = new FormData()
     fd.append('file',this.attachedFile[0])
     console.log(fd)
-    let headers = new Headers();
-    headers.append('Accept', 'application/json');
-    headers.append("Content-Type", 'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW');
-    return this.http.post<any>("http://localhost:8080/controller/sendfile",fd)
+    return this.http.post<any>("http://localhost:8080/controller/sendEmail",email)
  
   }
   temp = new Date()
@@ -73,13 +70,24 @@ x:String="";
     console.log(this.subjectText)
     console.log(this.conText)
     let temp = new Date()
-    //this.cMail = new mailing(this.shared.getUser(), this.to.split(','), this.subjectText, this.conText, temp.toDateString(), this.importance ,this.file64); 
+    this.cMail = new mailing(this.shared.getUser(), this.to.split(','), this.subjectText, this.conText, temp.toDateString(), this.importance ,this.attachedFileName); 
     let res !: any
     let resp !: any
-    this.sendmail(this.attachedFile[0]).subscribe(temp =>
+    this.sendmail(this.cMail).subscribe(temp =>
     {
-      res = temp
-      console.log(res)
+       res = temp
+       console.log(res)
+       if (res=="done"){
+        const fd = new FormData()
+        for (let file of this.attachedFile)
+        fd.append('file',file)
+        this.http.post<any>("http://localhost:8080/controller/sendfile",fd).subscribe(tem=>{
+          console.log(tem)
+        })
+  
+       }
+       
+
     })
    
   
@@ -127,8 +135,8 @@ class mailing
   mailContent!:string;
   time!: string;
   importance!:number;
-  file!:string;
-  constructor(a:string, b: string[], c: string, d: string, e: string,f: number,g:string)
+  file!:String[];
+  constructor(a:string, b: string[], c: string, d: string, e: string,f: number,g:String[])
   {
     this.from = a
     this.to = b

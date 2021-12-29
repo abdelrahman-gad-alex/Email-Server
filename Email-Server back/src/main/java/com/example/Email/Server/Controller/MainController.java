@@ -113,6 +113,7 @@ public class MainController {
                 System.out.println("in m");
                 m.setAttachments(files);
             }
+            update() ;
             return "done" ;
         }catch (Exception e){
             return "Error" ;
@@ -136,6 +137,20 @@ public class MainController {
         update() ;
 
         return "done" ;
+
+    }
+
+    public String deleteEmail(String user, String folder, String[] ID){
+        User theUser = mails.getUser(user) ;
+        try {
+            for(String id : ID){
+                theUser.deleteMessage(Long.parseLong(id), folder);
+            }
+            update() ;
+            return "done" ;
+        }catch (Exception e){
+            return "Error" ;
+        }
 
     }
 
@@ -172,13 +187,16 @@ public class MainController {
         }else
             return "contact do not edited" ;
     }
-    public String deletecontact(String contact, String user)
+    public String deletecontact(String contacts[], String user)
     {
         User theUser = mails.getUser(user) ;
-        theUser.deletecontact(contact);
+        for (String contact : contacts){
+            theUser.deletecontact(contact);
+        }
         update() ;
         return "contact deleted";
     }
+
     private void update(){
         mails.save();
     }

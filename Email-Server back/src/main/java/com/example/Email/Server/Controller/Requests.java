@@ -74,6 +74,12 @@ public class Requests {
     }
 
 
+    @DeleteMapping("/deleteEmail")
+    public String deleteEmail(@PathVariable String user, @PathVariable String folder, @PathVariable String[] ID) {
+        return controller.deleteEmail(user, folder, ID);
+    }
+
+
   
     @PostMapping("/draftEmail")
     public String draftReqest(@RequestBody String mail) throws IOException,ProcessingException {

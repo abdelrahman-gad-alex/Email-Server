@@ -10,6 +10,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { SharedService } from '../shared/shared.service';
 import { Ifolders } from '../Ifolders';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 // import { HttpClient } from '@angular/common/http';
 
 
@@ -208,7 +209,7 @@ export class FolderComponent implements OnInit {
       }
     }
     // this.folder[foldIdx].id 
-    this.http.get("http://localhost:8080/controller/sort",{
+    this.http.get("http://localhost:8888/controller/sort",{
       responseType:'text',
       params:{
           body: this.shared.getUser(),
@@ -244,6 +245,11 @@ export class FolderComponent implements OnInit {
         this.dataSource = new MatTableDataSource<Mail>(this.mails);
       }
     )
+  }
+  sendmail(sent?: movePar):Observable<any>
+  {
+    // console.log(email)
+    return this.http.post<any>("http://localhost:8888/controller/movemailtofolder",sent) 
   }
   operButClick()
   {
@@ -286,6 +292,14 @@ export class FolderComponent implements OnInit {
       {
         alert("File not found")
         return
+      }
+      if(this.operation == "move")
+      {
+        this.sendmail(new movePar(this.shared.getUser(), this.fileIn, temp, this.selectedMails)).subscribe((temp?: any)=>
+        {
+          this.res = temp
+        console.log(this.res)
+        })
       }
       for(let i =0; i < this.folder.length; i++)
       {
@@ -514,11 +528,20 @@ export class FolderComponent implements OnInit {
     document.getElementById("butDiv")!.style.display="none"
     document.getElementById("textDiv2")!.style.display="none"
     this.operation ="delete"
-    // this.http.delete("http://localhost:8888/controller/delete",
-    // params:{
-    //   a:x
-    // }
-    // )
+    console.log("Lol")
+    // let tempParam = new deletePar(this.shared.getUser(), this.fileIn, this.selectedMails)
+    this.http.delete("http://localhost:8888/controller/deleteEmail",{
+     responseType:"text",   
+     params:{
+      user: this.shared.getUser(),
+      folder: this.fileIn,
+      ID: this.selectedMails
+    },
+    observe:"response"
+  }
+    ).subscribe(response=>{
+      console.log(response)
+    })
     if(this.fileIn != "trash")
     {
       let trashIdx = -1
@@ -601,5 +624,19 @@ export class FolderComponent implements OnInit {
         }
       }
     this.dataSource = new MatTableDataSource<Mail>(this.mails);
+  }
+}
+class movePar
+{
+  email!: string
+  from!: string
+  to!: string
+  IDs !: number[]
+  constructor(x: string, y:string,w:string ,z: number[])
+  {
+    this.email = x
+    this.from = y
+    this.to = w
+    this.IDs = z
   }
 }

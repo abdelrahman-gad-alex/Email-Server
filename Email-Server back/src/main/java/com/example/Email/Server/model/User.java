@@ -123,7 +123,7 @@ public  class User implements Ibulider1{
 
 
         String mailsSt = new Gson().toJson(obj) ;
-        System.out.println(mails);
+        System.out.println(mailsSt);
                 //new Gson().toJson(mails) ;
         return mailsSt ;
     }

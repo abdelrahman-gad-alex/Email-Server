@@ -121,8 +121,8 @@ public class Requests {
     }
 
     @DeleteMapping("/deletefolder")
-    public String deletefolder(@RequestParam String deletefolder) {
-        return new Gson().toJson(controller.deleteFolder(deletefolder));
+    public String deletefolder(@RequestParam String email,@RequestParam String name) {
+        return new Gson().toJson(controller.deleteFolder(email, name));
     }
 
     @PostMapping("/movemailtofolder")
@@ -136,7 +136,7 @@ public class Requests {
     }
 
     // for sorting
-    @GetMapping("/sort")
+ @GetMapping("/sort")
     public String sort(@RequestParam String body, @RequestParam String foldr, @RequestParam String method)
     {
         HashMap<String, Object> tempHM = new HashMap<String, Object>();

@@ -82,7 +82,7 @@ export class LoginComponent {
       alert("Password length should be bigger than 6")
       return
     }
-    this.http.get("http://localhost:8080/controller/login",{
+    this.http.get("http://localhost:8888/controller/login",{
       responseType:'text',
       params:{
           email: this.myText,

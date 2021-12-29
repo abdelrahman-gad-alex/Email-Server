@@ -91,22 +91,6 @@ export class SidebarComponent implements OnInit {
         alert("Wrong Email or Wrong Password!!")
       }
     })
-
-
-
-
-
-
-    
-
-
-
-
-
-
-
-
-
         this.router.navigate([currentUrl]);
     }
 
@@ -159,6 +143,9 @@ export class SidebarComponent implements OnInit {
         alert("There ara a folder with the same selected name . Please choose new name.")
       }
       else{
+        this.http.post<any>("http://localhost:8080/controller/addfolder",{"email":this.shared.getUser(),"name":this.newFolderName} ).subscribe((res?:any)=>{
+          console.log(res);
+        })
         this.shared.getFolders().push(  {"name": this.newFolderName ,"id":[] }    )
     document.getElementById("nameI")!.style.display="none";
       this.newFolderName=""
@@ -176,13 +163,29 @@ export class SidebarComponent implements OnInit {
       case "sent":
       case "drafts":
       case "trash":
-      case "all-mail":
+      case "allMails":
         alert("Main Folder Cannot Be Delated")
         break;
       default:
         const index = this.shared.getFolders().findIndex(object => {
-          return object.name === 'this.curFolder';
+          return object.name == this.curFolder;
         });
+        console.log(index)
+        this.http.delete("http://localhost:8080/controller/deletefolder",{
+          responseType:"text",
+          params:
+          {
+            
+            email:this.shared.getUser(),
+            name:this.curFolder.toString()
+          
+           
+          },
+          observe:"response",
+         
+        }).subscribe(response=>{
+          console.log(response)
+        })
         this.shared.getFolders().splice (index,1)
         this.router.navigate(['folder',"inbox"])
       break;
@@ -209,6 +212,18 @@ export class SidebarComponent implements OnInit {
           
           if (obj){
           obj!.name=this.newFolderName
+          this.http.get("http://localhost:8080/controller/renamefolder",{
+            responseType:"text",
+            params:
+            {
+              email:this.shared.getUser(),
+              oldname:this.curFolder.toString(),
+              newname:this.newFolderName.toString()
+            },
+            observe:"response" 
+          }).subscribe(response=>{
+            console.log(response)
+          })
           this.router.navigate(['folder',this.newFolderName])
           document.getElementById("nameI2")!.style.display="none";
           this.newFolderName=""

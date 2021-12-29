@@ -39,32 +39,15 @@ public class contacts {
         }
         return false ;
     }
-    public boolean editcontact(String jasString)
+    public boolean editcontact( String oldname, String newname, String[] emails)
     {
-        try {
-            JSONObject jas = new JSONObject(jasString);
-            String oldname = jas.getString("oldname") ;
-            String newname = jas.getString("newname") ;
-
-            JSONArray arrvalues = new JSONArray(jas.getString("mails"));
-            String[] values = new String[arrvalues.length()] ;
-            for(int j = 0; j<arrvalues.length(); j++){
-                values[j] = arrvalues.getString(j) ;
-            }
-
-            if(check(values)){
-                contacts.remove(oldname) ;
-                contacts.put(newname,values) ;
-                return true ;
-            }
-            System.out.println("one of the emails do not exist");
-
-
-        }catch (JSONException e){
-            System.out.println("Error "+e.toString());
+        if(check(emails)){
+            contacts.remove(oldname) ;
+            contacts.put(newname,emails) ;
+            return true ;
         }
+        System.out.println("one of the emails do not exist");
         return false ;
-
     }
 
     public void deletecontact(String name)

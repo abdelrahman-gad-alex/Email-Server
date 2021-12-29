@@ -1,9 +1,9 @@
 package com.example.Email.Server.model;
 
 import com.google.gson.Gson;
-import org.json.simple.JSONObject;
-
-import java.util.HashMap;
+//import org.json.simple.JSONObject;
+import org.json.JSONException;
+import org.json.JSONObject;
 import java.util.LinkedList;
 
 
@@ -45,13 +45,13 @@ public  class User implements Ibulider1{
     {
        return contact.addcontact(jsonContact);
     }
-    public boolean editcontact(String jsonContact)
+    public boolean editcontact( String oldname, String newname, String[] emails)
     {
-        return contact.editcontact(jsonContact);
+        return contact.editcontact(oldname, newname, emails);
     }
-    public void deletecontact(String jsonContact)
+    public void deletecontact(String name)
     {
-        contact.deletecontact(jsonContact);
+        contact.deletecontact(name);
     }
 
 
@@ -111,9 +111,14 @@ public  class User implements Ibulider1{
         LinkedList folders = inbox.getAllFolders() ;
 
         JSONObject obj = new JSONObject() ;
-        obj.put("mails", mails) ;
-        obj.put("folders", folders) ;
-        obj.put("contacts", contact.getContacts()) ;
+        try {
+            obj.put("mails", mails) ;
+            obj.put("folders", folders) ;
+            obj.put("contacts", contact.getContacts()) ;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
 
 
         String mailsSt = new Gson().toJson(obj) ;

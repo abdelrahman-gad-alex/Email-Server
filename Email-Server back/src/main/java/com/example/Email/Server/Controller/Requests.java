@@ -1,33 +1,20 @@
 package com.example.Email.Server.Controller;
 
-import com.example.Email.Server.model.UploadForm;
 import com.example.Email.Server.model.User;
 import com.github.fge.jsonschema.core.exceptions.ProcessingException;
 import com.google.gson.Gson;
 import org.json.JSONException;
-import org.springframework.http.ResponseEntity;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
-import javax.mail.Multipart;
-import javax.servlet.http.HttpServletRequest;
 import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
 
 import java.util.HashMap;
 
 import java.util.LinkedList;
-import java.util.List;
-
-import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 @RestController
 @EnableWebMvc
@@ -75,7 +62,7 @@ public class Requests {
 
 
     @DeleteMapping("/deleteEmail")
-    public String deleteEmail(@PathVariable String user, @PathVariable String folder, @PathVariable String[] ID) {
+    public String deleteEmail(@RequestParam String user, @RequestParam String folder, @RequestParam String[] ID) {
         return controller.deleteEmail(user, folder, ID);
     }
 
@@ -112,13 +99,13 @@ public class Requests {
 
 
     @GetMapping("/editcontact")
-    public String editcontact(@RequestParam String contact, @RequestParam String email) {
-        return controller.editcontact(contact, email);
+    public String editcontact(@RequestParam String user,@RequestParam String oldname,@RequestParam String newname, @RequestParam String[] emails) {
+        return controller.editcontact(user, oldname, newname, emails);
     }
 
     @DeleteMapping("/deletecontact")
-    public String deletecontact(@PathVariable String contact, @PathVariable String email) {
-        return controller.deletecontact(contact, email);
+    public String deletecontact(@RequestParam String user, @RequestParam String[] names) {
+        return controller.deletecontact(user, names);
     }
 
 
@@ -130,7 +117,7 @@ public class Requests {
     }
 
     @DeleteMapping("/deletefolder")
-    public String deletefolder(@PathVariable String deletefolder) {
+    public String deletefolder(@RequestParam String deletefolder) {
         return new Gson().toJson(controller.deleteFolder(deletefolder));
     }
 

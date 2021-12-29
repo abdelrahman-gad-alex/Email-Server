@@ -157,11 +157,15 @@ public class MainController {
     public String addcontact(String addcontact)
     {
         String user ;
-        String contact ;
+        String name ;
+        String emails ;
         try {
             JSONObject jas = new JSONObject(addcontact) ;
             user = jas.getString("user");
-            contact = jas.getString("contact") ;
+            name = jas.getString("name") ;
+            emails = jas.getString("emails") ;
+
+            String contact = new JSONObject().put(name, emails).toString() ;
 
             User theUser = mails.getUser(user) ;
             if (theUser.addconctact(contact)){
@@ -178,19 +182,19 @@ public class MainController {
         }
 
     }
-    public String editcontact(String contact, String user)
+    public String editcontact(String user, String oldname, String newname, String[] emails)
     {
         User theUser = mails.getUser(user) ;
-        if(theUser.editcontact(contact)){
+        if(theUser.editcontact(oldname, newname, emails)){
             update() ;
             return "contact edited";
         }else
             return "contact do not edited" ;
     }
-    public String deletecontact(String contacts[], String user)
+    public String deletecontact(String user, String names[] )
     {
         User theUser = mails.getUser(user) ;
-        for (String contact : contacts){
+        for (String contact : names){
             theUser.deletecontact(contact);
         }
         update() ;

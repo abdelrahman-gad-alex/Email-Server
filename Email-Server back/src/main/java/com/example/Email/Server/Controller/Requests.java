@@ -10,6 +10,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.LinkedList;
 
 @RestController
@@ -121,9 +122,12 @@ public class Requests {
     }
    // for sorting
     @GetMapping("/sort")
-    public int[] sort(@RequestParam String body, @RequestParam String foldr, @RequestParam String method)
+    public String sort(@RequestParam String body, @RequestParam String foldr, @RequestParam String method)
     {
-        return controller.getarraysorted(body,foldr,method);
+        HashMap<String, Object> tempHM = new HashMap<String, Object>();
+        tempHM.put("ans", controller.getarraysorted(body,foldr,method));
+        Gson gs = new Gson();
+        return gs.toJson(tempHM);
     }
     @GetMapping("/sortcontact")
     public String sortcontacts (@RequestParam String body)

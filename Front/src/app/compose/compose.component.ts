@@ -40,7 +40,7 @@ x:String="";
   toText:string = ""
   subjectText:string = ""
   conText:string = ""
-  importance :number=0;
+  importance :number=1;
   // Text:string = ""
   back(): void {
     this.location.back()
@@ -57,7 +57,7 @@ x:String="";
   sendmail(email?: mailing):Observable<any>
   {
     console.log(email)
-    return this.http.post<any>("http://localhost:8080/controller/sendEmail",email) 
+    return this.http.post<any>("http://localhost:8888/controller/sendEmail",email) 
   }
   temp = new Date()
   cMail !: mailing;

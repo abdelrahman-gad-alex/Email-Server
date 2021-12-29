@@ -31,7 +31,7 @@ export class SidebarComponent implements OnInit {
     let currentUrl = this.router.url;
         this.router.routeReuseStrategy.shouldReuseRoute = () => false;
         this.router.onSameUrlNavigation = 'reload';
-        this.http.get("http://localhost:8080/controller/login",{
+        this.http.get("http://localhost:8888/controller/login",{
       responseType:'text',
       params:{
           email: this.shared.getUser(),
@@ -53,7 +53,7 @@ export class SidebarComponent implements OnInit {
         let mails: Mail[] = []
         for(let i =0; i < tempArr.length; i++)
         {
-          let temp : Ifolders = new Ifolders(tempArr[i].name, tempArr[i].id)
+          let temp : Ifolders = new Ifolders(tempArr[i].name, tempArr[i].id.reverse())
           folders.push(temp)
         }
         tempArr = this.res.contacts
@@ -74,7 +74,7 @@ export class SidebarComponent implements OnInit {
           temp.importance = tempArr[i].massageMap.importance
           temp.to = tempArr[i].massageMap.to
           temp.subject = tempArr[i].massageMap.subject
-          temp.mailContent = tempArr[i].massageMap.emailcontent
+          temp.mailContent = tempArr[i].massageMap.mailContent
           mails.push(temp)
           // console.log(temp)
         }

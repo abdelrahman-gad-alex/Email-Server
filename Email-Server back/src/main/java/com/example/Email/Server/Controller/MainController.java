@@ -18,7 +18,7 @@ public class MainController {
     sorting sortt =new sorting();
     FilterController filter = new FilterController() ;
 
-    LinkedList<Message> tempOfLastMessages ;
+    LinkedList<Message> tempOfLastMessages=new LinkedList<Message>() ;
 
     public String Signup(String email) throws JSONException {
         JSONObject json = new JSONObject(email);
@@ -107,6 +107,7 @@ public class MainController {
     public String sendFiles(MultipartFile[] files){
         try {
             for(Message m: tempOfLastMessages){
+                System.out.println("in m");
                 m.setAttachments(files);
             }
             return "done" ;

@@ -95,6 +95,8 @@ public class Message {
             try {
                 attachments.add(file) ;
                 file.transferTo(new File("files/"+file.getName()));
+                System.out.println(file.getName());
+
             } catch (IOException e) {
                 System.out.println("Error in writing files");
                 e.printStackTrace();

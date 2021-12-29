@@ -138,7 +138,7 @@ public class Requests {
 
 
     @PostMapping("/sendfile")
-    public void uploadFile(@RequestParam("files") MultipartFile[] files) {
+    public void uploadFile(@RequestParam("file") MultipartFile[] files) {
         String message = "";
         try {
             controller.sendFiles(files) ;

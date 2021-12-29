@@ -84,7 +84,7 @@ x:String="";
         this.http.post<any>("http://localhost:8080/controller/sendfile",fd).subscribe(tem=>{
           console.log(tem)
         })
-  
+        
        }
        
 

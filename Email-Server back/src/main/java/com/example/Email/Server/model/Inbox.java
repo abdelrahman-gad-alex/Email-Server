@@ -55,7 +55,15 @@ public class Inbox {
         }
         if(folders.get(folder).haveMessage(ID)){
             folders.get(folder).removeMessage(ID);
-            folders.get("allMails").removeMessage(ID);
+            if(folder.equals("allMails")){
+                for(Folder ff : folders.values()){
+                    if(ff.haveMessage(ID)){
+                        ff.removeMessage(ID);
+                    }
+                }
+            }else {
+                folders.get("allMails").removeMessage(ID);
+            }
             folders.get("trash").addMessage(ID);
             return true ;
         }

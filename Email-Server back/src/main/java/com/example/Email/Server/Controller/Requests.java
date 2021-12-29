@@ -136,32 +136,16 @@ public class Requests {
 
     public static final String Directory = System.getProperty("user.home") + "/Downloads/uploads";
 
-    /*
-    @PostMapping("/sendfile")
-        public String recivefile(@RequestParam(value = "file") MultipartFile file) throws IOException {
-        System.out.println(file);
-        FileReader rcvive = new FileReader((File) file);
-
-        //rcvive.write();
-        System.out.println("inn");
-        System.out.println(rcvive);
-        System.out.println(file);
-        return new Gson().toJson(file);
-    }
-
-     */
-
 
     @PostMapping("/sendfile")
-    public void uploadFile(@RequestParam("file") MultipartFile file) {
+    public void uploadFile(@RequestParam("files") MultipartFile[] files) {
         String message = "";
         try {
 
-            message = "Uploaded the file successfully: " + file.getOriginalFilename();
-            System.out.println(file);
+            message = "Uploaded the file successfully: " + files[0].getOriginalFilename();
+            System.out.println(files[0]);
         } catch (Exception e) {
-            message = "Could not upload the file: " + file.getOriginalFilename() + "!";
-            System.out.println(file);
+            System.out.println("error");
 
         }
     }

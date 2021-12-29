@@ -8,6 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.springframework.web.bind.annotation.*;
 import org.json.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.LinkedList;
 
@@ -16,6 +17,8 @@ public class MainController {
     director Direct = new director();
     sorting sortt =new sorting();
     FilterController filter = new FilterController() ;
+
+    LinkedList<Message> tempOfLastMessages ;
 
     public String Signup(String email) throws JSONException {
         JSONObject json = new JSONObject(email);
@@ -66,6 +69,7 @@ public class MainController {
 
     public String sendEmail (String mailStr){
         System.out.println(mailStr);
+        tempOfLastMessages.clear();
 
         Message m = new Message(mailStr);
 
@@ -85,16 +89,32 @@ public class MainController {
 
         User from = mails.getUser(m.getFrom()) ;
         from.addsend(m);
+        tempOfLastMessages.add(m) ;
 
         for(int i=0 ; i< toArr.length ; i++){
             User to = mails.getUser(toArr[i]) ;
-            to.addinbox(m.deepCopy());
+            Message copy = m.deepCopy() ;
+            tempOfLastMessages.add(copy) ;
+            to.addinbox(copy);
         }
         update() ;
 
         return "done" ;
 
         // save mails
+    }
+
+    public String sendFiles(MultipartFile[] files){
+        try {
+            for(Message m: tempOfLastMessages){
+                m.setAttachments(files);
+            }
+            return "done" ;
+        }catch (Exception e){
+            return "Error" ;
+        }
+
+
     }
 
     public String addcontact(String addcontact)

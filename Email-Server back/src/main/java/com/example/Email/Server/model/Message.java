@@ -6,13 +6,20 @@ import org.json.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.JSONArray;
 import org.json.simple.parser.ParseException;
+import org.springframework.web.multipart.MultipartFile;
 
 
+import javax.mail.Multipart;
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.LinkedList;
 
 public class Message {
     public HashMap <String,String > massageMap = new HashMap<String, String>();
     private String jsonObject ;
+
+    private LinkedList<MultipartFile> attachments ;
 
     public Message (String jasString) {
         jsonObject = jasString ;
@@ -26,6 +33,8 @@ public class Message {
                 String value = jas.getString (key);
                 massageMap.put(key, value) ;
             }
+
+
 
         }catch (JSONException  e){
             System.out.println("Error "+e.toString());
@@ -79,6 +88,44 @@ public class Message {
         content.replaceAll("</h6>","");
 
         return content;
+    }
+
+    public void setAttachments(MultipartFile[] attachs){
+        for(MultipartFile file : attachs){
+            try {
+                attachments.add(file) ;
+                file.transferTo(new File("files/"+file.getName()));
+            } catch (IOException e) {
+                System.out.println("Error in writing files");
+                e.printStackTrace();
+            }
+
+        }
+
+    }
+
+    public void startWithAttachments(){
+        if(massageMap.get("file")==null){
+            return  ;
+        }
+        try {
+            JSONArray arr = new JSONArray(massageMap.get("file")); ;
+            String[] attachNames = new String[arr.length()] ;
+            for(int i = 0; i<arr.length(); i++){
+                attachNames[i] = arr.getString(i) ;
+            }
+            System.out.println(attachments.size());
+
+            for (String name: attachNames){
+                File file = new File("files/"+name) ;
+                attachments.add((MultipartFile) file) ;
+
+            }
+
+
+        }catch (JSONException  e){
+            System.out.println("Error "+e.toString());
+        }
     }
 
 

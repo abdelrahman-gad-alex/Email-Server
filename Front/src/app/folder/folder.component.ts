@@ -211,7 +211,7 @@ export class FolderComponent implements OnInit {
       }
     }
     // this.folder[foldIdx].id 
-    this.http.get("http://localhost:8888/controller/sort",{
+    this.http.get("http://localhost:8080/controller/sort",{
       responseType:'text',
       params:{
           body: this.shared.getUser(),
@@ -251,7 +251,7 @@ export class FolderComponent implements OnInit {
   sendmail(sent?: movePar):Observable<any>
   {
     // console.log(email)
-    return this.http.post<any>("http://localhost:8888/controller/movemailtofolder",sent) 
+    return this.http.post<any>("http://localhost:8080/controller/movemailtofolder",sent) 
   }
   operButClick()
   {
@@ -391,7 +391,7 @@ export class FolderComponent implements OnInit {
       {
         alert("Enter text to search for")
       }
-      this.http.get("http://localhost:8888/controller/search",{
+      this.http.get("http://localhost:8080/controller/search",{
       responseType:'text',
       params:{
           user: this.shared.getUser(),
@@ -574,8 +574,9 @@ export class FolderComponent implements OnInit {
     this.operation ="delete"
     console.log("Lol")
     // let tempParam = new deletePar(this.shared.getUser(), this.fileIn, this.selectedMails)
-    this.http.delete("http://localhost:8888/controller/deleteEmail",{
-     responseType:"text",  
+
+    this.http.delete("http://localhost:8080/controller/deleteEmail",{
+     responseType:"text",   
      params:{
       user: this.shared.getUser(),
       folder: this.fileIn,

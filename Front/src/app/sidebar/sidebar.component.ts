@@ -85,13 +85,14 @@ export class SidebarComponent implements OnInit {
         this.shared.setMails(mails)
         // this.shared.setUser(this.myText)
         // this.route.navigate(['folder',"inbox"])
+        this.router.navigate([currentUrl]);
+
       }
       catch(e)
       {
         alert("Wrong Email or Wrong Password!!")
       }
     })
-        this.router.navigate([currentUrl]);
     }
 
     /**

@@ -14,6 +14,7 @@ public class Inbox {
 
     HashMap<String,Folder>  folders = new HashMap<String,Folder>() ;
     HashMap<Long,Message>  allMails = new HashMap<Long,Message>() ;
+    HashMap<Long,Date> deleteddate = new HashMap<Long,Date>() ;
 
     public Inbox(){
         folders.put("inbox", new Folder("inbox")) ;
@@ -37,6 +38,9 @@ public class Inbox {
     public void moveMessage(String toFolder, long ID, String oldFolder){
         folders.get(oldFolder).removeMessage(ID);
         folders.get(toFolder).addMessage(ID);
+        if(oldFolder.equals("trash")){
+            deleteddate.remove(ID) ;
+        }
     }
 
     // delete message from folder
@@ -49,6 +53,7 @@ public class Inbox {
             if(folders.get(folder).haveMessage(ID)){
                 folders.get(folder).removeMessage(ID);
                 allMails.remove(ID) ;
+                deleteddate.remove(ID) ;
                 return true ;
             }
             return false ;
@@ -56,7 +61,10 @@ public class Inbox {
         if(folders.get(folder).haveMessage(ID)){
             folders.get(folder).removeMessage(ID);
             folders.get("allMails").removeMessage(ID);
+            System.out.println(ID);
+            System.out.println("in delete");
             folders.get("trash").addMessage(ID);
+            deleteddate.put(ID,new Date()) ;
             return true ;
         }
         return false ;
@@ -85,8 +93,6 @@ public class Inbox {
 
 
 
-
-
     public LinkedList getAllMail(){
         //checkTimeForTrash() ;
 
@@ -101,25 +107,15 @@ public class Inbox {
         Date todayDate = new Date() ;
         System.out.println(todayDate);
         //2017-01-23
-        Folder trash = folders.get("trash") ;
-        for(long Id : trash.id){
-            String date = allMails.get(Id).getAttr("time") ;
+        for(long ID: deleteddate.keySet()){
+            long diff = todayDate.getTime() - deleteddate.get(ID).getTime();
+            long diffDays = diff / (24 * 60 * 60 * 1000);
 
-            SimpleDateFormat formatter =new SimpleDateFormat("E MMM dd yyyy HH:mm:ss");
-
-           try {
-                Date mdate = formatter.parse(date);
-                long duration =( (todayDate.getTime()- mdate.getTime()) / (1000 * 60 * 60 * 24))% 365 ;
-
-                if(duration>=30 ){
-                    trash.removeMessage(Id);
-                    allMails.remove(Id) ;
-                }
-
-            } catch (ParseException e) {
-                e.printStackTrace();
+            if(diffDays>30){
+                folders.get("trash").removeMessage(ID);
+                allMails.remove(ID) ;
+                deleteddate.remove(ID) ;
             }
-
 
         }
     }

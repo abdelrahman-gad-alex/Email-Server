@@ -160,7 +160,7 @@ export class SignupComponent {
   sendmail(email?: xp):Observable<any>
   {
     console.log(email)
-    return this.http.post<any>("http://localhost:88888/controller/signup",email) 
+    return this.http.post<any>("http://localhost:8080/controller/signup",email) 
   }
 }
 class xp

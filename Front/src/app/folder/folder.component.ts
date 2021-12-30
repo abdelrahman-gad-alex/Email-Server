@@ -479,7 +479,7 @@ export class FolderComponent implements OnInit {
       }
     }
     console.log(this.shared.getFolders())
-    this.http.get("http://localhost:8888/controller/filter",{
+    this.http.get("http://localhost:8080/controller/filter",{
       responseType:'text',
       params:{
           user: this.shared.getUser(),
@@ -501,7 +501,7 @@ export class FolderComponent implements OnInit {
           
         // }
         // this.shared.setFolders(folders)
-        this.http.get("http://localhost:8888/controller/login",{
+        this.http.get("http://localhost:8080/controller/login",{
           responseType:'text',
           params:{
               email: this.shared.getUser(),

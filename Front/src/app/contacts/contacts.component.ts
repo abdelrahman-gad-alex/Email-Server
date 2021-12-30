@@ -92,7 +92,7 @@ export class ContactsComponent implements OnInit {
       console.log("aaa")
       this.shared.getContacts().push( {"name": this.newContactName ,"mail":[this.newContactMail] }  )
       var map = new Map();    
-      this.http.post<string>("http://localhost:8888/controller/addcontact",{"user":this.shared.getUser(),"name":(this.newContactName),"emails":[this.newContactMail]}).subscribe((res?:any)=>
+      this.http.post<string>("http://localhost:8080/controller/addcontact",{"user":this.shared.getUser(),"name":(this.newContactName),"emails":[this.newContactMail]}).subscribe((res?:any)=>
       {
        console.log(res)
      })
@@ -157,7 +157,7 @@ edit(){
   
     observe:'response'
     console.log("aaa")
-    this.http.get("http://localhost:8888/controller/editcontact",{
+    this.http.get("http://localhost:8080/controller/editcontact",{
       responseType:'text',
       params:{
        user:this.shared.getUser(),
@@ -197,7 +197,7 @@ delete(){
   }
   else{
     console.log("show")
-    this.http.delete("http://localhost:8888/controller/deletecontact",
+    this.http.delete("http://localhost:8080/controller/deletecontact",
     {
       responseType:"text",
       params:{
@@ -226,7 +226,7 @@ onEnter(){
   }
    if (st){
     this.shared.getContacts()[this.selected].mail.push(this.newContactMail)
-    this.http.get("http://localhost:8888/controller/editcontact",{
+    this.http.get("http://localhost:8080/controller/editcontact",{
       responseType:'text',
       params:{
        user:this.shared.getUser(),
@@ -252,7 +252,7 @@ onEnter(){
 }
 sortClick()
 {
-  this.http.get("http://localhost:8888/controller/sortcontact",{
+  this.http.get("http://localhost:8080/controller/sortcontact",{
     responseType: 'text',
     params:{
       body: this.shared.getUser()
@@ -270,7 +270,7 @@ sortClick()
       temp.name = tempArr[i].nameValuePairs.name
       cont.push(temp)
     }
-    this.http.get("http://localhost:8888/controller/login",{
+    this.http.get("http://localhost:8080/controller/login",{
       responseType:'text',
       params:{
           email: this.shared.getUser(),
@@ -341,7 +341,7 @@ searchClick()
     alert("Enter key text")
     return
   }
-  this.http.get("http://localhost:8888/controller/searchcontact",{
+  this.http.get("http://localhost:8080/controller/searchcontact",{
     responseType: 'text',
     params:{
       user: this.shared.getUser(),
@@ -361,7 +361,7 @@ searchClick()
       cont.push(temp)
     }
     this.shared.setContacts(cont)
-    this.http.get("http://localhost:8888/controller/login",{
+    this.http.get("http://localhost:8080/controller/login",{
       responseType:'text',
       params:{
           email: this.shared.getUser(),

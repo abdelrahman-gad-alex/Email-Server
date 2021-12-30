@@ -32,7 +32,7 @@ export class SidebarComponent implements OnInit {
     let currentUrl = this.router.url;
         this.router.routeReuseStrategy.shouldReuseRoute = () => false;
         this.router.onSameUrlNavigation = 'reload';
-        this.http.get("http://localhost:8888/controller/login",{
+        this.http.get("http://localhost:8080/controller/login",{
       responseType:'text',
       params:{
           email: this.shared.getUser(),
@@ -144,7 +144,7 @@ export class SidebarComponent implements OnInit {
         alert("There ara a folder with the same selected name . Please choose new name.")
       }
       else{
-        this.http.post<any>("http://localhost:8888/controller/addfolder",{"email":this.shared.getUser(),"name":this.newFolderName} ).subscribe((res?:any)=>{
+        this.http.post<any>("http://localhost:8080/controller/addfolder",{"email":this.shared.getUser(),"name":this.newFolderName} ).subscribe((res?:any)=>{
           console.log(res);
         })
         this.shared.getFolders().push(  {"name": this.newFolderName ,"id":[] }    )
@@ -172,7 +172,7 @@ export class SidebarComponent implements OnInit {
           return object.name == this.curFolder;
         });
         console.log(index)
-        this.http.delete("http://localhost:8888/controller/deletefolder",{
+        this.http.delete("http://localhost:8080/controller/deletefolder",{
           responseType:"text",
           params:
           {
@@ -213,7 +213,7 @@ export class SidebarComponent implements OnInit {
           
           if (obj){
           obj!.name=this.newFolderName
-          this.http.get("http://localhost:8888/controller/renamefolder",{
+          this.http.get("http://localhost:8080/controller/renamefolder",{
             responseType:"text",
             params:
             {

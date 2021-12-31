@@ -1,12 +1,10 @@
 .card
 {
-    height: 380px;
-    width: 500px;
+    height: 430px;
+    width: 530px;
     background-color:aliceblue;
-    margin-top: 100px;
-    margin-bottom: 100px;
-    margin-right: 150px;
-    margin-left: 100px;
+    margin:auto;
+    margin-top: 200px;
 
 }
 .form-label

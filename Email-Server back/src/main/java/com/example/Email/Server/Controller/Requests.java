@@ -101,7 +101,7 @@ public class Requests {
 
       @PostMapping("/addcontact")
     public String addcontact(@RequestBody String addcontact) {
-            return new Gson().toJson(controller.addcontact(addcontact));
+        return new Gson().toJson(controller.addcontact(addcontact));
     }
 
 
@@ -124,8 +124,8 @@ public class Requests {
     }
 
     @DeleteMapping("/deletefolder")
-    public String deletefolder(@RequestParam String deletefolder) {
-        return new Gson().toJson(controller.deleteFolder(deletefolder));
+    public String deletefolder(@RequestParam String email,@RequestParam String name) {
+        return new Gson().toJson(controller.deleteFolder(email, name));
     }
 
     @PostMapping("/movemailtofolder")
@@ -139,7 +139,7 @@ public class Requests {
     }
 
     // for sorting
-    @GetMapping("/sort")
+ @GetMapping("/sort")
     public String sort(@RequestParam String body, @RequestParam String foldr, @RequestParam String method)
     {
         HashMap<String, Object> tempHM = new HashMap<String, Object>();
@@ -187,21 +187,19 @@ public class Requests {
     }
 
     @GetMapping("/getfiles")
-    public ResponseEntity<UrlResource> getFiles (@RequestParam String email,@RequestParam String ID){
-        Path[] paths = controller.getfiles(email,ID) ;
-        String[] names = controller.filesNames(email,ID) ;
+    public ResponseEntity<UrlResource> getFiles (@RequestParam String fileName){
+        Path paths = controller.getfiles(fileName) ;
         try {
-            UrlResource resource = new UrlResource(paths[0].toUri());
+            UrlResource resource = new UrlResource(paths.toUri());
             HttpHeaders httpHeaders = new HttpHeaders() ;
-            httpHeaders.add("File-Name", names[0]);
+            httpHeaders.add("File-Name", fileName);
             httpHeaders.add(HttpHeaders.CONTENT_DISPOSITION, "attachment;File-Name="+resource.getFilename());
-            return ResponseEntity.ok().contentType(MediaType.parseMediaType(Files.probeContentType(paths[0]))).headers(httpHeaders).body( resource) ;
+            return ResponseEntity.ok().contentType(MediaType.parseMediaType(Files.probeContentType(paths))).headers(httpHeaders).body( resource) ;
         } catch (Exception e) {
             e.printStackTrace();
             return null ;
         }
     }
-
 
 
 

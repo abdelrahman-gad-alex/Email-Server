@@ -1,11 +1,14 @@
 @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css");
 .card
 {
-    height: 350px;
-    width: 530px;
+    height: 310px;
+    width: 500px;
     background-color:aliceblue;
-    margin: auto;
-    margin-top: 200px;
+    margin-top: 100px;
+    margin-bottom: 100px;
+    margin-right: 150px;
+    margin-left: 100px;
+
 }
 .form-label
 {

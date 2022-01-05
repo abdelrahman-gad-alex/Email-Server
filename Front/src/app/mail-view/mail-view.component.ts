@@ -48,20 +48,23 @@ export class MailViewComponent implements OnInit {
     console.log(this.temp)
     
     document.getElementById("mailContent")!.innerHTML = this.mails[foundIdx].mailContent
-    for (let  i=0;i< this.temp.length;i++){
-      if(this.temp[i]!="," && this.temp[i]!='"' &&this.temp[i]!=" " && this.temp[i]!="[" && this.temp[i]!="]")
-      { 
-        console.log(this.temp[i])
-          this.temp3=this.temp3+this.temp[i]
-      }
-      else
-      {
-        console.log(this.temp3)
-        this.temp2.push(this.temp3);
-        this.temp3=""
-       
-      }
+    console.log(this.temp)
+    if(this.temp!= null){
+      for (let  i=0;i< this.temp.length;i++){
+        if(this.temp[i]!="," && this.temp[i]!='"' && this.temp[i]!="[" && this.temp[i]!="]")
+        { 
+          console.log(this.temp[i])
+            this.temp3=this.temp3+this.temp[i]
+        }
+        else
+        {
+          console.log(this.temp3)
+          this.temp2.push(this.temp3);
+          this.temp3=""
+        
+        }
 
+      }
     }
     console.log(this.temp2.length)
       for(let i of this.temp2){
@@ -69,6 +72,7 @@ export class MailViewComponent implements OnInit {
           this.attachedFile.push(i)
         }
       }
+      console.log(this.attachedFile)
       for(let i of this.attachedFile){
 
         this.http.get("http://localhost:8080/controller/getfiles",{

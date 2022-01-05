@@ -27,7 +27,6 @@ public class Message {
     public HashMap <String,String > massageMap = new HashMap<String, String>();
     private String jsonObject ;
 
-    private LinkedList<MultipartFile> attachments ;
 
     public Message (String jasString) {
         jsonObject = jasString ;
@@ -42,7 +41,6 @@ public class Message {
                 massageMap.put(key, value) ;
             }
 
-            attachments = new LinkedList<MultipartFile>() ;
 
 
         }catch (JSONException  e){
@@ -102,7 +100,6 @@ public class Message {
     public void setAttachments(MultipartFile[] files){
             try {
                 for(MultipartFile file : files) {
-                    attachments.add(file);
                     //File save = new File("files/"+file.getOriginalFilename()) ;
                     String fileName = StringUtils.cleanPath(file.getOriginalFilename()) ;
                     Path filePath = Paths.get("files/" , fileName).toAbsolutePath().normalize()  ;
@@ -130,38 +127,13 @@ public class Message {
             for(int i = 0; i<arr.length(); i++){
                 attachNames[i] = arr.getString(i) ;
             }
-            System.out.println(attachments.size());
+            System.out.println(attachNames.length);
 
         }catch (JSONException  e){
             System.out.println("Error "+e.toString());
         }
         return attachNames ;
     }
-
-    public void startWithAttachments(){
-        if(massageMap.get("file")==null){
-            return  ;   
-        }
-        try {
-            JSONArray arr = new JSONArray(massageMap.get("file")); ;
-            String[] attachNames = new String[arr.length()] ;
-            for(int i = 0; i<arr.length(); i++){
-                attachNames[i] = arr.getString(i) ;
-            }
-            System.out.println(attachments.size());
-
-            for (String name: attachNames){
-                File file = new File("files/"+name) ;
-                attachments.add((MultipartFile) file) ;
-
-            }
-
-
-        }catch (JSONException  e){
-            System.out.println("Error "+e.toString());
-        }
-    }
-
 
     public void setAttr(String attr, String value){
         massageMap.put(attr, value) ;

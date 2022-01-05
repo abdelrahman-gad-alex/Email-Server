@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.json.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.awt.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -21,7 +22,7 @@ public class MainController {
     sorting sortt =new sorting();
     FilterController filter = new FilterController() ;
 
-    LinkedList<Message> tempOfLastMessages=new LinkedList<Message>() ;
+    Message tempOfLastMessages;
 
     public String Signup(String email) throws JSONException {
         JSONObject json = new JSONObject(email);
@@ -72,7 +73,6 @@ public class MainController {
 
     public String sendEmail (String mailStr){
         System.out.println(mailStr);
-        tempOfLastMessages.clear();
 
         Message m = new Message(mailStr);
 
@@ -92,13 +92,12 @@ public class MainController {
 
         User from = mails.getUser(m.getFrom()) ;
         from.addsend(m);
-        tempOfLastMessages.add(m) ;
+        tempOfLastMessages = m ;
         System.out.println("add from");
 
         for(int i=0 ; i< toArr.length ; i++){
             User to = mails.getUser(toArr[i]) ;
             Message copy = m.deepCopy() ;
-            tempOfLastMessages.add(copy) ;
             System.out.println("add to");
 
             to.addinbox(copy);
@@ -112,13 +111,12 @@ public class MainController {
 
     public String sendFiles(MultipartFile[] files){
         try {
-            for(Message m: tempOfLastMessages){
-                System.out.println("in m");
-                m.setAttachments(files);
-            }
-            update() ;
+            tempOfLastMessages.setAttachments(files);
+            System.out.println("Done writing file");
             return "done" ;
         }catch (Exception e){
+            System.out.println("error writing file");
+
             return "Error" ;
         }
 
@@ -127,8 +125,10 @@ public class MainController {
     public Path getfiles(String fileName) {
         Path res = Paths.get("files/").toAbsolutePath().normalize().resolve(fileName) ;
         if(Files.exists(res)){
+            System.out.println("will send");
             return res ;
         }
+        System.out.println("will NOT send");
         return null ;
 
     }

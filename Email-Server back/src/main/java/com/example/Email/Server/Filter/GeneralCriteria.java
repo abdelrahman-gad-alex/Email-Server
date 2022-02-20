@@ -8,6 +8,9 @@ public class GeneralCriteria implements Criteria{
     String compere ;
     String key ;
     public GeneralCriteria(String attribute, String equal){
+        if (attribute.equals("attachment"))
+            key="file";
+        else
         key = attribute ;
         compere = equal ;
     }
@@ -15,7 +18,7 @@ public class GeneralCriteria implements Criteria{
     @Override
     public LinkedList<String> filter(LinkedList<Message> mails){
         LinkedList<String> res =  new LinkedList<String>() ;
-
+        System.out.println(key);
         try {
             for(Message m: mails){
                 String value = m.getAttr(key) ;

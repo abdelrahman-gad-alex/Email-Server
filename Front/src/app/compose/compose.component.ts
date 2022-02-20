@@ -50,6 +50,7 @@ x:String="";
     let currentUrl = this.router.url;
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.router.onSameUrlNavigation = 'reload';
+    if (this.to!=null){
     this.cMail2 = new mailing(this.shared.getUser(), this.to.split(','), this.subjectText, this.conText, this.temp2.toDateString(), this.importance ,this.attachedFileName); 
     this.sendmail2(this.cMail2).subscribe(res =>{
       console.log(res)
@@ -116,6 +117,71 @@ x:String="";
     })
       
 })
+  }
+  else{
+    this.http.get("http://localhost:8080/controller/login",{
+      responseType:'text',
+      params:{
+          email: this.shared.getUser(),
+          password: this.shared.getPass()
+      },
+      observe:'response'
+    })
+    .subscribe(response=>{      
+          
+      try
+      {
+        console.log(response.body)
+        this.res=JSON.parse(<string>response.body)
+        console.log(this.res)
+        let tempArr = this.res.folders
+        let tempName !: string
+        let folders: Ifolders[] = []
+        let contacts: Icontacts[] = []
+        let mails: Mail[] = []
+        for(let i =0; i < tempArr.length; i++)
+        {
+          let temp : Ifolders = new Ifolders(tempArr[i].name, tempArr[i].id.reverse())
+          folders.push(temp)
+        }
+        tempArr = this.res.contacts
+        for(let i =0; i < tempArr.length; i++)
+        {
+          let temp : Icontacts = new Icontacts()
+          temp.mail = tempArr[i].nameValuePairs.emails
+          temp.name = tempArr[i].nameValuePairs.name
+          contacts.push(temp)
+        }
+        tempArr = this.res.mails
+        for(let i =0; i < tempArr.length; i++)
+        {
+          let temp : Mail = new Mail()
+          temp.id = tempArr[i].massageMap.id
+          temp.time = tempArr[i].massageMap.time
+          temp.from = tempArr[i].massageMap.from
+          temp.importance = tempArr[i].massageMap.importance
+          temp.to = tempArr[i].massageMap.to
+          temp.subject = tempArr[i].massageMap.subject
+          temp.mailContent = tempArr[i].massageMap.mailContent
+          temp.file = tempArr[i].massageMap.file
+          mails.push(temp)
+          // console.log(temp)
+        }
+        this.shared.setContacts(contacts)
+        this.shared.setFolders(folders)
+        this.shared.setMails(mails)
+        // this.shared.setUser(this.myText)
+        // this.route.navigate(['folder',"inbox"])
+        this.router.navigate([currentUrl]);
+        this.location.back()
+      }
+      catch(e)
+      {
+        alert("Wrong Email or Wrong Password!!")
+      }
+    })
+
+  }
   }
   sendmail2(email: mailing):Observable<HttpEvent<any>>
   {

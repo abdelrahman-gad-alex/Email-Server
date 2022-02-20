@@ -4,13 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dbd52f86-9bb7-4922-9953-8916cc424eeb" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Email-Server.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Email-Server.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/Email/Server/Controller/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/Email/Server/Controller/MainController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/Email/Server/model/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/Email/Server/model/Message.java" afterDir="false" />
-    </list>
+    <list default="true" id="dbd52f86-9bb7-4922-9953-8916cc424eeb" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -38,7 +32,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="settings.editor.selected.configurable" value="reference.settings.project.maven.repository.indices" />
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="JUnit.sixthtest.contextLoads">
     <configuration name="EmailServerApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.example.Email.Server.EmailServerApplication" />
       <module name="Email-Server" />
@@ -52,8 +46,73 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="fifthtest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Email-Server" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.Email.Server.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.example.Email.Server" />
+      <option name="MAIN_CLASS_NAME" value="com.example.Email.Server.fifthtest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="fourthtest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Email-Server" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.Email.Server.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.example.Email.Server" />
+      <option name="MAIN_CLASS_NAME" value="com.example.Email.Server.fourthtest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="seventhtest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Email-Server" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.Email.Server.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.example.Email.Server" />
+      <option name="MAIN_CLASS_NAME" value="com.example.Email.Server.seventhtest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="sixthtest.contextLoads" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Email-Server" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.Email.Server.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.example.Email.Server" />
+      <option name="MAIN_CLASS_NAME" value="com.example.Email.Server.sixthtest" />
+      <option name="METHOD_NAME" value="contextLoads" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.sixthtest.contextLoads" />
+        <item itemvalue="JUnit.seventhtest" />
+        <item itemvalue="JUnit.fourthtest" />
+        <item itemvalue="JUnit.fifthtest" />
         <item itemvalue="Application.EmailServerApplication" />
       </list>
     </recent_temporary>

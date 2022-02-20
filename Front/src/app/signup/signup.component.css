@@ -1,11 +1,25 @@
+.background{
+    background-color: #e4e4e4;
+    height: 100%;
+}
+
+
+
 .card
 {
     height: 430px;
-    width: 530px;
-    background-color:aliceblue;
+    width: 350px;
+    background-color:#fafafb ;
     margin:auto;
     margin-top: 200px;
+    border-radius: 20px;
+    box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.3),0 1px 3px 1px rgba(60, 64, 67, 0.15);
 
+
+}
+.bro{
+   display: flex;
+   flex-flow: row ;
 }
 .form-label
 {

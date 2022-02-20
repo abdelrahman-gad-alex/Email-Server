@@ -22,38 +22,9 @@ export class SignupComponent {
   sub()
   {
     let atfound = false
-    if(this.myText.length < 6)
+    if(this.myText.length < 2)
     {
       alert("Email should be int this format: '###@###.com'")
-    }
-    for(let i = 0; i < this.myText.length - 4; i++)
-    {
-      let c = this.myText.charAt(i)
-      if(this.myText.endsWith(".com"))
-      {
-        if(c == '@')
-        {
-          if(atfound)
-          {
-            alert("Email should be int this format: '###@###.com' where # should be number, letter or underscore")
-            return
-          }
-          else
-          {
-            atfound = true
-          }
-        }
-        else if (!((c>= '0' && c <= '9') || (c>= 'A' && c <= 'Z') || (c>= 'a' && c <= 'z') || c=="_"))
-        {
-          alert("Email should be int this format: '###@###.com' where # should be number, letter or underscore")
-          return
-        }
-      }
-      else
-      {
-        alert("Email should be int this format: '###@###.com'")
-        return
-      }
     }
     if(this.pw != this.pwc)
     {
@@ -80,6 +51,7 @@ export class SignupComponent {
     //   console.log(this.res)
     // })
     // ans : string;
+    this.myText=this.myText+"@bro.com"
     let email= new xp(this.myText, this.pw)
     this.sendmail(email).subscribe((temp?: any)=>
     {

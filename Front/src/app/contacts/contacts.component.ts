@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faStar,faFile,faClock,faPaperPlane,faBookmark ,faTrash } from '@fortawesome/free-solid-svg-icons';
 import { observable } from 'rxjs';
-import { CONTACTS } from '../';
+import { CONTACTS } from '../contacts';
 import { Icontacts } from '../Icontacts';
 import { SharedService } from '../shared/shared.service';
 import { Mail } from '../mail';

@@ -32,7 +32,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="settings.editor.selected.configurable" value="reference.settings.project.maven.repository.indices" />
   </component>
-  <component name="RunManager" selected="JUnit.sixthtest.contextLoads">
+  <component name="RunManager" selected="Application.EmailServerApplication">
     <configuration name="EmailServerApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.example.Email.Server.EmailServerApplication" />
       <module name="Email-Server" />
@@ -109,11 +109,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.EmailServerApplication" />
         <item itemvalue="JUnit.sixthtest.contextLoads" />
         <item itemvalue="JUnit.seventhtest" />
         <item itemvalue="JUnit.fourthtest" />
         <item itemvalue="JUnit.fifthtest" />
-        <item itemvalue="Application.EmailServerApplication" />
       </list>
     </recent_temporary>
   </component>

@@ -1,31 +1,35 @@
+ <div class="background">
   <div class ="container">
-  <div class="row">
-    <div class="col-mid-6">
-      <div class="card">
-        <div class="text-center">
-          <div class="Logo">
-            <img alt="Mail Server Logo" src="./assets/img/myMail.png" width=50>
-            <span>Bro Mail</span>
-          </div>
-          <div style="display: flex; flex-wrap: wrap ;align-items: center; justify-content: center;">
-            <div class="mb-3" style="width: 490px;">
-              <label for="exampleInputEmail1" class="form-label"  >Email address</label>
-              <input [(ngModel)]="myText" type="text" class="form-control" id="exampleInputEmail1"  aria-describedby="emailHelp" >
-              <!-- [(ngmode)]="myText" -->
+    <div class="row">
+      <div class="col-mid-6">
+        <div class="card">
+          <div class="text-center">
+            <div class="Logo">
+              <img alt="Mail Server Logo" src="./assets/img/myMail.png" width=50 style="margin-top: 20px;">
+              <span>Bro Mail</span>
             </div>
-            <div class="mb-3" style="width: 490px">
-              <label for="exampleInputPassword1" class="form-label" >Password</label>
-              <input type="password" [(ngModel)]="pw" class="form-control" id="exampleInputPassword1" >
-              <div style="text-align: left;"><a routerLink="/signup">Do not have account</a></div>
+            <div style="display: flex; flex-wrap: wrap ;align-items: center; justify-content: center;">
+              <div class="mb-3" style="width: 300px;">
+                <label for="exampleInputEmail1" class="form-label"  >Email address</label>
+                <input [(ngModel)]="myText" type="text" class="form-control" id="exampleInputEmail1"  aria-describedby="emailHelp" >
+                <!-- [(ngmode)]="myText" -->
+              </div>
+              <div class="mb-3" style="width: 300px">
+                <label for="exampleInputPassword1" class="form-label" >Password</label>
+                <input type="password" [(ngModel)]="pw" class="form-control" id="exampleInputPassword1" >
+                <div style="text-align: left;"><a routerLink="/signup">Do not have account</a></div>
+              </div>
+              <!-- <input type="text" [(ngmodel.text)]="myText"> -->
+              <button class="btn btn-primary" (click)="sub()">Login</button>
             </div>
-            <!-- <input type="text" [(ngmodel.text)]="myText"> -->
-            <button class="btn btn-primary" (click)="sub()">Login</button>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+ </div>
+ 
+
 <!-- <button mat-flat-button color="warn">Warn</button> -->
 
 
